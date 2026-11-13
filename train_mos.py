@@ -1,15 +1,20 @@
 """
-train_mos.py — Offline Multi-Station HRRRv4 MOS Trainer for Northern Arizona
-Downloads HRRR-Zarr spatial tiles (2020–present) and IEM ASOS/COOP daily records,
-derives cycle-specific (00Z, 06Z, 12Z, 18Z) Max/Min MOS equations for all stations
-in stations.json, and saves the trained weights to mos_equations.json.
+train_mos.py — Plug-and-Play Multi-Station HRRRv4 MOS Trainer
+To add new stations later:
+  1. Add an entry to stations.json with just: name, network, iem_id, lat, lon, elev_ft
+  2. Run: python train_mos.py
+     (Automatically trains ONLY newly added stations and merges them into mos_equations.json!
+      Pass --retrain-all to retrain every station from scratch.)
 """
+import argparse
 import asyncio
 import datetime
 import io
 import json
 import logging
 import math
+import os
+import pickle
 import warnings
 
 import aiohttp
@@ -28,11 +33,11 @@ logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 
 START_DATE = "2020-12-03"
 END_DATE = (datetime.date.today() - datetime.timedelta(days=4)).strftime("%Y-%m-%d")
-SAMPLE_STEP_DAYS = 2
-MAX_CONCURRENT_RUNS = 110
+SAMPLE_STEP_DAYS = 3             # ~720 independent synoptic days/cycle across 6 winters & summers
+MAX_CONCURRENT_RUNS = 160        # High-throughput Windows/Linux async socket pool
 OUTPUT_EQ_FILE = "mos_equations.json"
+CACHE_DIR = "zarr_pixel_cache"
 
-# Cycle-specific Max/Min forecast windows within the 36-hour HRRR-Zarr horizon
 CYCLE_PERIODS = {
     "00Z": [
         {"key": "min_1", "kind": "min", "label": "Overnight Min (Day 1)",  "day_offset": 1, "fhrs": [9, 12, 14]},
@@ -85,6 +90,22 @@ def create_sync_session() -> requests.Session:
     retries = Retry(total=4, backoff_factor=0.6, status_forcelist=[429, 500, 502, 503, 504], raise_on_status=False)
     s.mount("https://", HTTPAdapter(max_retries=retries))
     return s
+
+
+def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
+    """
+    Automatically fits seasonal normal Max/Min curves [c0, cos1, sin1] from the
+    station's own IEM daily record so users never need manual climate constants.
+    """
+    doys = obs_df.index.dayofyear.values
+    X = np.column_stack([
+        np.ones(len(doys)),
+        np.cos(2.0 * math.pi * doys / 365.25),
+        np.sin(2.0 * math.pi * doys / 365.25),
+    ])
+    w_min, _, _, _ = np.linalg.lstsq(X, obs_df["obs_min"].values, rcond=None)
+    w_max, _, _, _ = np.linalg.lstsq(X, obs_df["obs_max"].values, rcond=None)
+    return [round(float(x), 4) for x in w_min], [round(float(x), 4) for x in w_max]
 
 
 def fetch_station_daily_obs(stn_id: str, meta: dict, start_date: str, end_date: str) -> pd.DataFrame:
@@ -179,6 +200,10 @@ def resolve_zarr_pixels(stations: dict):
     return station_pixels, sorted(unique_tiles), resolved_specs
 
 
+def eval_harmonic_norm(w: list, doy: int) -> float:
+    return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
+
+
 def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.datetime, meta: dict, prev_min: float, prev_max: float) -> dict:
     """Builds the identical predictor dictionary for both Zarr training and live GRIB2 inference."""
     if "tmp_2m" not in var_arrays:
@@ -231,10 +256,8 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
     verify_date = init_dt.date() + datetime.timedelta(days=period["day_offset"])
     doy = pd.Timestamp(verify_date).dayofyear
 
-    if period["kind"] == "min":
-        norm_t = meta["clim_mean_min"] - meta["clim_amp_min"] * math.cos(2.0 * math.pi * (doy - 20) / 365.25)
-    else:
-        norm_t = meta["clim_mean_max"] - meta["clim_amp_max"] * math.cos(2.0 * math.pi * (doy - 20) / 365.25)
+    w_clim = meta["clim_min_w"] if period["kind"] == "min" else meta["clim_max_w"]
+    norm_t = eval_harmonic_norm(w_clim, doy)
 
     return {
         "hrrr_ext_t": hrrr_ext_t,
@@ -329,19 +352,36 @@ async def fetch_tile_var(session, compressor, url, spec, pixels_in_tile):
 
 
 async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, resolved_specs):
-    tile_to_pixels = {t: {} for t in unique_tiles}
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    data_store = {}
+    uncached_stations = {}
+
     for stn_id, info in station_pixels.items():
+        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_step{SAMPLE_STEP_DAYS}.pkl")
+        if os.path.exists(cache_path):
+            with open(cache_path, "rb") as f:
+                data_store[stn_id] = pickle.load(f)
+            print(f"  -> Loaded cached Zarr runs for {stn_id} ({len(data_store[stn_id])} runs).")
+        else:
+            data_store[stn_id] = {}
+            uncached_stations[stn_id] = info
+
+    if not uncached_stations:
+        return data_store
+
+    active_tiles = sorted({info["tile_id"] for info in uncached_stations.values()})
+    tile_to_pixels = {t: {} for t in active_tiles}
+    for stn_id, info in uncached_stations.items():
         tile_to_pixels[info["tile_id"]][stn_id] = (info["ly"], info["lx"])
 
     queue = asyncio.Queue()
     for r in unique_runs:
         queue.put_nowait(r)
 
-    connector = aiohttp.TCPConnector(limit=250, ttl_dns_cache=600)
+    connector = aiohttp.TCPConnector(limit=320, ttl_dns_cache=600)
     timeout = aiohttp.ClientTimeout(total=15, sock_connect=5, sock_read=8)
     compressor = numcodecs.Blosc()
-    data_store = {stn_id: {} for stn_id in station_pixels}
-    pbar = tqdm(total=len(unique_runs), desc="Multi-Station HRRR-Zarr Ingestion", unit="run")
+    pbar = tqdm(total=len(unique_runs), desc="Multi-Station HRRR-Zarr Ingestion", unit="run", smoothing=0.05)
 
     async def worker(session):
         while True:
@@ -383,19 +423,64 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
     finally:
         pbar.close()
 
+    for stn_id in uncached_stations:
+        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_step{SAMPLE_STEP_DAYS}.pkl")
+        with open(cache_path, "wb") as f:
+            pickle.dump(data_store[stn_id], f)
+
     return data_store
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations instead of only newly added ones.")
+    args = parser.parse_args()
+
     with open("stations.json", "r") as f:
-        stations = json.load(f)
+        all_stations = json.load(f)
+
+    if os.path.exists(OUTPUT_EQ_FILE) and not args.retrain_all:
+        with open(OUTPUT_EQ_FILE, "r") as f:
+            equations_bundle = json.load(f)
+        existing_ids = set(equations_bundle.get("stations", {}).keys())
+        target_stations = {k: v for k, v in all_stations.items() if k not in existing_ids}
+        for old_id in list(existing_ids):
+            if old_id not in all_stations:
+                del equations_bundle["stations"][old_id]
+        if not target_stations:
+            print(f"All {len(all_stations)} stations in stations.json are already trained in {OUTPUT_EQ_FILE}!")
+            print("Run 'python train_mos.py --retrain-all' if you want to refresh all weights.")
+            return
+        print(f"Incremental mode: training {len(target_stations)} newly added station(s): {list(target_stations.keys())}")
+    else:
+        equations_bundle = {"stations": {}}
+        target_stations = all_stations
+        print(f"Full training mode: training all {len(target_stations)} stations...")
 
     obs_by_stn = {}
-    for stn_id, meta in stations.items():
+    valid_targets = {}
+    for stn_id, meta in target_stations.items():
         print(f"Fetching COOP/ASOS observations for {stn_id} ({meta['name']})...")
-        obs_by_stn[stn_id] = fetch_station_daily_obs(stn_id, meta, START_DATE, END_DATE)
+        try:
+            obs_df = fetch_station_daily_obs(stn_id, meta, START_DATE, END_DATE)
+            if len(obs_df) < 200:
+                print(f"  [!] Skipping {stn_id}: only {len(obs_df)} daily records available.")
+                continue
+            w_min, w_max = fit_harmonic_climatology(obs_df)
+            meta_enriched = dict(meta)
+            meta_enriched.setdefault("elev_ft", 5000)
+            meta_enriched["clim_min_w"] = w_min
+            meta_enriched["clim_max_w"] = w_max
+            obs_by_stn[stn_id] = obs_df
+            valid_targets[stn_id] = meta_enriched
+        except Exception as exc:
+            print(f"  [!] Skipping {stn_id} due to observation fetch error: {exc}")
 
-    station_pixels, unique_tiles, resolved_specs = resolve_zarr_pixels(stations)
+    if not valid_targets:
+        print("No valid stations to train.")
+        return
+
+    station_pixels, unique_tiles, resolved_specs = resolve_zarr_pixels(valid_targets)
     init_dates = pd.date_range(START_DATE, END_DATE, freq=f"{SAMPLE_STEP_DAYS}D")
     unique_runs = [
         datetime.datetime(d.year, d.month, d.day, hr)
@@ -415,13 +500,10 @@ def main():
         "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2", "norm_t",
     ]
 
-    equations_bundle = {
-        "generated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "training_window": f"{START_DATE} to {END_DATE}",
-        "stations": {},
-    }
+    equations_bundle["generated_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    equations_bundle["training_window"] = f"{START_DATE} to {END_DATE}"
 
-    for stn_id, meta in stations.items():
+    for stn_id, meta in valid_targets.items():
         obs_df = obs_by_stn[stn_id]
         stn_runs = data_store[stn_id]
         equations_bundle["stations"][stn_id] = {"meta": meta, "cycles": {}}
@@ -478,7 +560,7 @@ def main():
 
     with open(OUTPUT_EQ_FILE, "w") as f:
         json.dump(equations_bundle, f, indent=2)
-    print(f"\nSaved all trained multi-station MOS equations to {OUTPUT_EQ_FILE}!")
+    print(f"\nSaved {len(equations_bundle['stations'])} trained stations to {OUTPUT_EQ_FILE}!")
 
 
 if __name__ == "__main__":
