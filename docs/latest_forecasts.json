@@ -1,0 +1,6998 @@
+{
+  "updated_utc": "2026-11-13 23:43 UTC",
+  "updated_mst": "2026-11-13 04:43 PM MST",
+  "hrrr_init_utc": "2026-11-13 18:00Z",
+  "synoptic_cycle": "18Z",
+  "stations": {
+    "KFGZ": {
+      "id": "KFGZ",
+      "name": "WFO Bellemont (COOP)",
+      "network": "AZCLIMATE",
+      "lat": 35.2303,
+      "lon": -111.8222,
+      "elev_ft": 7152,
+      "prev_obs_min": 23.0,
+      "prev_obs_max": 59.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 49.1,
+          "mos_f": 59.0,
+          "delta_f": 9.9,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 2.2,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 49.06,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 59.0,
+              "weight": 1.0,
+              "contrib": 59.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 34.7,
+          "mos_f": 34.2,
+          "delta_f": -0.6,
+          "holdout_mos_mae": 3.56,
+          "holdout_raw_mae": 12.4,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -24.5801,
+              "contrib": -24.58
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 34.72,
+              "weight": 0.8985,
+              "contrib": 31.2
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 99.6,
+              "weight": 0.1817,
+              "contrib": 18.1
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 31.98,
+              "weight": 0.178,
+              "contrib": 5.69
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 23.0,
+              "weight": 0.1633,
+              "contrib": 3.76
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 38.2,
+          "mos_f": 47.1,
+          "delta_f": 8.9,
+          "holdout_mos_mae": 2.01,
+          "holdout_raw_mae": 2.79,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 3.0513,
+              "contrib": 3.05
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 38.17,
+              "weight": 0.6461,
+              "contrib": 24.66
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 59.0,
+              "weight": 0.3286,
+              "contrib": 19.39
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 49.1
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 49.1
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 47.8
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 40.1
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 39.3
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 37.5
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 37.7
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 37.8
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 37.4
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 37.2
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 37.1
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 38.1
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 36.8
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 36.4
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 35.3
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 34.8
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 34.7
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 34.7
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 35.0
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 35.5
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 35.9
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 36.1
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 36.2
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 38.2
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 35.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 35.1
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 33.0
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 32.5
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 31.9
+        }
+      ]
+    },
+    "KFLG": {
+      "id": "KFLG",
+      "name": "Flagstaff Pulliam Airport",
+      "network": "AZ_ASOS",
+      "lat": 35.1403,
+      "lon": -111.6692,
+      "elev_ft": 7011,
+      "prev_obs_min": 28.4,
+      "prev_obs_max": 55.1,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 51.3,
+          "mos_f": 55.1,
+          "delta_f": 3.8,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.37,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 51.31,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 55.07,
+              "weight": 1.0,
+              "contrib": 55.07
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 37.2,
+          "mos_f": 35.7,
+          "delta_f": -1.5,
+          "holdout_mos_mae": 2.59,
+          "holdout_raw_mae": 5.37,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -6.9955,
+              "contrib": -7.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 37.2,
+              "weight": 0.8667,
+              "contrib": 32.24
+            },
+            {
+              "term": "hrrr_win_dp2m",
+              "value": 36.52,
+              "weight": 0.1723,
+              "contrib": 6.29
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 33.17,
+              "weight": 0.1262,
+              "contrib": 4.19
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 39.9,
+          "mos_f": 41.2,
+          "delta_f": 1.3,
+          "holdout_mos_mae": 1.94,
+          "holdout_raw_mae": 1.88,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 3.9844,
+              "contrib": 3.98
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 39.92,
+              "weight": 0.9322,
+              "contrib": 37.22
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 51.0
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 51.0
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 51.3
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 50.1
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 48.8
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 40.1
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 38.9
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 39.4
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 39.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 37.9
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 38.2
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 39.5
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 39.4
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 38.8
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 37.8
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 37.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 37.2
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 36.7
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 36.8
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 37.4
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 37.5
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 38.3
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 39.9
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 38.1
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 40.2
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 39.0
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 36.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 34.9
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 34.0
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 32.6
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 32.7
+        }
+      ]
+    },
+    "KGCN": {
+      "id": "KGCN",
+      "name": "Grand Canyon Nat'l Park Arpt",
+      "network": "AZ_ASOS",
+      "lat": 35.9524,
+      "lon": -112.147,
+      "elev_ft": 6609,
+      "prev_obs_min": 25.7,
+      "prev_obs_max": 56.2,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 54.9,
+          "mos_f": 56.2,
+          "delta_f": 1.3,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.85,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 54.91,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 56.2,
+              "weight": 1.0,
+              "contrib": 56.2
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 37.6,
+          "mos_f": 31.1,
+          "delta_f": -6.6,
+          "holdout_mos_mae": 2.98,
+          "holdout_raw_mae": 9.13,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -8.4917,
+              "contrib": -8.49
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 37.65,
+              "weight": 0.6295,
+              "contrib": 23.7
+            },
+            {
+              "term": "hrrr_win_dp2m",
+              "value": 36.97,
+              "weight": 0.1412,
+              "contrib": 5.22
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 25.72,
+              "weight": 0.2974,
+              "contrib": 7.65
+            },
+            {
+              "term": "hrrr_mcdc",
+              "value": 75.0,
+              "weight": 0.0396,
+              "contrib": 2.97
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 42.2,
+          "mos_f": 44.7,
+          "delta_f": 2.5,
+          "holdout_mos_mae": 2.03,
+          "holdout_raw_mae": 2.32,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.9868,
+              "contrib": -0.99
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 42.17,
+              "weight": 0.8114,
+              "contrib": 34.22
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 56.2,
+              "weight": 0.2041,
+              "contrib": 11.47
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 54.5
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 54.2
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 54.9
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 53.2
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 52.2
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 49.6
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 45.8
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 44.1
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 41.9
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 41.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 40.9
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 40.4
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 39.7
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 37.3
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 38.0
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 37.9
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 37.8
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 37.9
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 37.5
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 38.0
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 39.1
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 41.0
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 42.2
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 42.4
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 42.1
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 39.7
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 36.5
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 34.3
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 33.0
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 32.0
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 32.2
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 32.4
+        }
+      ]
+    },
+    "KPGA": {
+      "id": "KPGA",
+      "name": "Page Municipal Airport",
+      "network": "AZ_ASOS",
+      "lat": 36.9261,
+      "lon": -111.4483,
+      "elev_ft": 4316,
+      "prev_obs_min": 47.0,
+      "prev_obs_max": 61.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 65.9,
+          "mos_f": 61.0,
+          "delta_f": -4.9,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.63,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 65.94,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 61.0,
+              "weight": 1.0,
+              "contrib": 61.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 47.0,
+          "mos_f": 47.5,
+          "delta_f": 0.5,
+          "holdout_mos_mae": 2.43,
+          "holdout_raw_mae": 2.59,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.5918,
+              "contrib": 0.59
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 46.99,
+              "weight": 0.9989,
+              "contrib": 46.93
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 53.1,
+          "mos_f": 54.0,
+          "delta_f": 1.0,
+          "holdout_mos_mae": 2.01,
+          "holdout_raw_mae": 2.28,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -2.8977,
+              "contrib": -2.9
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 53.09,
+              "weight": 0.7665,
+              "contrib": 40.69
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 61.0,
+              "weight": 0.2663,
+              "contrib": 16.24
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 60.9
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 63.1
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 65.9
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 66.0
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 64.4
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 61.3
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 56.9
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 54.3
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 53.4
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 54.5
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 55.1
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 53.7
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 51.6
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 50.8
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 50.6
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 49.0
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 47.2
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 47.7
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 47.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 47.0
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 47.4
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 49.1
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 49.2
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 48.9
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 47.5
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 50.3
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 53.1
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 53.4
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 49.2
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 45.3
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 44.8
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 43.6
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 43.7
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 42.4
+        }
+      ]
+    },
+    "KINW": {
+      "id": "KINW",
+      "name": "Winslow-Lindbergh Regional",
+      "network": "AZ_ASOS",
+      "lat": 35.0219,
+      "lon": -110.7225,
+      "elev_ft": 4941,
+      "prev_obs_min": 33.8,
+      "prev_obs_max": 63.1,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 65.4,
+          "mos_f": 63.1,
+          "delta_f": -2.2,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 2.52,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 65.38,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.13,
+              "weight": 1.0,
+              "contrib": 63.13
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 41.2,
+          "mos_f": 40.4,
+          "delta_f": -0.9,
+          "holdout_mos_mae": 2.77,
+          "holdout_raw_mae": 3.11,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -2.9777,
+              "contrib": -2.98
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 41.25,
+              "weight": 1.0214,
+              "contrib": 42.13
+            },
+            {
+              "term": "hrrr_u10_kt",
+              "value": -2.64,
+              "weight": -0.4563,
+              "contrib": 1.21
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 53.2,
+          "mos_f": 56.4,
+          "delta_f": 3.2,
+          "holdout_mos_mae": 1.82,
+          "holdout_raw_mae": 2.44,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0665,
+              "contrib": 0.07
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 53.2,
+              "weight": 0.7766,
+              "contrib": 41.32
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.13,
+              "weight": 0.2376,
+              "contrib": 15.0
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 65.1
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 65.0
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 65.4
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 64.2
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 62.5
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 58.6
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 55.3
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 51.6
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 49.3
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 48.4
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 44.3
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 43.5
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 42.5
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 45.3
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 44.0
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 44.9
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 43.7
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 41.2
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 43.4
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 49.7
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 52.1
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 50.8
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 51.8
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 53.2
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 53.0
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 53.2
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 51.7
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 50.3
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 47.3
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 47.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 43.2
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 40.8
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 39.7
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 38.2
+        }
+      ]
+    },
+    "KPRC": {
+      "id": "KPRC",
+      "name": "Prescott Regional Airport",
+      "network": "AZ_ASOS",
+      "lat": 34.6545,
+      "lon": -112.4196,
+      "elev_ft": 5045,
+      "prev_obs_min": 37.2,
+      "prev_obs_max": 63.6,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 60.5,
+          "mos_f": 63.6,
+          "delta_f": 3.1,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.19,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 60.48,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.61,
+              "weight": 1.0,
+              "contrib": 63.61
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 41.8,
+          "mos_f": 37.6,
+          "delta_f": -4.2,
+          "holdout_mos_mae": 2.47,
+          "holdout_raw_mae": 4.04,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -4.1238,
+              "contrib": -4.12
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 41.81,
+              "weight": 0.7868,
+              "contrib": 32.9
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 37.23,
+              "weight": 0.2378,
+              "contrib": 8.85
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 46.9,
+          "mos_f": 47.0,
+          "delta_f": 0.1,
+          "holdout_mos_mae": 1.83,
+          "holdout_raw_mae": 1.74,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.9931,
+              "contrib": 1.99
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 46.94,
+              "weight": 0.9596,
+              "contrib": 45.05
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 60.3
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 60.5
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 60.4
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 59.3
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 54.1
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 51.1
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 47.5
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 45.4
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 44.6
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 43.3
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 42.4
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 41.8
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 43.8
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 44.5
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 44.8
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 45.5
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 46.8
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 43.5
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 41.8
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 40.6
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 39.8
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 38.9
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 38.4
+        }
+      ]
+    },
+    "KSOW": {
+      "id": "KSOW",
+      "name": "Show Low Regional Airport",
+      "network": "AZ_ASOS",
+      "lat": 34.2655,
+      "lon": -110.0056,
+      "elev_ft": 6415,
+      "prev_obs_min": 35.2,
+      "prev_obs_max": 59.2,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 57.4,
+          "mos_f": 59.2,
+          "delta_f": 1.8,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.9,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 57.39,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 59.18,
+              "weight": 1.0,
+              "contrib": 59.18
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 40.0,
+          "mos_f": 40.0,
+          "delta_f": -0.1,
+          "holdout_mos_mae": 2.65,
+          "holdout_raw_mae": 3.1,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -6.7975,
+              "contrib": -6.8
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 40.04,
+              "weight": 1.0619,
+              "contrib": 42.52
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 32.86,
+              "weight": 0.1295,
+              "contrib": 4.26
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 43.7,
+          "mos_f": 51.0,
+          "delta_f": 7.3,
+          "holdout_mos_mae": 1.89,
+          "holdout_raw_mae": 2.39,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.7437,
+              "contrib": 1.74
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 43.68,
+              "weight": 0.5707,
+              "contrib": 24.93
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 59.18,
+              "weight": 0.4105,
+              "contrib": 24.3
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 56.4
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 56.9
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 57.4
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 56.4
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 54.9
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 50.1
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 43.2
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 43.5
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 43.3
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 42.1
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 42.2
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 41.1
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 40.9
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 41.4
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 40.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 40.7
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 40.7
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 41.0
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 42.2
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 42.9
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 41.5
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 41.8
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 43.1
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 43.7
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 42.6
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 40.7
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 39.1
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 40.3
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 38.5
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 35.7
+        }
+      ]
+    },
+    "KSJN": {
+      "id": "KSJN",
+      "name": "St. Johns Industrial Air Park",
+      "network": "AZ_ASOS",
+      "lat": 34.5184,
+      "lon": -109.3789,
+      "elev_ft": 5737,
+      "prev_obs_min": 33.0,
+      "prev_obs_max": 63.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 65.1,
+          "mos_f": 63.0,
+          "delta_f": -2.1,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.67,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 65.09,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.0,
+              "weight": 1.0,
+              "contrib": 63.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 40.0,
+          "mos_f": 35.0,
+          "delta_f": -5.0,
+          "holdout_mos_mae": 3.22,
+          "holdout_raw_mae": 5.28,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -8.5818,
+              "contrib": -8.58
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 40.01,
+              "weight": 1.0891,
+              "contrib": 43.58
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 50.6,
+          "mos_f": 53.3,
+          "delta_f": 2.7,
+          "holdout_mos_mae": 1.52,
+          "holdout_raw_mae": 1.7,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.4063,
+              "contrib": -0.41
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 50.61,
+              "weight": 0.8123,
+              "contrib": 41.11
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.0,
+              "weight": 0.1998,
+              "contrib": 12.59
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 64.5
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 65.1
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 64.9
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 64.2
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 62.7
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 57.8
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 54.1
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 50.6
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 49.0
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 47.4
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 47.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 44.1
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 41.7
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 42.5
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 43.8
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 44.0
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 42.6
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 43.4
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 41.5
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 43.6
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 47.4
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 50.7
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 50.6
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 48.9
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 49.8
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 48.3
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 47.6
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 43.0
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 42.1
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 43.3
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 41.8
+        }
+      ]
+    },
+    "KSEZ": {
+      "id": "KSEZ",
+      "name": "Sedona Airport",
+      "network": "AZ_ASOS",
+      "lat": 34.8486,
+      "lon": -111.7884,
+      "elev_ft": 4830,
+      "prev_obs_min": 53.6,
+      "prev_obs_max": 62.6,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 64.6,
+          "mos_f": 62.6,
+          "delta_f": -2.0,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.71,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 64.59,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 62.6,
+              "weight": 1.0,
+              "contrib": 62.6
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 48.2,
+          "mos_f": 44.5,
+          "delta_f": -3.7,
+          "holdout_mos_mae": 2.19,
+          "holdout_raw_mae": 2.38,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 7.2997,
+              "contrib": 7.3
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 48.22,
+              "weight": 1.0948,
+              "contrib": 52.79
+            },
+            {
+              "term": "hrrr_dlwrf",
+              "value": 340.6,
+              "weight": -0.0458,
+              "contrib": -15.59
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 49.8,
+          "mos_f": 52.0,
+          "delta_f": 2.2,
+          "holdout_mos_mae": 2.22,
+          "holdout_raw_mae": 2.5,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.1807,
+              "contrib": -0.18
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 49.82,
+              "weight": 0.7897,
+              "contrib": 39.35
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 62.6,
+              "weight": 0.2058,
+              "contrib": 12.88
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 63.4
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 64.4
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 64.6
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 64.0
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 62.5
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 54.9
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 53.0
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 51.7
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 51.0
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 50.3
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 49.8
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 49.7
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 49.8
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 49.3
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 49.6
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 48.7
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 48.4
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 48.4
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 48.2
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 48.1
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 48.1
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 48.3
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 49.9
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 49.7
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 49.8
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 49.3
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 49.1
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 49.0
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 47.8
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 46.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 47.6
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 45.4
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 44.8
+        }
+      ]
+    },
+    "KPAN": {
+      "id": "KPAN",
+      "name": "Payson Airport",
+      "network": "AZ_ASOS",
+      "lat": 34.2568,
+      "lon": -111.3393,
+      "elev_ft": 5157,
+      "prev_obs_min": 43.5,
+      "prev_obs_max": 63.1,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 60.1,
+          "mos_f": 63.1,
+          "delta_f": 3.0,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.16,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 60.09,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.07,
+              "weight": 1.0,
+              "contrib": 63.07
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 44.7,
+          "mos_f": 43.1,
+          "delta_f": -1.6,
+          "holdout_mos_mae": 2.07,
+          "holdout_raw_mae": 2.6,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.7006,
+              "contrib": -0.7
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 44.74,
+              "weight": 0.5901,
+              "contrib": 26.4
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 43.47,
+              "weight": 0.4006,
+              "contrib": 17.41
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 47.9,
+          "mos_f": 51.8,
+          "delta_f": 3.9,
+          "holdout_mos_mae": 1.45,
+          "holdout_raw_mae": 1.73,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 2.0553,
+              "contrib": 2.06
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 47.91,
+              "weight": 0.7554,
+              "contrib": 36.2
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 63.07,
+              "weight": 0.2143,
+              "contrib": 13.51
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 59.7
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 60.0
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 60.1
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 59.8
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 57.8
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 51.3
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 46.8
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 47.7
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 46.5
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 45.8
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 45.5
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 45.4
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 44.7
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 46.8
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 48.3
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 47.9
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 46.7
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 45.8
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 43.3
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 42.7
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 42.1
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 40.9
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 39.9
+        }
+      ]
+    },
+    "KRQE": {
+      "id": "KRQE",
+      "name": "Window Rock Airport",
+      "network": "AZ_ASOS",
+      "lat": 35.6571,
+      "lon": -109.0603,
+      "elev_ft": 6745,
+      "prev_obs_min": 25.2,
+      "prev_obs_max": 58.1,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 56.7,
+          "mos_f": 58.1,
+          "delta_f": 1.4,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 2.01,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 56.71,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 58.12,
+              "weight": 1.0,
+              "contrib": 58.12
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 38.1,
+          "mos_f": 35.5,
+          "delta_f": -2.6,
+          "holdout_mos_mae": 3.25,
+          "holdout_raw_mae": 6.65,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -7.1977,
+              "contrib": -7.2
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 38.09,
+              "weight": 0.6194,
+              "contrib": 23.59
+            },
+            {
+              "term": "hrrr_win_dp2m",
+              "value": 36.52,
+              "weight": 0.1991,
+              "contrib": 7.27
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 25.25,
+              "weight": 0.2965,
+              "contrib": 7.49
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 34.32,
+              "weight": 0.1253,
+              "contrib": 4.3
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 43.1,
+          "mos_f": 49.6,
+          "delta_f": 6.5,
+          "holdout_mos_mae": 2.19,
+          "holdout_raw_mae": 2.32,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.4884,
+              "contrib": 1.49
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 43.07,
+              "weight": 0.7174,
+              "contrib": 30.9
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 58.12,
+              "weight": 0.2954,
+              "contrib": 17.17
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 53.2
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 55.1
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 56.7
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 56.4
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 52.8
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 48.7
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 47.7
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 44.8
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 40.5
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 39.2
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 37.9
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 38.9
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 38.1
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 38.8
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 38.9
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 38.5
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 38.5
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 38.5
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 40.1
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 42.5
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 43.5
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 44.3
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 43.1
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 43.0
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 41.5
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 39.3
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 38.0
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 36.6
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 33.7
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 32.3
+        }
+      ]
+    },
+    "KCMR": {
+      "id": "KCMR",
+      "name": "Williams / Clark Field",
+      "network": "AZ_ASOS",
+      "lat": 35.3055,
+      "lon": -112.1944,
+      "elev_ft": 6691,
+      "prev_obs_min": 31.8,
+      "prev_obs_max": 58.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 53.5,
+          "mos_f": 58.0,
+          "delta_f": 4.6,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.38,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 53.45,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 58.03,
+              "weight": 1.0,
+              "contrib": 58.03
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 38.1,
+          "mos_f": 35.1,
+          "delta_f": -3.0,
+          "holdout_mos_mae": 3.17,
+          "holdout_raw_mae": 5.82,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -5.4586,
+              "contrib": -5.46
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 38.1,
+              "weight": 0.9049,
+              "contrib": 34.48
+            },
+            {
+              "term": "hrrr_win_dp2m",
+              "value": 37.2,
+              "weight": 0.164,
+              "contrib": 6.1
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 42.1,
+          "mos_f": 43.7,
+          "delta_f": 1.6,
+          "holdout_mos_mae": 1.69,
+          "holdout_raw_mae": 1.82,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 3.3836,
+              "contrib": 3.38
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 42.06,
+              "weight": 0.9575,
+              "contrib": 40.28
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 53.4
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 51.0
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 53.5
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 50.8
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 48.7
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 41.8
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 41.5
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 40.1
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 39.9
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 39.9
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 40.2
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 39.3
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 39.5
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 38.8
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 38.5
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 38.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 38.1
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 38.6
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 39.6
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 39.5
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 39.9
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 40.6
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 42.1
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 40.5
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 41.4
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 40.9
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 37.7
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 37.7
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 36.1
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 34.5
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 33.3
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 32.6
+        }
+      ]
+    },
+    "AZ6471": {
+      "id": "AZ6471",
+      "name": "Phantom Ranch (Grand Canyon)",
+      "network": "AZCLIMATE",
+      "lat": 36.1056,
+      "lon": -112.095,
+      "elev_ft": 2530,
+      "prev_obs_min": 46.0,
+      "prev_obs_max": 67.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 70.4,
+          "mos_f": 67.0,
+          "delta_f": -3.4,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 5.91,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 70.38,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 67.0,
+              "weight": 1.0,
+              "contrib": 67.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 51.7,
+          "mos_f": 47.4,
+          "delta_f": -4.3,
+          "holdout_mos_mae": 3.55,
+          "holdout_raw_mae": 5.25,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -4.2293,
+              "contrib": -4.23
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 51.74,
+              "weight": 0.3999,
+              "contrib": 20.69
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 46.0,
+              "weight": 0.3584,
+              "contrib": 16.48
+            },
+            {
+              "term": "norm_t",
+              "value": 46.72,
+              "weight": 0.31,
+              "contrib": 14.48
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 58.6,
+          "mos_f": 64.2,
+          "delta_f": 5.6,
+          "holdout_mos_mae": 2.51,
+          "holdout_raw_mae": 6.52,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -1.5961,
+              "contrib": -1.6
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 58.6,
+              "weight": 0.5837,
+              "contrib": 34.2
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 67.0,
+              "weight": 0.4713,
+              "contrib": 31.58
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 69.0
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 70.4
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 70.0
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 68.7
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 67.5
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 64.7
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 62.4
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 60.9
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 59.6
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 56.9
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 57.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 56.3
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 55.3
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 54.0
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 53.1
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 50.7
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 51.5
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 51.7
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 51.9
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 53.0
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 55.4
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 56.0
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 56.6
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 58.4
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 58.6
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 59.1
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 58.3
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 55.6
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 51.5
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 48.9
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 45.5
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 45.2
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 45.1
+        }
+      ]
+    },
+    "AZ0159": {
+      "id": "AZ0159",
+      "name": "Alpine COOP",
+      "network": "AZCLIMATE",
+      "lat": 33.8492,
+      "lon": -109.1436,
+      "elev_ft": 8050,
+      "prev_obs_min": 29.0,
+      "prev_obs_max": 58.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 49.0,
+          "mos_f": 58.0,
+          "delta_f": 9.0,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 3.19,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 48.95,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 58.0,
+              "weight": 1.0,
+              "contrib": 58.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 34.9,
+          "mos_f": 32.6,
+          "delta_f": -2.3,
+          "holdout_mos_mae": 3.89,
+          "holdout_raw_mae": 11.01,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -13.7386,
+              "contrib": -13.74
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 34.95,
+              "weight": 0.7175,
+              "contrib": 25.07
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 91.27,
+              "weight": 0.1105,
+              "contrib": 10.08
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 29.0,
+              "weight": 0.2579,
+              "contrib": 7.48
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 23.35,
+              "weight": 0.1602,
+              "contrib": 3.74
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 37.0,
+          "mos_f": 46.7,
+          "delta_f": 9.6,
+          "holdout_mos_mae": 2.86,
+          "holdout_raw_mae": 3.33,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.4555,
+              "contrib": 1.46
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 37.04,
+              "weight": 0.5903,
+              "contrib": 21.87
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 58.0,
+              "weight": 0.4029,
+              "contrib": 23.37
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 47.1
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 48.4
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 49.0
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 48.7
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 47.4
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 44.1
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 40.6
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 38.5
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 37.5
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 36.2
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 35.8
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 35.3
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 35.2
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 35.8
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 36.2
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 36.4
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 36.5
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 35.5
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 34.7
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 34.9
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 34.7
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 34.8
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 34.9
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 35.3
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 35.4
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 35.3
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 35.5
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 37.0
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 36.3
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 36.2
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 35.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 33.4
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 33.1
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 32.6
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 32.5
+        }
+      ]
+    },
+    "AZ8162": {
+      "id": "AZ8162",
+      "name": "Springerville COOP",
+      "network": "AZCLIMATE",
+      "lat": 34.1361,
+      "lon": -109.2864,
+      "elev_ft": 7060,
+      "prev_obs_min": 28.0,
+      "prev_obs_max": 65.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 56.9,
+          "mos_f": 65.0,
+          "delta_f": 8.1,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 4.16,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 56.94,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 65.0,
+              "weight": 1.0,
+              "contrib": 65.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 36.3,
+          "mos_f": 32.4,
+          "delta_f": -3.9,
+          "holdout_mos_mae": 3.72,
+          "holdout_raw_mae": 10.01,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -18.0188,
+              "contrib": -18.02
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 36.3,
+              "weight": 0.8565,
+              "contrib": 31.09
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 74.83,
+              "weight": 0.1134,
+              "contrib": 8.49
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 23.92,
+              "weight": 0.1694,
+              "contrib": 4.05
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 28.0,
+              "weight": 0.2423,
+              "contrib": 6.78
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 46.1,
+          "mos_f": 57.1,
+          "delta_f": 11.0,
+          "holdout_mos_mae": 2.3,
+          "holdout_raw_mae": 3.69,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 3.5373,
+              "contrib": 3.54
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 46.11,
+              "weight": 0.5103,
+              "contrib": 23.53
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 65.0,
+              "weight": 0.4625,
+              "contrib": 30.06
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 56.5
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 56.5
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 56.9
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 56.3
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 54.8
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 51.4
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 48.6
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 43.6
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 42.1
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 43.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 40.1
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 38.6
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 38.8
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 39.9
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 38.2
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 39.4
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 40.4
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 36.3
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 40.3
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 47.5
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 45.6
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 44.5
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 43.9
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 43.1
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 41.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 37.8
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 35.6
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 35.0
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 36.9
+        }
+      ]
+    },
+    "AZ9359": {
+      "id": "AZ9359",
+      "name": "Williams COOP",
+      "network": "AZCLIMATE",
+      "lat": 35.2413,
+      "lon": -112.1929,
+      "elev_ft": 6909,
+      "prev_obs_min": 35.0,
+      "prev_obs_max": 64.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 51.5,
+          "mos_f": 64.0,
+          "delta_f": 12.5,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 3.37,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 51.54,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 64.0,
+              "weight": 1.0,
+              "contrib": 64.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 36.9,
+          "mos_f": 35.5,
+          "delta_f": -1.3,
+          "holdout_mos_mae": 3.67,
+          "holdout_raw_mae": 6.67,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -7.2176,
+              "contrib": -7.22
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 36.86,
+              "weight": 0.7254,
+              "contrib": 26.74
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 94.67,
+              "weight": 0.0774,
+              "contrib": 7.33
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 35.0,
+              "weight": 0.2483,
+              "contrib": 8.69
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 40.1,
+          "mos_f": 53.7,
+          "delta_f": 13.6,
+          "holdout_mos_mae": 2.35,
+          "holdout_raw_mae": 4.66,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 3.0799,
+              "contrib": 3.08
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 40.15,
+              "weight": 0.4936,
+              "contrib": 19.82
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 64.0,
+              "weight": 0.4813,
+              "contrib": 30.8
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 51.1
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 49.2
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 51.5
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 50.2
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 49.0
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 46.8
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 42.5
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 41.1
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 40.2
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 39.2
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 38.3
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 37.8
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 38.8
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 39.3
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 38.2
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 37.7
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 37.2
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 37.1
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 38.0
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 37.7
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 38.9
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 39.1
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 40.1
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 39.5
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 39.5
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 38.1
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 34.6
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 33.3
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 32.4
+        }
+      ]
+    },
+    "AZ6323": {
+      "id": "AZ6323",
+      "name": "Payson COOP",
+      "network": "AZCLIMATE",
+      "lat": 34.2333,
+      "lon": -111.3333,
+      "elev_ft": 4915,
+      "prev_obs_min": 35.0,
+      "prev_obs_max": 68.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 60.5,
+          "mos_f": 68.0,
+          "delta_f": 7.5,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.95,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 60.54,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 68.0,
+              "weight": 1.0,
+              "contrib": 68.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 45.0,
+          "mos_f": 42.2,
+          "delta_f": -2.7,
+          "holdout_mos_mae": 2.82,
+          "holdout_raw_mae": 8.77,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -11.4688,
+              "contrib": -11.47
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 44.96,
+              "weight": 0.7168,
+              "contrib": 32.23
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 96.33,
+              "weight": 0.1115,
+              "contrib": 10.74
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 35.0,
+              "weight": 0.3066,
+              "contrib": 10.73
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 48.5,
+          "mos_f": 60.0,
+          "delta_f": 11.6,
+          "holdout_mos_mae": 2.0,
+          "holdout_raw_mae": 3.03,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 4.4234,
+              "contrib": 4.42
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 48.47,
+              "weight": 0.4887,
+              "contrib": 23.69
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 68.0,
+              "weight": 0.4693,
+              "contrib": 31.91
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 60.1
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 60.5
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 60.5
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 60.1
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 58.2
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 51.3
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 47.8
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 46.8
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 45.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 45.6
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 48.6
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 48.9
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 47.0
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 44.6
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 43.7
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 43.1
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 42.3
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 41.4
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 40.7
+        }
+      ]
+    },
+    "AZ0750": {
+      "id": "AZ0750",
+      "name": "Betatakin (Navajo Nat'l Mon)",
+      "network": "AZCLIMATE",
+      "lat": 36.6786,
+      "lon": -110.5419,
+      "elev_ft": 7286,
+      "prev_obs_min": 40.0,
+      "prev_obs_max": 59.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 53.5,
+          "mos_f": 59.0,
+          "delta_f": 5.5,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 3.6,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 53.45,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 59.0,
+              "weight": 1.0,
+              "contrib": 59.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 36.7,
+          "mos_f": 33.2,
+          "delta_f": -3.6,
+          "holdout_mos_mae": 2.56,
+          "holdout_raw_mae": 3.02,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.4621,
+              "contrib": 1.46
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 36.75,
+              "weight": 0.6376,
+              "contrib": 23.43
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 40.0,
+              "weight": 0.3425,
+              "contrib": 13.7
+            },
+            {
+              "term": "hrrr_wspd10_kt",
+              "value": 18.25,
+              "weight": -0.2967,
+              "contrib": -5.41
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 39.0,
+          "mos_f": 48.2,
+          "delta_f": 9.3,
+          "holdout_mos_mae": 3.05,
+          "holdout_raw_mae": 4.95,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.3461,
+              "contrib": 0.35
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 38.96,
+              "weight": 0.5801,
+              "contrib": 22.6
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 59.0,
+              "weight": 0.4285,
+              "contrib": 25.28
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 51.1
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 52.7
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 53.5
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 53.5
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 52.4
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 48.6
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 43.7
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 41.2
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 40.6
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 39.3
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 38.9
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 37.1
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 37.2
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 36.8
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 37.2
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 36.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 36.7
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 37.1
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 37.7
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 37.6
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 37.4
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 40.0
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 36.8
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 38.7
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 40.2
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 39.0
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 35.2
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 33.4
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 32.9
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 32.2
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 32.1
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 32.0
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 31.9
+        }
+      ]
+    },
+    "AZ1248": {
+      "id": "AZ1248",
+      "name": "Canyon de Chelly COOP",
+      "network": "AZCLIMATE",
+      "lat": 36.1536,
+      "lon": -109.5389,
+      "elev_ft": 5610,
+      "prev_obs_min": 32.0,
+      "prev_obs_max": 61.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 61.3,
+          "mos_f": 61.0,
+          "delta_f": -0.3,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 3.27,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 61.33,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 61.0,
+              "weight": 1.0,
+              "contrib": 61.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 42.3,
+          "mos_f": 37.8,
+          "delta_f": -4.4,
+          "holdout_mos_mae": 3.38,
+          "holdout_raw_mae": 7.1,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -10.6029,
+              "contrib": -10.6
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 42.26,
+              "weight": 0.8556,
+              "contrib": 36.16
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 32.0,
+              "weight": 0.2163,
+              "contrib": 6.92
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 81.6,
+              "weight": 0.0658,
+              "contrib": 5.37
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 49.8,
+          "mos_f": 55.7,
+          "delta_f": 5.9,
+          "holdout_mos_mae": 2.3,
+          "holdout_raw_mae": 4.17,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.4518,
+              "contrib": -0.45
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 49.82,
+              "weight": 0.5396,
+              "contrib": 26.88
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 61.0,
+              "weight": 0.4805,
+              "contrib": 29.31
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 59.4
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 60.4
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 61.3
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 61.3
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 59.9
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 55.5
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 52.6
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 50.5
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 49.2
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 48.0
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 45.5
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 46.0
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 43.3
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 42.6
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 42.3
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 43.0
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 45.4
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 45.2
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 47.0
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 49.8
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 43.8
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 46.8
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 44.4
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 41.9
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 40.6
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 39.0
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 36.9
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 36.1
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 34.5
+        }
+      ]
+    },
+    "AZ6468": {
+      "id": "AZ6468",
+      "name": "Petrified Forest NP",
+      "network": "AZCLIMATE",
+      "lat": 34.8122,
+      "lon": -109.8925,
+      "elev_ft": 5446,
+      "prev_obs_min": 30.0,
+      "prev_obs_max": 64.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 61.4,
+          "mos_f": 64.0,
+          "delta_f": 2.6,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 4.34,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 61.44,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 64.0,
+              "weight": 1.0,
+              "contrib": 64.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 42.6,
+          "mos_f": 36.3,
+          "delta_f": -6.3,
+          "holdout_mos_mae": 2.26,
+          "holdout_raw_mae": 4.14,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -4.6842,
+              "contrib": -4.68
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 42.59,
+              "weight": 0.7928,
+              "contrib": 33.77
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 30.0,
+              "weight": 0.2417,
+              "contrib": 7.25
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 47.3,
+          "mos_f": 65.9,
+          "delta_f": 18.5,
+          "holdout_mos_mae": 3.24,
+          "holdout_raw_mae": 4.73,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -1.2396,
+              "contrib": -1.24
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 47.35,
+              "weight": 0.5059,
+              "contrib": 23.95
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 64.0,
+              "weight": 0.5191,
+              "contrib": 33.22
+            },
+            {
+              "term": "hrrr_lcdc",
+              "value": 100.0,
+              "weight": 0.0992,
+              "contrib": 9.92
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 59.3
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 60.9
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 61.4
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 61.5
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 59.8
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 55.8
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 51.5
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 49.9
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 47.5
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 45.6
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 44.0
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 45.7
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 44.5
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 42.6
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 43.1
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 43.5
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 42.8
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 43.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 42.8
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 42.7
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 44.1
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 46.1
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 48.4
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 48.3
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 47.3
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 46.6
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 45.8
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 45.0
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 41.4
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 40.3
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 38.8
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 38.1
+        }
+      ]
+    },
+    "AZ5494": {
+      "id": "AZ5494",
+      "name": "Meteor Crater COOP",
+      "network": "AZCLIMATE",
+      "lat": 35.0283,
+      "lon": -111.0233,
+      "elev_ft": 5535,
+      "prev_obs_min": 32.0,
+      "prev_obs_max": 60.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 61.9,
+          "mos_f": 60.0,
+          "delta_f": -1.9,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 3.84,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 61.89,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 60.0,
+              "weight": 1.0,
+              "contrib": 60.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 41.5,
+          "mos_f": 34.8,
+          "delta_f": -6.7,
+          "holdout_mos_mae": 5.9,
+          "holdout_raw_mae": 7.26,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -2.095,
+              "contrib": -2.1
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 41.47,
+              "weight": 0.3572,
+              "contrib": 14.82
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 32.0,
+              "weight": 0.4193,
+              "contrib": 13.42
+            },
+            {
+              "term": "norm_t",
+              "value": 35.34,
+              "weight": 0.2454,
+              "contrib": 8.67
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 49.5,
+          "mos_f": 54.1,
+          "delta_f": 4.6,
+          "holdout_mos_mae": 3.55,
+          "holdout_raw_mae": 3.89,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.2816,
+              "contrib": 0.28
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 49.53,
+              "weight": 0.5308,
+              "contrib": 26.29
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 60.0,
+              "weight": 0.4594,
+              "contrib": 27.56
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 62.0
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 61.3
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 61.9
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 60.5
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 58.5
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 54.2
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 50.3
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 49.0
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 45.6
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 44.1
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 41.6
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 40.7
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 40.4
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 41.3
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 43.0
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 44.2
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 43.7
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 43.6
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 43.2
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 41.5
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 42.5
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 45.2
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 45.9
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 46.3
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 47.3
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 48.6
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 49.7
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 49.5
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 46.5
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 44.0
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 39.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 37.5
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 36.6
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 36.0
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 34.5
+        }
+      ]
+    },
+    "AZ8910": {
+      "id": "AZ8910",
+      "name": "Twin Arrows COOP",
+      "network": "AZCLIMATE",
+      "lat": 35.1583,
+      "lon": -111.275,
+      "elev_ft": 5920,
+      "prev_obs_min": 33.0,
+      "prev_obs_max": 60.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 60.1,
+          "mos_f": 60.0,
+          "delta_f": -0.1,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 1.63,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 60.09,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 60.0,
+              "weight": 1.0,
+              "contrib": 60.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 40.2,
+          "mos_f": 34.8,
+          "delta_f": -5.4,
+          "holdout_mos_mae": 2.79,
+          "holdout_raw_mae": 4.46,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -5.5674,
+              "contrib": -5.57
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 40.24,
+              "weight": 0.6953,
+              "contrib": 27.98
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 33.0,
+              "weight": 0.2839,
+              "contrib": 9.37
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 33.44,
+              "weight": 0.0908,
+              "contrib": 3.04
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 46.2,
+          "mos_f": 53.0,
+          "delta_f": 6.8,
+          "holdout_mos_mae": 2.31,
+          "holdout_raw_mae": 1.72,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.8536,
+              "contrib": 0.85
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 46.16,
+              "weight": 0.5014,
+              "contrib": 23.14
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 60.0,
+              "weight": 0.4828,
+              "contrib": 28.97
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 60.3
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 59.6
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 60.1
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 58.0
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 55.2
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 53.7
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 47.0
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 47.0
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 43.2
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 42.7
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 42.0
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 41.4
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 43.6
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 44.4
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 43.4
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 42.4
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 42.2
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 41.9
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 40.2
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 42.3
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 42.9
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 43.1
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 44.3
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 44.5
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 45.2
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 44.5
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 45.6
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 46.2
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 43.6
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 40.6
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 39.1
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 37.9
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 37.3
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 36.7
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 35.4
+        }
+      ]
+    },
+    "AZ8904": {
+      "id": "AZ8904",
+      "name": "Tuzigoot Nat'l Monument",
+      "network": "AZCLIMATE",
+      "lat": 34.7708,
+      "lon": -112.0264,
+      "elev_ft": 3383,
+      "prev_obs_min": 43.0,
+      "prev_obs_max": 78.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 68.0,
+          "mos_f": 78.0,
+          "delta_f": 10.0,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 3.11,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 67.96,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 78.0,
+              "weight": 1.0,
+              "contrib": 78.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 47.1,
+          "mos_f": 44.0,
+          "delta_f": -3.1,
+          "holdout_mos_mae": 2.78,
+          "holdout_raw_mae": 7.85,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -8.6197,
+              "contrib": -8.62
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 47.12,
+              "weight": 0.6862,
+              "contrib": 32.34
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 43.0,
+              "weight": 0.3213,
+              "contrib": 13.82
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 85.47,
+              "weight": 0.0754,
+              "contrib": 6.45
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 57.4,
+          "mos_f": 69.6,
+          "delta_f": 12.2,
+          "holdout_mos_mae": 2.39,
+          "holdout_raw_mae": 4.74,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.6151,
+              "contrib": 1.62
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 57.36,
+              "weight": 0.4947,
+              "contrib": 28.38
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 78.0,
+              "weight": 0.5075,
+              "contrib": 39.58
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 66.9
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 67.9
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 68.0
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 67.6
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 65.3
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 57.9
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 56.6
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 52.5
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 51.4
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 50.3
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 49.7
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 51.3
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 51.5
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 51.8
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 50.4
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 48.3
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 47.9
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 47.1
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 46.9
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 48.8
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 49.5
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 51.5
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 52.8
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 54.4
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 56.1
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 57.4
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 57.1
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 57.3
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 57.2
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 55.7
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 51.4
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 49.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 48.0
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 46.5
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 45.1
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 45.1
+        }
+      ]
+    },
+    "AZ5635": {
+      "id": "AZ5635",
+      "name": "Montezuma Castle Nat'l Mon",
+      "network": "AZCLIMATE",
+      "lat": 34.6114,
+      "lon": -111.835,
+      "elev_ft": 3180,
+      "prev_obs_min": 37.0,
+      "prev_obs_max": 77.0,
+      "periods": [
+        {
+          "key": "max_1",
+          "kind": "max",
+          "label": "Afternoon Max (Today)",
+          "verify_date": "Fri, Nov 13",
+          "raw_hrrr_f": 68.6,
+          "mos_f": 77.0,
+          "delta_f": 8.4,
+          "holdout_mos_mae": 0.0,
+          "holdout_raw_mae": 4.53,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 0.0,
+              "contrib": 0.0
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 68.64,
+              "weight": -0.0,
+              "contrib": -0.0
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 77.0,
+              "weight": 1.0,
+              "contrib": 77.0
+            }
+          ]
+        },
+        {
+          "key": "min_1",
+          "kind": "min",
+          "label": "Overnight Min (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 48.7,
+          "mos_f": 40.7,
+          "delta_f": -8.0,
+          "holdout_mos_mae": 2.99,
+          "holdout_raw_mae": 11.19,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": -12.7707,
+              "contrib": -12.77
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 48.67,
+              "weight": 0.5949,
+              "contrib": 28.96
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 37.0,
+              "weight": 0.4546,
+              "contrib": 16.82
+            },
+            {
+              "term": "hrrr_win_rh",
+              "value": 80.03,
+              "weight": 0.096,
+              "contrib": 7.69
+            }
+          ]
+        },
+        {
+          "key": "max_2",
+          "kind": "max",
+          "label": "Afternoon Max (Day 1)",
+          "verify_date": "Sat, Nov 14",
+          "raw_hrrr_f": 54.5,
+          "mos_f": 67.0,
+          "delta_f": 12.5,
+          "holdout_mos_mae": 3.72,
+          "holdout_raw_mae": 5.28,
+          "breakdown": [
+            {
+              "term": "Intercept",
+              "value": 1.0,
+              "weight": 1.8082,
+              "contrib": 1.81
+            },
+            {
+              "term": "hrrr_ext_t",
+              "value": 54.55,
+              "weight": 0.5132,
+              "contrib": 27.99
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 77.0,
+              "weight": 0.4568,
+              "contrib": 35.18
+            },
+            {
+              "term": "hrrr_wspd10_kt",
+              "value": 9.45,
+              "weight": 0.2185,
+              "contrib": 2.06
+            }
+          ]
+        }
+      ],
+      "hourly_curve": [
+        {
+          "fhr": 1,
+          "time_mst": "Fri 12 PM",
+          "raw_temp_f": 68.0
+        },
+        {
+          "fhr": 2,
+          "time_mst": "Fri 01 PM",
+          "raw_temp_f": 68.2
+        },
+        {
+          "fhr": 3,
+          "time_mst": "Fri 02 PM",
+          "raw_temp_f": 68.6
+        },
+        {
+          "fhr": 4,
+          "time_mst": "Fri 03 PM",
+          "raw_temp_f": 67.9
+        },
+        {
+          "fhr": 5,
+          "time_mst": "Fri 04 PM",
+          "raw_temp_f": 60.5
+        },
+        {
+          "fhr": 6,
+          "time_mst": "Fri 05 PM",
+          "raw_temp_f": 57.0
+        },
+        {
+          "fhr": 7,
+          "time_mst": "Fri 06 PM",
+          "raw_temp_f": 54.4
+        },
+        {
+          "fhr": 8,
+          "time_mst": "Fri 07 PM",
+          "raw_temp_f": 53.3
+        },
+        {
+          "fhr": 9,
+          "time_mst": "Fri 08 PM",
+          "raw_temp_f": 52.6
+        },
+        {
+          "fhr": 10,
+          "time_mst": "Fri 09 PM",
+          "raw_temp_f": 51.6
+        },
+        {
+          "fhr": 11,
+          "time_mst": "Fri 10 PM",
+          "raw_temp_f": 51.3
+        },
+        {
+          "fhr": 12,
+          "time_mst": "Fri 11 PM",
+          "raw_temp_f": 52.8
+        },
+        {
+          "fhr": 13,
+          "time_mst": "Sat 12 AM",
+          "raw_temp_f": 53.1
+        },
+        {
+          "fhr": 14,
+          "time_mst": "Sat 01 AM",
+          "raw_temp_f": 53.6
+        },
+        {
+          "fhr": 15,
+          "time_mst": "Sat 02 AM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 16,
+          "time_mst": "Sat 03 AM",
+          "raw_temp_f": 52.4
+        },
+        {
+          "fhr": 17,
+          "time_mst": "Sat 04 AM",
+          "raw_temp_f": 50.8
+        },
+        {
+          "fhr": 18,
+          "time_mst": "Sat 05 AM",
+          "raw_temp_f": 49.9
+        },
+        {
+          "fhr": 19,
+          "time_mst": "Sat 06 AM",
+          "raw_temp_f": 48.9
+        },
+        {
+          "fhr": 20,
+          "time_mst": "Sat 07 AM",
+          "raw_temp_f": 48.7
+        },
+        {
+          "fhr": 21,
+          "time_mst": "Sat 08 AM",
+          "raw_temp_f": 50.9
+        },
+        {
+          "fhr": 22,
+          "time_mst": "Sat 09 AM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 23,
+          "time_mst": "Sat 10 AM",
+          "raw_temp_f": 52.3
+        },
+        {
+          "fhr": 24,
+          "time_mst": "Sat 11 AM",
+          "raw_temp_f": 52.8
+        },
+        {
+          "fhr": 25,
+          "time_mst": "Sat 12 PM",
+          "raw_temp_f": 55.1
+        },
+        {
+          "fhr": 26,
+          "time_mst": "Sat 01 PM",
+          "raw_temp_f": 54.5
+        },
+        {
+          "fhr": 27,
+          "time_mst": "Sat 02 PM",
+          "raw_temp_f": 54.2
+        },
+        {
+          "fhr": 28,
+          "time_mst": "Sat 03 PM",
+          "raw_temp_f": 53.9
+        },
+        {
+          "fhr": 29,
+          "time_mst": "Sat 04 PM",
+          "raw_temp_f": 53.7
+        },
+        {
+          "fhr": 30,
+          "time_mst": "Sat 05 PM",
+          "raw_temp_f": 53.5
+        },
+        {
+          "fhr": 31,
+          "time_mst": "Sat 06 PM",
+          "raw_temp_f": 51.4
+        },
+        {
+          "fhr": 32,
+          "time_mst": "Sat 07 PM",
+          "raw_temp_f": 49.4
+        },
+        {
+          "fhr": 33,
+          "time_mst": "Sat 08 PM",
+          "raw_temp_f": 48.5
+        },
+        {
+          "fhr": 34,
+          "time_mst": "Sat 09 PM",
+          "raw_temp_f": 48.1
+        },
+        {
+          "fhr": 35,
+          "time_mst": "Sat 10 PM",
+          "raw_temp_f": 47.4
+        },
+        {
+          "fhr": 36,
+          "time_mst": "Sat 11 PM",
+          "raw_temp_f": 47.1
+        }
+      ]
+    }
+  }
+}
