@@ -1,8 +1,8 @@
 """
 update_forecast.py — Operational 6-Hourly HRRR MOS Runner for GitHub Actions
-Finds the latest 48-hour synoptic HRRR run (00Z, 06Z, 12Z, 18Z) on NOAA AWS S3,
-extracts all 8 Northern Arizona station grid points in a single pass per fhr,
-applies the trained weights in mos_equations.json, and writes docs/latest_forecasts.json.
+Automatically processes every station present in mos_equations.json, fetches
+the latest 48-hour synoptic HRRR cycle from NOAA AWS S3, pulls current IEM
+persistence observations in parallel, and writes docs/latest_forecasts.json.
 """
 import datetime
 import io
@@ -60,7 +60,11 @@ def create_sync_session() -> requests.Session:
     return s
 
 
-def fetch_latest_obs_persistence(meta: dict) -> tuple:
+def eval_harmonic_norm(w: list, doy: int) -> float:
+    return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
+
+
+def fetch_latest_obs_persistence(stn_id: str, meta: dict) -> tuple:
     """Fetches the most recent observed daily High/Low from IEM for persistence."""
     session = create_sync_session()
     s_dt = datetime.date.today() - datetime.timedelta(days=10)
@@ -92,14 +96,17 @@ def fetch_latest_obs_persistence(meta: dict) -> tuple:
             df["obs_max"] = pd.to_numeric(df[max_col], errors="coerce")
             df = df.dropna(subset=["obs_min", "obs_max"])
             if not df.empty:
-                return float(df["obs_min"].iloc[-1]), float(df["obs_max"].iloc[-1])
+                return stn_id, float(df["obs_min"].iloc[-1]), float(df["obs_max"].iloc[-1])
     except Exception:
         pass
-    return float(meta["clim_mean_min"]), float(meta["clim_mean_max"])
+    doy = datetime.date.today().timetuple().tm_yday
+    fallback_min = eval_harmonic_norm(meta.get("clim_min_w", [35.0, -18.0, -5.0]), doy)
+    fallback_max = eval_harmonic_norm(meta.get("clim_max_w", [65.0, -20.0, -5.0]), doy)
+    return stn_id, fallback_min, fallback_max
 
 
 def fetch_fhr_all_stations(init_dt: datetime.datetime, fhr: int, stations: dict) -> dict:
-    """Fetches one HRRR forecast hour and extracts all 8 station points simultaneously."""
+    """Fetches one HRRR forecast hour and extracts all station points simultaneously."""
     session = create_sync_session()
     d_str = init_dt.strftime("%Y%m%d")
     c_str = f"{init_dt.hour:02d}"
@@ -224,10 +231,8 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
     verify_date = init_dt.date() + datetime.timedelta(days=period["day_offset"])
     doy = pd.Timestamp(verify_date).dayofyear
 
-    if period["kind"] == "min":
-        norm_t = meta["clim_mean_min"] - meta["clim_amp_min"] * math.cos(2.0 * math.pi * (doy - 20) / 365.25)
-    else:
-        norm_t = meta["clim_mean_max"] - meta["clim_amp_max"] * math.cos(2.0 * math.pi * (doy - 20) / 365.25)
+    w_clim = meta["clim_min_w"] if period["kind"] == "min" else meta["clim_max_w"]
+    norm_t = eval_harmonic_norm(w_clim, doy)
 
     return {
         "hrrr_ext_t": hrrr_ext_t,
@@ -295,6 +300,10 @@ def main():
     with ThreadPoolExecutor(max_workers=16) as pool:
         fhr_results = dict(zip(fhrs_to_fetch, pool.map(lambda fh: fetch_fhr_all_stations(chosen_init, fh, stations), fhrs_to_fetch)))
 
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        obs_futures = [pool.submit(fetch_latest_obs_persistence, sid, sinfo["meta"]) for sid, sinfo in stations.items()]
+        obs_pers = {sid: (pmn, pmx) for sid, pmn, pmx in (f.result() for f in obs_futures)}
+
     output_payload = {
         "updated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "updated_mst": datetime.datetime.now(az_tz).strftime("%Y-%m-%d %I:%M %p MST"),
@@ -305,7 +314,7 @@ def main():
 
     for stn_id, s_info in stations.items():
         meta = s_info["meta"]
-        prev_min, prev_max = fetch_latest_obs_persistence(meta)
+        prev_min, prev_max = obs_pers[stn_id]
 
         var_arrays = {}
         for vkey in HRRR_IDX_PATTERNS:
@@ -366,7 +375,7 @@ def main():
             "network": meta["network"],
             "lat": meta["lat"],
             "lon": meta["lon"],
-            "elev_ft": meta["elev_ft"],
+            "elev_ft": meta.get("elev_ft", 5000),
             "prev_obs_min": round(prev_min, 1),
             "prev_obs_max": round(prev_max, 1),
             "periods": periods_out,
