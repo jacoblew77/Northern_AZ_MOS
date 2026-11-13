@@ -3,45 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Northern Arizona HRRR-MOS Guidance</title>
+  <title>Northern Arizona HRRR-MOS Guidance (WFO Flagstaff CWA)</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; }
+    :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; --coop: #a78bfa; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
-    header { padding: 14px 22px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
-    .meta-badge { font-size: 0.82rem; color: var(--muted); background: #0f172a; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); }
-    .layout { display: grid; grid-template-columns: 1.15fr 1fr; height: calc(100vh - 58px); }
+    header { padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    header h1 { font-size: 1.1rem; font-weight: 700; }
+    .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .filter-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+    .filter-btn.active { color: var(--text); border-color: var(--accent); background: #1e293b; }
+    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; }
+    .meta-badge { font-size: 0.8rem; color: var(--muted); background: #0f172a; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .layout { display: grid; grid-template-columns: 1.2fr 1fr; height: calc(100vh - 56px); }
     @media (max-width: 960px) { .layout { grid-template-columns: 1fr; height: auto; } #map { height: 420px; } }
     #map { width: 100%; height: 100%; z-index: 1; }
-    .panel { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-    .stn-header h2 { font-size: 1.3rem; }
-    .stn-header p { color: var(--muted); font-size: 0.88rem; margin-top: 3px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color 0.15s; }
+    .panel { padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+    .stn-header h2 { font-size: 1.25rem; }
+    .stn-header p { color: var(--muted); font-size: 0.86rem; margin-top: 3px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; cursor: pointer; transition: border-color 0.15s; }
     .card.active, .card:hover { border-color: var(--accent); }
-    .card .lbl { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .card .dt { font-size: 0.85rem; color: var(--text); margin: 2px 0 8px; }
-    .card .temp { font-size: 1.9rem; font-weight: 800; }
+    .card .lbl { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .card .dt { font-size: 0.84rem; color: var(--text); margin: 2px 0 6px; }
+    .card .temp { font-size: 1.85rem; font-weight: 800; }
     .card.min .temp { color: #38bdf8; }
     .card.max .temp { color: #fb923c; }
-    .card .sub { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+    .card .sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
     .box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
-    .box h3 { font-size: 0.92rem; margin-bottom: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
-    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+    .box h3 { font-size: 0.88rem; margin-bottom: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--border); }
     th { color: var(--muted); font-weight: 600; }
     .num { text-align: right; font-variant-numeric: tabular-nums; }
-    .pin-label { background: #1e293b; color: #f8fafc; border: 1px solid #38bdf8; border-radius: 6px; padding: 3px 7px; font-weight: 700; font-size: 12px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.45); }
+    .pin-label { background: #1e293b; color: #f8fafc; border: 1.5px solid #38bdf8; border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+    .pin-label.coop { border-color: #a78bfa; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Northern Arizona HRRRv4 MOS — Max / Min Temperature Guidance</h1>
-    <div class="meta-badge" id="run-meta">Loading latest HRRR run...</div>
+    <h1>Northern AZ HRRRv4 MOS — WFO Flagstaff CWA</h1>
+    <div class="controls">
+      <button class="filter-btn active" data-net="ALL">All (24)</button>
+      <button class="filter-btn" data-net="AZ_ASOS">ASOS/AWOS</button>
+      <button class="filter-btn" data-net="AZCLIMATE">COOP</button>
+      <select id="stn-select"></select>
+      <div class="meta-badge" id="run-meta">Loading HRRR run...</div>
+    </div>
   </header>
 
   <div class="layout">
@@ -49,14 +60,14 @@
     <div class="panel">
       <div class="stn-header">
         <h2 id="stn-title">Select a Station</h2>
-        <p id="stn-sub">Click any ASOS or COOP marker on the map</p>
+        <p id="stn-sub">Click any ASOS/AWOS (cyan) or COOP (violet) pin on the map</p>
       </div>
 
       <div class="cards" id="period-cards"></div>
 
       <div class="box">
         <h3>36-Hour Raw HRRR Hourly Trajectory</h3>
-        <canvas id="trajChart" height="125"></canvas>
+        <canvas id="trajChart" height="120"></canvas>
       </div>
 
       <div class="box">
@@ -75,21 +86,43 @@
     let forecastData = null;
     let selectedStn = "KFGZ";
     let selectedPeriodIdx = 0;
+    let activeNetwork = "ALL";
+    let markersLayer = L.layerGroup();
     let chartInstance = null;
 
-    const map = L.map("map").setView([35.35, -111.25], 7);
+    const map = L.map("map").setView([35.25, -110.95], 7);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
       attribution: "&copy; OpenStreetMap &copy; CARTO"
     }).addTo(map);
+    markersLayer.addTo(map);
+
+    function renderMarkers() {
+      markersLayer.clearLayers();
+      Object.values(forecastData.stations).forEach(stn => {
+        if (activeNetwork !== "ALL" && stn.network !== activeNetwork) return;
+        const p0 = stn.periods[0];
+        const badge = p0 ? `${stn.id}: ${p0.mos_f.toFixed(0)}°` : stn.id;
+        const cls = stn.network === "AZCLIMATE" ? "pin-label coop" : "pin-label";
+        const icon = L.divIcon({ className: "", html: `<div class="${cls}">${badge}</div>`, iconSize: [74, 22] });
+        L.marker([stn.lat, stn.lon], { icon })
+          .addTo(markersLayer)
+          .on("click", () => {
+            selectedPeriodIdx = 0;
+            document.getElementById("stn-select").value = stn.id;
+            renderStation(stn.id);
+          });
+      });
+    }
 
     function renderStation(stnId) {
       selectedStn = stnId;
       const stn = forecastData.stations[stnId];
       if (!stn) return;
 
+      const netLabel = stn.network === "AZCLIMATE" ? "NWS COOP" : "ASOS/AWOS";
       document.getElementById("stn-title").textContent = `${stn.id} — ${stn.name}`;
       document.getElementById("stn-sub").textContent =
-        `Elevation: ${stn.elev_ft.toLocaleString()} ft | Network: ${stn.network} | Prior Obs: ${stn.prev_obs_min}°F / ${stn.prev_obs_max}°F`;
+        `Elevation: ${stn.elev_ft.toLocaleString()} ft | Network: ${netLabel} | Prior Obs: ${stn.prev_obs_min}°F / ${stn.prev_obs_max}°F`;
 
       const cardsEl = document.getElementById("period-cards");
       cardsEl.innerHTML = "";
@@ -108,12 +141,10 @@
         cardsEl.appendChild(card);
       });
 
-      // Render predictor breakdown for active card
       const activeP = stn.periods[selectedPeriodIdx] || stn.periods[0];
       if (activeP) {
         document.getElementById("breakdown-title").textContent = `Equation Breakdown — ${activeP.label} (${activeP.verify_date})`;
-        const tbody = document.getElementById("breakdown-body");
-        tbody.innerHTML = activeP.breakdown.map(row => `
+        document.getElementById("breakdown-body").innerHTML = activeP.breakdown.map(row => `
           <tr>
             <td>${row.term}</td>
             <td class="num">${row.value}</td>
@@ -123,7 +154,6 @@
         `).join("");
       }
 
-      // Render 36-hour trajectory chart
       const ctx = document.getElementById("trajChart").getContext("2d");
       if (chartInstance) chartInstance.destroy();
       chartInstance = new Chart(ctx, {
@@ -152,25 +182,38 @@
       });
     }
 
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeNetwork = btn.dataset.net;
+        renderMarkers();
+      };
+    });
+
     fetch("./latest_forecasts.json")
       .then(r => r.json())
       .then(data => {
         forecastData = data;
+        const stnIds = Object.keys(data.stations);
+        document.querySelector('[data-net="ALL"]').textContent = `All (${stnIds.length})`;
         document.getElementById("run-meta").textContent =
-          `HRRR Run: ${data.hrrr_init_utc} (${data.synoptic_cycle}) | Updated: ${data.updated_mst}`;
+          `HRRR: ${data.hrrr_init_utc} (${data.synoptic_cycle}) | Updated: ${data.updated_mst}`;
 
-        Object.values(data.stations).forEach(stn => {
-          const p0 = stn.periods[0];
-          const badge = p0 ? `${stn.id}: ${p0.mos_f.toFixed(0)}°F` : stn.id;
-          const icon = L.divIcon({ className: "", html: `<div class="pin-label">${badge}</div>`, iconSize: [75, 24] });
-          L.marker([stn.lat, stn.lon], { icon })
-            .addTo(map)
-            .on("click", () => { selectedPeriodIdx = 0; renderStation(stn.id); });
+        const selectEl = document.getElementById("stn-select");
+        stnIds.sort().forEach(id => {
+          const opt = document.createElement("option");
+          opt.value = id;
+          opt.textContent = `${id} — ${data.stations[id].name}`;
+          selectEl.appendChild(opt);
         });
+        selectEl.value = selectedStn;
+        selectEl.onchange = () => { selectedPeriodIdx = 0; renderStation(selectEl.value); };
 
+        renderMarkers();
         renderStation(selectedStn);
       })
-      .catch(err => {
+      .catch(() => {
         document.getElementById("run-meta").textContent = "Run GitHub Action first to generate latest_forecasts.json";
       });
   </script>
