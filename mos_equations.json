@@ -1,0 +1,7060 @@
+{
+  "stations": {
+    "KFGZ": {
+      "meta": {
+        "name": "WFO Bellemont (COOP)",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ0678",
+        "lat": 35.2303,
+        "lon": -111.8222,
+        "elev_ft": 7152,
+        "clim_min_w": [
+          28.7689,
+          -15.5739,
+          -7.4921
+        ],
+        "clim_max_w": [
+          63.0009,
+          -18.413,
+          -6.6759
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -32.707783,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1",
+              "hrrr_dlwrf",
+              "hrrr_lcdc",
+              "hrrr_snow_in"
+            ],
+            "weights": [
+              0.318183,
+              0.146825,
+              0.216183,
+              -5.217579,
+              0.150887,
+              -0.082235,
+              -0.35663
+            ],
+            "holdout_raw_mae": 12.9,
+            "holdout_mos_mae": 3.04,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 3.952947,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.786631,
+              0.179908
+            ],
+            "holdout_raw_mae": 2.24,
+            "holdout_mos_mae": 1.99,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -26.489261,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.825261,
+              0.192488,
+              0.179214,
+              0.299434
+            ],
+            "holdout_raw_mae": 12.75,
+            "holdout_mos_mae": 4.0,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -10.108773,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1",
+              "hrrr_mcdc",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.601429,
+              0.074416,
+              0.179895,
+              -4.126273,
+              0.044507,
+              0.292005
+            ],
+            "holdout_raw_mae": 12.63,
+            "holdout_mos_mae": 3.3,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 4.221395,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.793497,
+              0.167077
+            ],
+            "holdout_raw_mae": 2.13,
+            "holdout_mos_mae": 2.04,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -25.103464,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.92146,
+              0.193533,
+              0.174816,
+              0.135794
+            ],
+            "holdout_raw_mae": 12.61,
+            "holdout_mos_mae": 3.83,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.366463,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.684966,
+              0.284555
+            ],
+            "holdout_raw_mae": 2.05,
+            "holdout_mos_mae": 1.72,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -30.658573,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.83722,
+              0.217094,
+              0.157702,
+              0.192366
+            ],
+            "holdout_raw_mae": 12.41,
+            "holdout_mos_mae": 3.63,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 4.549263,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.757643,
+              0.197846
+            ],
+            "holdout_raw_mae": 3.01,
+            "holdout_mos_mae": 2.26,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.707175,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.697656,
+              0.266908
+            ],
+            "holdout_raw_mae": 2.2,
+            "holdout_mos_mae": 1.72,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -30.819979,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.837281,
+              0.217278,
+              0.156124,
+              0.195956
+            ],
+            "holdout_raw_mae": 12.4,
+            "holdout_mos_mae": 3.68,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 3.726846,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.759158,
+              0.208531
+            ],
+            "holdout_raw_mae": 2.79,
+            "holdout_mos_mae": 2.05,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KFLG": {
+      "meta": {
+        "name": "Flagstaff Pulliam Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "FLG",
+        "lat": 35.1403,
+        "lon": -111.6692,
+        "elev_ft": 7011,
+        "clim_min_w": [
+          34.0808,
+          -16.2532,
+          -7.1784
+        ],
+        "clim_max_w": [
+          62.5844,
+          -18.7517,
+          -6.9683
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -8.779748,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.657877,
+              0.217988,
+              0.145299,
+              0.242888
+            ],
+            "holdout_raw_mae": 5.72,
+            "holdout_mos_mae": 2.61,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 3.009394,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.946706
+            ],
+            "holdout_raw_mae": 1.51,
+            "holdout_mos_mae": 1.54,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -14.771769,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.831498,
+              0.084691,
+              0.120636,
+              0.245745
+            ],
+            "holdout_raw_mae": 6.04,
+            "holdout_mos_mae": 2.93,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -4.103023,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.832034,
+              0.215603
+            ],
+            "holdout_raw_mae": 5.49,
+            "holdout_mos_mae": 2.63,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 3.151471,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.943279
+            ],
+            "holdout_raw_mae": 1.4,
+            "holdout_mos_mae": 1.49,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -7.687806,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.716989,
+              0.176388,
+              0.132403,
+              0.179198
+            ],
+            "holdout_raw_mae": 5.65,
+            "holdout_mos_mae": 2.8,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 15.776769,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_tmp_700"
+            ],
+            "weights": [
+              0.685744,
+              0.60704
+            ],
+            "holdout_raw_mae": 1.42,
+            "holdout_mos_mae": 1.58,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -12.724744,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              1.018473,
+              0.076293,
+              0.118048
+            ],
+            "holdout_raw_mae": 5.51,
+            "holdout_mos_mae": 2.64,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 4.271779,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.930541
+            ],
+            "holdout_raw_mae": 2.1,
+            "holdout_mos_mae": 2.16,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.380658,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.942104
+            ],
+            "holdout_raw_mae": 1.37,
+            "holdout_mos_mae": 1.41,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -6.995502,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.866703,
+              0.172289,
+              0.126191
+            ],
+            "holdout_raw_mae": 5.37,
+            "holdout_mos_mae": 2.59,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 3.984429,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.932196
+            ],
+            "holdout_raw_mae": 1.88,
+            "holdout_mos_mae": 1.94,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KGCN": {
+      "meta": {
+        "name": "Grand Canyon Nat'l Park Arpt",
+        "network": "AZ_ASOS",
+        "iem_id": "GCN",
+        "lat": 35.9524,
+        "lon": -112.147,
+        "elev_ft": 6609,
+        "clim_min_w": [
+          31.0581,
+          -16.4374,
+          -7.7766
+        ],
+        "clim_max_w": [
+          64.9408,
+          -20.4329,
+          -6.8358
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -12.727137,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.851396,
+              0.281303,
+              0.310085
+            ],
+            "holdout_raw_mae": 9.13,
+            "holdout_mos_mae": 3.11,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": -0.409398,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.008837
+            ],
+            "holdout_raw_mae": 1.89,
+            "holdout_mos_mae": 1.84,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -20.895499,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              1.075517,
+              0.147135
+            ],
+            "holdout_raw_mae": 9.83,
+            "holdout_mos_mae": 3.71,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -9.626952,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.833686,
+              0.279023
+            ],
+            "holdout_raw_mae": 8.75,
+            "holdout_mos_mae": 3.17,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": -0.275758,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.005832
+            ],
+            "holdout_raw_mae": 1.73,
+            "holdout_mos_mae": 1.69,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -10.516471,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd10_kt",
+              "obs_prev_min",
+              "hrrr_snow_in"
+            ],
+            "weights": [
+              0.704,
+              0.269685,
+              0.347721,
+              0.134639,
+              -1.520662
+            ],
+            "holdout_raw_mae": 9.42,
+            "holdout_mos_mae": 3.24,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 0.074966,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.002172
+            ],
+            "holdout_raw_mae": 1.84,
+            "holdout_mos_mae": 1.75,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -18.007371,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.943174,
+              0.125164,
+              0.133509
+            ],
+            "holdout_raw_mae": 9.09,
+            "holdout_mos_mae": 3.52,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 0.015242,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.00076
+            ],
+            "holdout_raw_mae": 2.36,
+            "holdout_mos_mae": 2.35,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 0.457149,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.00031
+            ],
+            "holdout_raw_mae": 1.85,
+            "holdout_mos_mae": 1.62,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -8.906043,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_v10_kt",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.703303,
+              0.225858,
+              0.303687,
+              0.152779
+            ],
+            "holdout_raw_mae": 9.13,
+            "holdout_mos_mae": 3.5,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -0.02384,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.000779
+            ],
+            "holdout_raw_mae": 2.32,
+            "holdout_mos_mae": 2.32,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KPGA": {
+      "meta": {
+        "name": "Page Municipal Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "PGA",
+        "lat": 36.9261,
+        "lon": -111.4483,
+        "elev_ft": 4316,
+        "clim_min_w": [
+          51.8875,
+          -21.6221,
+          -6.737
+        ],
+        "clim_max_w": [
+          72.9572,
+          -25.4278,
+          -6.135
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": 7.821373,
+            "predictors": [
+              "hrrr_ext_t",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.859133,
+              -4.025559
+            ],
+            "holdout_raw_mae": 2.56,
+            "holdout_mos_mae": 2.21,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": -4.107725,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t"
+            ],
+            "weights": [
+              0.843764,
+              0.202465
+            ],
+            "holdout_raw_mae": 1.87,
+            "holdout_mos_mae": 1.9,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": 6.951908,
+            "predictors": [
+              "hrrr_ext_t",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.855998,
+              -4.827001
+            ],
+            "holdout_raw_mae": 2.9,
+            "holdout_mos_mae": 2.7,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": 1.269092,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.99365
+            ],
+            "holdout_raw_mae": 2.48,
+            "holdout_mos_mae": 2.14,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": -2.228137,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.023989
+            ],
+            "holdout_raw_mae": 1.67,
+            "holdout_mos_mae": 1.78,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 0.172851,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.007882
+            ],
+            "holdout_raw_mae": 2.77,
+            "holdout_mos_mae": 2.68,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": -1.404247,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.013408
+            ],
+            "holdout_raw_mae": 1.68,
+            "holdout_mos_mae": 1.81,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": 0.065098,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.008161
+            ],
+            "holdout_raw_mae": 2.65,
+            "holdout_mos_mae": 2.56,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -3.301645,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.854373,
+              0.181915
+            ],
+            "holdout_raw_mae": 2.37,
+            "holdout_mos_mae": 2.36,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": -1.795884,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.020751
+            ],
+            "holdout_raw_mae": 1.63,
+            "holdout_mos_mae": 1.69,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": 0.591813,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.998902
+            ],
+            "holdout_raw_mae": 2.59,
+            "holdout_mos_mae": 2.43,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -3.251614,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.867675,
+              0.16779
+            ],
+            "holdout_raw_mae": 2.28,
+            "holdout_mos_mae": 2.33,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KINW": {
+      "meta": {
+        "name": "Winslow-Lindbergh Regional",
+        "network": "AZ_ASOS",
+        "iem_id": "INW",
+        "lat": 35.0219,
+        "lon": -110.7225,
+        "elev_ft": 4941,
+        "clim_min_w": [
+          42.2932,
+          -20.7764,
+          -7.4703
+        ],
+        "clim_max_w": [
+          73.8424,
+          -21.859,
+          -5.4606
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -4.476273,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.045577
+            ],
+            "holdout_raw_mae": 3.09,
+            "holdout_mos_mae": 2.72,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 0.956729,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.006017
+            ],
+            "holdout_raw_mae": 2.55,
+            "holdout_mos_mae": 1.81,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -6.520271,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              1.078417,
+              -0.360628
+            ],
+            "holdout_raw_mae": 3.9,
+            "holdout_mos_mae": 2.84,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -2.771822,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              1.026682,
+              -0.4805
+            ],
+            "holdout_raw_mae": 2.74,
+            "holdout_mos_mae": 2.42,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 1.707152,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.99727
+            ],
+            "holdout_raw_mae": 2.45,
+            "holdout_mos_mae": 1.66,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -3.827333,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              1.034862,
+              -0.377205
+            ],
+            "holdout_raw_mae": 3.26,
+            "holdout_mos_mae": 2.89,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 2.770503,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.985944
+            ],
+            "holdout_raw_mae": 2.57,
+            "holdout_mos_mae": 1.65,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -3.190846,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              1.023415,
+              -0.407248
+            ],
+            "holdout_raw_mae": 3.2,
+            "holdout_mos_mae": 2.72,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 1.020943,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              0.994351,
+              0.178503
+            ],
+            "holdout_raw_mae": 2.63,
+            "holdout_mos_mae": 2.02,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 2.690668,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.988865
+            ],
+            "holdout_raw_mae": 2.52,
+            "holdout_mos_mae": 1.38,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -2.977701,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              1.021414,
+              -0.456295
+            ],
+            "holdout_raw_mae": 3.11,
+            "holdout_mos_mae": 2.77,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 1.087278,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              0.994102,
+              0.175686
+            ],
+            "holdout_raw_mae": 2.44,
+            "holdout_mos_mae": 1.8,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KPRC": {
+      "meta": {
+        "name": "Prescott Regional Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "PRC",
+        "lat": 34.6545,
+        "lon": -112.4196,
+        "elev_ft": 5045,
+        "clim_min_w": [
+          44.4386,
+          -18.299,
+          -6.945
+        ],
+        "clim_max_w": [
+          71.1617,
+          -18.1979,
+          -6.3972
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": 1.418726,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.797404,
+              0.153497,
+              -2.936999
+            ],
+            "holdout_raw_mae": 3.66,
+            "holdout_mos_mae": 1.81,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 2.154424,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.954464
+            ],
+            "holdout_raw_mae": 1.37,
+            "holdout_mos_mae": 1.68,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": 4.264343,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.735239,
+              0.139018,
+              -4.596772
+            ],
+            "holdout_raw_mae": 4.73,
+            "holdout_mos_mae": 2.34,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -4.141912,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.936908,
+              0.124021
+            ],
+            "holdout_raw_mae": 3.28,
+            "holdout_mos_mae": 2.06,
+            "sample_size": 423
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 1.81549,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.958538
+            ],
+            "holdout_raw_mae": 1.29,
+            "holdout_mos_mae": 1.38,
+            "sample_size": 423
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 3.650933,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.760667,
+              0.129758,
+              -3.794975
+            ],
+            "holdout_raw_mae": 4.19,
+            "holdout_mos_mae": 2.41,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 1.336045,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.965444
+            ],
+            "holdout_raw_mae": 1.18,
+            "holdout_mos_mae": 1.41,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -5.160054,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.859407,
+              0.179807
+            ],
+            "holdout_raw_mae": 4.01,
+            "holdout_mos_mae": 2.49,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 2.043181,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.959783
+            ],
+            "holdout_raw_mae": 1.92,
+            "holdout_mos_mae": 1.94,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 2.01379,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.956994
+            ],
+            "holdout_raw_mae": 1.19,
+            "holdout_mos_mae": 1.41,
+            "sample_size": 422
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -4.600631,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.85902,
+              0.171185
+            ],
+            "holdout_raw_mae": 4.04,
+            "holdout_mos_mae": 2.65,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 1.993098,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.959572
+            ],
+            "holdout_raw_mae": 1.74,
+            "holdout_mos_mae": 1.83,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KSOW": {
+      "meta": {
+        "name": "Show Low Regional Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "SOW",
+        "lat": 34.2655,
+        "lon": -110.0056,
+        "elev_ft": 6415,
+        "clim_min_w": [
+          41.8838,
+          -17.4426,
+          -6.928
+        ],
+        "clim_max_w": [
+          67.925,
+          -19.2551,
+          -5.749
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -6.589424,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              1.051233,
+              0.413039
+            ],
+            "holdout_raw_mae": 3.35,
+            "holdout_mos_mae": 2.83,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 2.37847,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.807462,
+              0.170476
+            ],
+            "holdout_raw_mae": 2.03,
+            "holdout_mos_mae": 1.94,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -8.885869,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_wspd700_kt",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              1.043358,
+              0.132188,
+              0.085133
+            ],
+            "holdout_raw_mae": 3.41,
+            "holdout_mos_mae": 2.77,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -3.704003,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              1.051711,
+              0.42277
+            ],
+            "holdout_raw_mae": 2.92,
+            "holdout_mos_mae": 2.51,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 2.509305,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.822327,
+              0.152956
+            ],
+            "holdout_raw_mae": 2.22,
+            "holdout_mos_mae": 1.97,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -6.163762,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_wspd700_kt",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.996781,
+              0.12511,
+              0.08632
+            ],
+            "holdout_raw_mae": 3.27,
+            "holdout_mos_mae": 2.79,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 2.733343,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.728358,
+              0.243155
+            ],
+            "holdout_raw_mae": 2.1,
+            "holdout_mos_mae": 1.63,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -2.878413,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_v10_kt"
+            ],
+            "weights": [
+              0.993809,
+              0.269433
+            ],
+            "holdout_raw_mae": 3.25,
+            "holdout_mos_mae": 2.78,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 2.568016,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              0.71957,
+              0.24307,
+              0.135009
+            ],
+            "holdout_raw_mae": 2.58,
+            "holdout_mos_mae": 2.24,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.26373,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.710938,
+              0.253408
+            ],
+            "holdout_raw_mae": 1.9,
+            "holdout_mos_mae": 1.47,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -6.797457,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              1.061927,
+              0.129535
+            ],
+            "holdout_raw_mae": 3.1,
+            "holdout_mos_mae": 2.65,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 0.885242,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.82034,
+              0.171208,
+              0.07204
+            ],
+            "holdout_raw_mae": 2.39,
+            "holdout_mos_mae": 2.13,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KSJN": {
+      "meta": {
+        "name": "St. Johns Industrial Air Park",
+        "network": "AZ_ASOS",
+        "iem_id": "SJN",
+        "lat": 34.5184,
+        "lon": -109.3789,
+        "elev_ft": 5737,
+        "clim_min_w": [
+          39.7282,
+          -21.0342,
+          -6.9191
+        ],
+        "clim_max_w": [
+          72.4809,
+          -19.39,
+          -4.7781
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -11.381444,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_tmp_700",
+              "obs_prev_min"
+            ],
+            "weights": [
+              1.085218,
+              -0.426028,
+              0.14696
+            ],
+            "holdout_raw_mae": 5.8,
+            "holdout_mos_mae": 4.45,
+            "sample_size": 184
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 1.130159,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.995453
+            ],
+            "holdout_raw_mae": 1.62,
+            "holdout_mos_mae": 1.37,
+            "sample_size": 184
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -7.796932,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.959473,
+              0.079738,
+              -4.178119
+            ],
+            "holdout_raw_mae": 6.4,
+            "holdout_mos_mae": 3.35,
+            "sample_size": 184
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -10.061438,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              1.058764,
+              0.077648
+            ],
+            "holdout_raw_mae": 5.53,
+            "holdout_mos_mae": 3.62,
+            "sample_size": 184
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 1.76058,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.989477
+            ],
+            "holdout_raw_mae": 1.5,
+            "holdout_mos_mae": 1.19,
+            "sample_size": 184
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -9.026693,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.09252
+            ],
+            "holdout_raw_mae": 5.61,
+            "holdout_mos_mae": 3.51,
+            "sample_size": 184
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 1.489488,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.996198
+            ],
+            "holdout_raw_mae": 1.73,
+            "holdout_mos_mae": 1.11,
+            "sample_size": 183
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -8.7615,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.087945
+            ],
+            "holdout_raw_mae": 5.52,
+            "holdout_mos_mae": 3.5,
+            "sample_size": 183
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -1.269054,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              1.024947,
+              0.094961
+            ],
+            "holdout_raw_mae": 1.92,
+            "holdout_mos_mae": 1.59,
+            "sample_size": 183
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 1.63619,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.994628
+            ],
+            "holdout_raw_mae": 1.67,
+            "holdout_mos_mae": 0.96,
+            "sample_size": 183
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -8.581809,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.089141
+            ],
+            "holdout_raw_mae": 5.28,
+            "holdout_mos_mae": 3.22,
+            "sample_size": 183
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 9.341479,
+            "predictors": [
+              "hrrr_ext_t",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.878416,
+              -3.048435
+            ],
+            "holdout_raw_mae": 1.7,
+            "holdout_mos_mae": 1.48,
+            "sample_size": 183
+          }
+        }
+      }
+    },
+    "KSEZ": {
+      "meta": {
+        "name": "Sedona Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "SEZ",
+        "lat": 34.8486,
+        "lon": -111.7884,
+        "elev_ft": 4830,
+        "clim_min_w": [
+          53.1842,
+          -15.8059,
+          -7.0782
+        ],
+        "clim_max_w": [
+          74.9604,
+          -19.8376,
+          -6.439
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": 1.343467,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.962326
+            ],
+            "holdout_raw_mae": 1.82,
+            "holdout_mos_mae": 1.9,
+            "sample_size": 423
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 0.363517,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.983335
+            ],
+            "holdout_raw_mae": 1.92,
+            "holdout_mos_mae": 1.83,
+            "sample_size": 423
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": 16.845101,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_tmp_700",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.614617,
+              0.543764,
+              -2.456282
+            ],
+            "holdout_raw_mae": 2.45,
+            "holdout_mos_mae": 2.23,
+            "sample_size": 423
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": 0.606963,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_v10_kt"
+            ],
+            "weights": [
+              0.965898,
+              -0.391712
+            ],
+            "holdout_raw_mae": 1.92,
+            "holdout_mos_mae": 1.69,
+            "sample_size": 422
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 0.611206,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.977632
+            ],
+            "holdout_raw_mae": 1.86,
+            "holdout_mos_mae": 1.82,
+            "sample_size": 422
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 2.094478,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_mcdc"
+            ],
+            "weights": [
+              0.955461,
+              -0.034151
+            ],
+            "holdout_raw_mae": 2.38,
+            "holdout_mos_mae": 2.25,
+            "sample_size": 422
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 0.076601,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.985058
+            ],
+            "holdout_raw_mae": 1.86,
+            "holdout_mos_mae": 1.85,
+            "sample_size": 422
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": 1.952591,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_mcdc"
+            ],
+            "weights": [
+              0.959257,
+              -0.03915
+            ],
+            "holdout_raw_mae": 2.39,
+            "holdout_mos_mae": 2.4,
+            "sample_size": 422
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -1.933755,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              1.011494,
+              0.052291
+            ],
+            "holdout_raw_mae": 2.47,
+            "holdout_mos_mae": 2.39,
+            "sample_size": 422
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 0.314775,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.984478
+            ],
+            "holdout_raw_mae": 1.71,
+            "holdout_mos_mae": 1.71,
+            "sample_size": 421
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": 7.299656,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_dlwrf"
+            ],
+            "weights": [
+              1.09477,
+              -0.045786
+            ],
+            "holdout_raw_mae": 2.38,
+            "holdout_mos_mae": 2.19,
+            "sample_size": 421
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -1.894366,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              1.010606,
+              0.047238
+            ],
+            "holdout_raw_mae": 2.5,
+            "holdout_mos_mae": 2.31,
+            "sample_size": 421
+          }
+        }
+      }
+    },
+    "KPAN": {
+      "meta": {
+        "name": "Payson Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "PAN",
+        "lat": 34.2568,
+        "lon": -111.3393,
+        "elev_ft": 5157,
+        "clim_min_w": [
+          48.3695,
+          -15.2562,
+          -7.2971
+        ],
+        "clim_max_w": [
+          70.951,
+          -18.7189,
+          -6.4294
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -1.166673,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.99284
+            ],
+            "holdout_raw_mae": 2.54,
+            "holdout_mos_mae": 2.17,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 1.27753,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.977161
+            ],
+            "holdout_raw_mae": 1.51,
+            "holdout_mos_mae": 1.4,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -2.652849,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t"
+            ],
+            "weights": [
+              0.840064,
+              0.179751
+            ],
+            "holdout_raw_mae": 2.73,
+            "holdout_mos_mae": 2.27,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -0.906556,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.986107
+            ],
+            "holdout_raw_mae": 2.4,
+            "holdout_mos_mae": 2.08,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 1.481763,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.969761
+            ],
+            "holdout_raw_mae": 1.47,
+            "holdout_mos_mae": 1.26,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 0.054899,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.965823
+            ],
+            "holdout_raw_mae": 2.7,
+            "holdout_mos_mae": 2.32,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 0.949992,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.97844
+            ],
+            "holdout_raw_mae": 1.49,
+            "holdout_mos_mae": 1.34,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -79.937953,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_hgt_500"
+            ],
+            "weights": [
+              0.624853,
+              0.203347,
+              0.014286
+            ],
+            "holdout_raw_mae": 2.59,
+            "holdout_mos_mae": 2.14,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 10.498931,
+            "predictors": [
+              "hrrr_ext_t",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.846827,
+              -2.60867
+            ],
+            "holdout_raw_mae": 1.88,
+            "holdout_mos_mae": 1.8,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 1.059205,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.979719
+            ],
+            "holdout_raw_mae": 1.16,
+            "holdout_mos_mae": 1.07,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -2.84999,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.764574,
+              0.181751
+            ],
+            "holdout_raw_mae": 2.6,
+            "holdout_mos_mae": 2.24,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 0.870533,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.979254,
+              0.052676
+            ],
+            "holdout_raw_mae": 1.73,
+            "holdout_mos_mae": 1.61,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KRQE": {
+      "meta": {
+        "name": "Window Rock Airport",
+        "network": "AZ_ASOS",
+        "iem_id": "RQE",
+        "lat": 35.6571,
+        "lon": -109.0603,
+        "elev_ft": 6745,
+        "clim_min_w": [
+          32.8618,
+          -18.9005,
+          -6.956
+        ],
+        "clim_max_w": [
+          66.8458,
+          -20.1025,
+          -6.5435
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": 1.39771,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.549403,
+              0.342916,
+              -6.267376,
+              0.120275
+            ],
+            "holdout_raw_mae": 7.27,
+            "holdout_mos_mae": 3.38,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 1.816642,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.01796
+            ],
+            "holdout_raw_mae": 2.0,
+            "holdout_mos_mae": 2.41,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": 0.792018,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.575016,
+              0.330555,
+              -5.735726,
+              0.12331
+            ],
+            "holdout_raw_mae": 7.11,
+            "holdout_mos_mae": 3.73,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": 2.095471,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.60733,
+              0.328485,
+              -4.985844
+            ],
+            "holdout_raw_mae": 6.62,
+            "holdout_mos_mae": 3.47,
+            "sample_size": 423
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 1.788815,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.017973
+            ],
+            "holdout_raw_mae": 2.07,
+            "holdout_mos_mae": 2.2,
+            "sample_size": 423
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 0.102477,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.614111,
+              0.317305,
+              -4.761205,
+              0.115921
+            ],
+            "holdout_raw_mae": 6.83,
+            "holdout_mos_mae": 3.67,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 1.840699,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.020276
+            ],
+            "holdout_raw_mae": 2.16,
+            "holdout_mos_mae": 2.45,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -0.004532,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.608317,
+              0.307982,
+              -5.087306,
+              0.135469
+            ],
+            "holdout_raw_mae": 6.66,
+            "holdout_mos_mae": 3.69,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 27.816368,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_tmp_700"
+            ],
+            "weights": [
+              0.343264,
+              0.167775,
+              1.035653
+            ],
+            "holdout_raw_mae": 2.26,
+            "holdout_mos_mae": 2.48,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 2.207775,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              1.01647
+            ],
+            "holdout_raw_mae": 2.01,
+            "holdout_mos_mae": 2.25,
+            "sample_size": 422
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -0.041513,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.612461,
+              0.317654,
+              -4.960255,
+              0.128939
+            ],
+            "holdout_raw_mae": 6.65,
+            "holdout_mos_mae": 3.42,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 1.889695,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.827906,
+              0.184216
+            ],
+            "holdout_raw_mae": 2.32,
+            "holdout_mos_mae": 2.32,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "KCMR": {
+      "meta": {
+        "name": "Williams / Clark Field",
+        "network": "AZ_ASOS",
+        "iem_id": "CMR",
+        "lat": 35.3055,
+        "lon": -112.1944,
+        "elev_ft": 6691,
+        "clim_min_w": [
+          36.9116,
+          -16.1611,
+          -7.774
+        ],
+        "clim_max_w": [
+          65.1995,
+          -18.4341,
+          -7.1411
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -153.335734,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "hrrr_thick_1000_500",
+              "hrrr_dlwrf"
+            ],
+            "weights": [
+              0.559187,
+              0.163911,
+              0.159905,
+              0.025913,
+              0.050445
+            ],
+            "holdout_raw_mae": 6.04,
+            "holdout_mos_mae": 2.99,
+            "sample_size": 410
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 2.005519,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.978022
+            ],
+            "holdout_raw_mae": 1.61,
+            "holdout_mos_mae": 1.53,
+            "sample_size": 410
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -9.946559,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.803442,
+              0.149299,
+              0.115132,
+              0.182522
+            ],
+            "holdout_raw_mae": 6.46,
+            "holdout_mos_mae": 3.34,
+            "sample_size": 410
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -6.60861,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_v10_kt"
+            ],
+            "weights": [
+              0.888551,
+              0.185269,
+              0.33215
+            ],
+            "holdout_raw_mae": 5.46,
+            "holdout_mos_mae": 2.99,
+            "sample_size": 409
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 2.211493,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.972493
+            ],
+            "holdout_raw_mae": 1.5,
+            "holdout_mos_mae": 1.55,
+            "sample_size": 409
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -8.067065,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.919781,
+              0.172004,
+              0.099163
+            ],
+            "holdout_raw_mae": 6.15,
+            "holdout_mos_mae": 2.91,
+            "sample_size": 409
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 1.912451,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.975933
+            ],
+            "holdout_raw_mae": 1.49,
+            "holdout_mos_mae": 1.44,
+            "sample_size": 409
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -8.172812,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.931977,
+              0.154856,
+              0.099095
+            ],
+            "holdout_raw_mae": 6.08,
+            "holdout_mos_mae": 3.1,
+            "sample_size": 409
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 3.737235,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.954761
+            ],
+            "holdout_raw_mae": 1.93,
+            "holdout_mos_mae": 1.78,
+            "sample_size": 409
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 2.046472,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.976619
+            ],
+            "holdout_raw_mae": 1.38,
+            "holdout_mos_mae": 1.3,
+            "sample_size": 408
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -5.458639,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.904937,
+              0.163981
+            ],
+            "holdout_raw_mae": 5.82,
+            "holdout_mos_mae": 3.17,
+            "sample_size": 408
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 3.383585,
+            "predictors": [
+              "hrrr_ext_t"
+            ],
+            "weights": [
+              0.957545
+            ],
+            "holdout_raw_mae": 1.82,
+            "holdout_mos_mae": 1.69,
+            "sample_size": 408
+          }
+        }
+      }
+    },
+    "AZ6471": {
+      "meta": {
+        "name": "Phantom Ranch (Grand Canyon)",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ6471",
+        "lat": 36.1056,
+        "lon": -112.095,
+        "elev_ft": 2530,
+        "clim_min_w": [
+          55.7685,
+          -19.7837,
+          -6.2564
+        ],
+        "clim_max_w": [
+          83.2419,
+          -23.5203,
+          -5.8325
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": 120.724656,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_hgt_500",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              0.780061,
+              0.398533,
+              -0.023192,
+              0.073742
+            ],
+            "holdout_raw_mae": 5.69,
+            "holdout_mos_mae": 3.85,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 2.578907,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.690874,
+              0.319463
+            ],
+            "holdout_raw_mae": 5.77,
+            "holdout_mos_mae": 3.39,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -11.672833,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t",
+              "obs_prev_max",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              0.436105,
+              0.387736,
+              0.225747,
+              0.075627
+            ],
+            "holdout_raw_mae": 5.63,
+            "holdout_mos_mae": 3.85,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": 108.621266,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_hgt_500"
+            ],
+            "weights": [
+              0.710245,
+              0.415828,
+              -0.020141
+            ],
+            "holdout_raw_mae": 5.16,
+            "holdout_mos_mae": 3.61,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 3.008907,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.704019,
+              0.303329
+            ],
+            "holdout_raw_mae": 5.87,
+            "holdout_mos_mae": 3.15,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 104.383267,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t",
+              "hrrr_hgt_500",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.624762,
+              0.353322,
+              -0.02089,
+              0.198298
+            ],
+            "holdout_raw_mae": 5.65,
+            "holdout_mos_mae": 3.93,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.08559,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.603224,
+              0.395412
+            ],
+            "holdout_raw_mae": 5.88,
+            "holdout_mos_mae": 3.01,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": 100.321079,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "norm_t",
+              "hrrr_hgt_500"
+            ],
+            "weights": [
+              0.661987,
+              0.232312,
+              0.314311,
+              -0.019561
+            ],
+            "holdout_raw_mae": 5.18,
+            "holdout_mos_mae": 3.83,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -0.142571,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.704375,
+              0.338864
+            ],
+            "holdout_raw_mae": 6.51,
+            "holdout_mos_mae": 3.44,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.450415,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.606424,
+              0.389961
+            ],
+            "holdout_raw_mae": 5.91,
+            "holdout_mos_mae": 2.96,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": 98.656374,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "norm_t",
+              "hrrr_hgt_500"
+            ],
+            "weights": [
+              0.646668,
+              0.228388,
+              0.329112,
+              -0.019223
+            ],
+            "holdout_raw_mae": 5.25,
+            "holdout_mos_mae": 3.85,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -0.377815,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.710906,
+              0.335637
+            ],
+            "holdout_raw_mae": 6.52,
+            "holdout_mos_mae": 3.46,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ0159": {
+      "meta": {
+        "name": "Alpine COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ0159",
+        "lat": 33.8492,
+        "lon": -109.1436,
+        "elev_ft": 8050,
+        "clim_min_w": [
+          30.8068,
+          -14.7141,
+          -6.6635
+        ],
+        "clim_max_w": [
+          63.1889,
+          -16.7102,
+          -5.2665
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -16.797918,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1",
+              "hrrr_wspd700_kt",
+              "hrrr_dlwrf"
+            ],
+            "weights": [
+              0.562298,
+              0.134815,
+              -4.224435,
+              0.155652,
+              0.06368
+            ],
+            "holdout_raw_mae": 10.57,
+            "holdout_mos_mae": 3.34,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 3.800804,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.744234,
+              0.221146
+            ],
+            "holdout_raw_mae": 3.65,
+            "holdout_mos_mae": 2.95,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -10.839105,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.786281,
+              0.154089,
+              0.149493,
+              -3.405096
+            ],
+            "holdout_raw_mae": 10.95,
+            "holdout_mos_mae": 4.38,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -18.007155,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1",
+              "hrrr_wspd700_kt",
+              "hrrr_dlwrf"
+            ],
+            "weights": [
+              0.609776,
+              0.132751,
+              -3.603024,
+              0.140119,
+              0.064387
+            ],
+            "holdout_raw_mae": 10.19,
+            "holdout_mos_mae": 3.22,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 4.122459,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.740911,
+              0.217583
+            ],
+            "holdout_raw_mae": 3.33,
+            "holdout_mos_mae": 2.76,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -10.714855,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.795295,
+              0.155361,
+              0.144848,
+              -2.992201
+            ],
+            "holdout_raw_mae": 10.81,
+            "holdout_mos_mae": 4.28,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.259795,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.630871,
+              0.337095
+            ],
+            "holdout_raw_mae": 3.42,
+            "holdout_mos_mae": 2.67,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -11.841212,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "hrrr_u10_kt",
+              "hrrr_snow_in",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.804156,
+              0.171533,
+              0.124591,
+              0.320469,
+              -1.644753,
+              -2.306705
+            ],
+            "holdout_raw_mae": 10.93,
+            "holdout_mos_mae": 3.89,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 2.740648,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.688133,
+              0.289775
+            ],
+            "holdout_raw_mae": 3.31,
+            "holdout_mos_mae": 2.97,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.595051,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.646681,
+              0.315574
+            ],
+            "holdout_raw_mae": 3.19,
+            "holdout_mos_mae": 2.52,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -10.878922,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.793253,
+              0.151556,
+              0.162219,
+              -3.077047
+            ],
+            "holdout_raw_mae": 11.01,
+            "holdout_mos_mae": 4.13,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 2.702751,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.682105,
+              0.296092
+            ],
+            "holdout_raw_mae": 3.33,
+            "holdout_mos_mae": 2.99,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ8162": {
+      "meta": {
+        "name": "Springerville COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ8162",
+        "lat": 34.1361,
+        "lon": -109.2864,
+        "elev_ft": 7060,
+        "clim_min_w": [
+          33.6395,
+          -17.4604,
+          -7.0485
+        ],
+        "clim_max_w": [
+          69.4441,
+          -17.854,
+          -5.0458
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -23.727745,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "obs_prev_min",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.77087,
+              0.11869,
+              0.217128,
+              0.157278,
+              0.167545
+            ],
+            "holdout_raw_mae": 10.19,
+            "holdout_mos_mae": 4.39,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 2.752056,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.716671,
+              0.276268
+            ],
+            "holdout_raw_mae": 4.4,
+            "holdout_mos_mae": 2.58,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -5.155885,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.688717,
+              0.278457,
+              0.193598,
+              -4.2236
+            ],
+            "holdout_raw_mae": 10.46,
+            "holdout_mos_mae": 4.64,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -17.715431,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.898343,
+              0.109455,
+              0.182444,
+              0.198749
+            ],
+            "holdout_raw_mae": 9.94,
+            "holdout_mos_mae": 4.34,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 2.783499,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.728375,
+              0.264645
+            ],
+            "holdout_raw_mae": 4.19,
+            "holdout_mos_mae": 2.66,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -15.060556,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.932381,
+              0.148824,
+              0.199782,
+              -3.74245
+            ],
+            "holdout_raw_mae": 10.31,
+            "holdout_mos_mae": 4.67,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 2.33868,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.661167,
+              0.335022
+            ],
+            "holdout_raw_mae": 4.33,
+            "holdout_mos_mae": 2.56,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -14.568486,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              0.910012,
+              0.146975,
+              0.206307,
+              -4.132332,
+              -0.288496
+            ],
+            "holdout_raw_mae": 9.87,
+            "holdout_mos_mae": 4.18,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 2.795897,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.740969,
+              0.250513,
+              0.066816
+            ],
+            "holdout_raw_mae": 3.61,
+            "holdout_mos_mae": 2.66,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 2.899646,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.678699,
+              0.307896
+            ],
+            "holdout_raw_mae": 4.16,
+            "holdout_mos_mae": 2.49,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -15.947631,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.947889,
+              0.157609,
+              0.191301,
+              -3.27229
+            ],
+            "holdout_raw_mae": 10.01,
+            "holdout_mos_mae": 4.11,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 2.390563,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.722778,
+              0.272555,
+              0.072268
+            ],
+            "holdout_raw_mae": 3.69,
+            "holdout_mos_mae": 2.66,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ9359": {
+      "meta": {
+        "name": "Williams COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ9359",
+        "lat": 35.2413,
+        "lon": -112.1929,
+        "elev_ft": 6909,
+        "clim_min_w": [
+          36.7232,
+          -15.2605,
+          -7.3654
+        ],
+        "clim_max_w": [
+          66.4185,
+          -18.1726,
+          -6.6165
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -4.631721,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "hrrr_win_dpd"
+            ],
+            "weights": [
+              -0.373311,
+              1.360439,
+              0.115876,
+              1.084294
+            ],
+            "holdout_raw_mae": 6.51,
+            "holdout_mos_mae": 3.7,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 5.597603,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.671146,
+              0.278638
+            ],
+            "holdout_raw_mae": 3.46,
+            "holdout_mos_mae": 2.35,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -135.916078,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1",
+              "hrrr_wspd700_kt",
+              "hrrr_thick_1000_500"
+            ],
+            "weights": [
+              0.61598,
+              0.130907,
+              -3.353981,
+              0.096451,
+              0.024377
+            ],
+            "holdout_raw_mae": 7.08,
+            "holdout_mos_mae": 3.89,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -7.045895,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd10_kt",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.592691,
+              0.248537,
+              0.315751,
+              0.154951
+            ],
+            "holdout_raw_mae": 6.28,
+            "holdout_mos_mae": 3.44,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 6.089054,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.684331,
+              0.256641
+            ],
+            "holdout_raw_mae": 3.29,
+            "holdout_mos_mae": 2.32,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -7.637642,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.865795,
+              0.114719,
+              -2.425056,
+              0.087719
+            ],
+            "holdout_raw_mae": 6.83,
+            "holdout_mos_mae": 3.78,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.384901,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.447854,
+              0.521142
+            ],
+            "holdout_raw_mae": 3.42,
+            "holdout_mos_mae": 2.08,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -15.653418,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_max",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.80444,
+              0.113054,
+              0.164186,
+              0.089691
+            ],
+            "holdout_raw_mae": 6.82,
+            "holdout_mos_mae": 3.66,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 5.355132,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.630522,
+              0.319677
+            ],
+            "holdout_raw_mae": 4.67,
+            "holdout_mos_mae": 2.86,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.208224,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.440172,
+              0.531568
+            ],
+            "holdout_raw_mae": 3.37,
+            "holdout_mos_mae": 2.03,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -15.99051,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_max",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.815772,
+              0.115491,
+              0.161689,
+              0.088297
+            ],
+            "holdout_raw_mae": 6.67,
+            "holdout_mos_mae": 3.51,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 4.557616,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.626988,
+              0.331476
+            ],
+            "holdout_raw_mae": 4.66,
+            "holdout_mos_mae": 2.91,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ6323": {
+      "meta": {
+        "name": "Payson COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ6323",
+        "lat": 34.2333,
+        "lon": -111.3333,
+        "elev_ft": 4915,
+        "clim_min_w": [
+          41.5863,
+          -16.708,
+          -7.7759
+        ],
+        "clim_max_w": [
+          73.7648,
+          -17.9087,
+          -6.2775
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -11.697399,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_dlwrf",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.298514,
+              0.209066,
+              -4.080534,
+              0.069396,
+              0.163676
+            ],
+            "holdout_raw_mae": 9.02,
+            "holdout_mos_mae": 2.39,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 3.79253,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.717398,
+              0.258164
+            ],
+            "holdout_raw_mae": 1.97,
+            "holdout_mos_mae": 2.09,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -15.385325,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "norm_t"
+            ],
+            "weights": [
+              0.748547,
+              0.141155,
+              0.318058
+            ],
+            "holdout_raw_mae": 9.04,
+            "holdout_mos_mae": 3.0,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -10.504527,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "hrrr_wspd10_kt",
+              "hrrr_dlwrf"
+            ],
+            "weights": [
+              0.508267,
+              0.214781,
+              -4.164873,
+              0.513477,
+              0.063523
+            ],
+            "holdout_raw_mae": 8.9,
+            "holdout_mos_mae": 2.39,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 4.526351,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.741297,
+              0.22215
+            ],
+            "holdout_raw_mae": 1.97,
+            "holdout_mos_mae": 1.99,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -14.829294,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "norm_t"
+            ],
+            "weights": [
+              0.767595,
+              0.147179,
+              0.283696
+            ],
+            "holdout_raw_mae": 8.86,
+            "holdout_mos_mae": 2.89,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.381565,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.559261,
+              0.413419
+            ],
+            "holdout_raw_mae": 1.96,
+            "holdout_mos_mae": 1.86,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -14.169677,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "norm_t"
+            ],
+            "weights": [
+              0.756118,
+              0.140538,
+              0.287464
+            ],
+            "holdout_raw_mae": 8.79,
+            "holdout_mos_mae": 2.94,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 4.553472,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.729789,
+              0.229152,
+              0.053256
+            ],
+            "holdout_raw_mae": 3.03,
+            "holdout_mos_mae": 2.18,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.313261,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.556297,
+              0.418838
+            ],
+            "holdout_raw_mae": 1.95,
+            "holdout_mos_mae": 1.74,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -13.313358,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.808993,
+              0.124643,
+              0.227315
+            ],
+            "holdout_raw_mae": 8.77,
+            "holdout_mos_mae": 2.85,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 4.079054,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.736937,
+              0.228328,
+              0.055843
+            ],
+            "holdout_raw_mae": 3.03,
+            "holdout_mos_mae": 2.07,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ0750": {
+      "meta": {
+        "name": "Betatakin (Navajo Nat'l Mon)",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ0750",
+        "lat": 36.6786,
+        "lon": -110.5419,
+        "elev_ft": 7286,
+        "clim_min_w": [
+          40.3767,
+          -17.8148,
+          -7.4318
+        ],
+        "clim_max_w": [
+          64.6754,
+          -22.83,
+          -7.1544
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": 0.217814,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_v10_kt"
+            ],
+            "weights": [
+              0.77346,
+              0.219558,
+              -0.259409
+            ],
+            "holdout_raw_mae": 3.31,
+            "holdout_mos_mae": 2.85,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": -2.862917,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              0.798186,
+              0.246406,
+              0.171867
+            ],
+            "holdout_raw_mae": 3.53,
+            "holdout_mos_mae": 2.81,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -0.223326,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_tcdc"
+            ],
+            "weights": [
+              0.774112,
+              0.226649,
+              -0.028907
+            ],
+            "holdout_raw_mae": 3.25,
+            "holdout_mos_mae": 3.1,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": 10.442684,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_v10_kt",
+              "hrrr_tmp_500",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.701984,
+              -0.322299,
+              0.372175,
+              0.178799
+            ],
+            "holdout_raw_mae": 3.19,
+            "holdout_mos_mae": 2.83,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": -2.686581,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_u10_kt"
+            ],
+            "weights": [
+              0.831878,
+              0.212306,
+              0.162272
+            ],
+            "holdout_raw_mae": 3.62,
+            "holdout_mos_mae": 2.87,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -85.227166,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_hgt_500"
+            ],
+            "weights": [
+              0.658183,
+              0.212486,
+              0.015551
+            ],
+            "holdout_raw_mae": 3.1,
+            "holdout_mos_mae": 2.97,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": -1.814516,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.659727,
+              0.383759
+            ],
+            "holdout_raw_mae": 3.64,
+            "holdout_mos_mae": 2.65,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": 1.159692,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.719642,
+              0.261934,
+              -0.283366
+            ],
+            "holdout_raw_mae": 3.2,
+            "holdout_mos_mae": 2.9,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -3.025225,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_u10_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.629662,
+              0.189172,
+              0.170241,
+              0.221293
+            ],
+            "holdout_raw_mae": 4.94,
+            "holdout_mos_mae": 3.41,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": -1.596909,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.654596,
+              0.386239
+            ],
+            "holdout_raw_mae": 3.6,
+            "holdout_mos_mae": 2.61,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": 1.098936,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.724564,
+              0.259012,
+              -0.271389
+            ],
+            "holdout_raw_mae": 3.02,
+            "holdout_mos_mae": 2.76,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -3.139889,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_u10_kt",
+              "norm_t"
+            ],
+            "weights": [
+              0.647366,
+              0.174744,
+              0.175238,
+              0.217723
+            ],
+            "holdout_raw_mae": 4.95,
+            "holdout_mos_mae": 3.34,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ1248": {
+      "meta": {
+        "name": "Canyon de Chelly COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ1248",
+        "lat": 36.1536,
+        "lon": -109.5389,
+        "elev_ft": 5610,
+        "clim_min_w": [
+          38.5169,
+          -19.9721,
+          -7.2679
+        ],
+        "clim_max_w": [
+          70.612,
+          -24.2314,
+          -5.8971
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -12.797122,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_dlwrf",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.502899,
+              0.201506,
+              0.076765,
+              -3.538384
+            ],
+            "holdout_raw_mae": 7.2,
+            "holdout_mos_mae": 3.33,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 8.318949,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.644982,
+              0.248342,
+              -4.485958
+            ],
+            "holdout_raw_mae": 3.57,
+            "holdout_mos_mae": 2.96,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -8.330749,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.93133,
+              0.110946,
+              -4.598249
+            ],
+            "holdout_raw_mae": 7.91,
+            "holdout_mos_mae": 3.65,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -10.852562,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              0.886836,
+              0.188843,
+              0.065509
+            ],
+            "holdout_raw_mae": 6.49,
+            "holdout_mos_mae": 3.51,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": -1.91634,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.740685,
+              0.305439
+            ],
+            "holdout_raw_mae": 3.4,
+            "holdout_mos_mae": 2.75,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -7.767983,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.934449,
+              0.104274,
+              -3.680499
+            ],
+            "holdout_raw_mae": 7.0,
+            "holdout_mos_mae": 3.4,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": -1.723521,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.648582,
+              0.392685
+            ],
+            "holdout_raw_mae": 3.39,
+            "holdout_mos_mae": 2.19,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -16.951959,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.890915,
+              0.101862,
+              0.163081
+            ],
+            "holdout_raw_mae": 7.17,
+            "holdout_mos_mae": 3.64,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -3.553065,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.774987,
+              0.288532,
+              0.070368
+            ],
+            "holdout_raw_mae": 4.26,
+            "holdout_mos_mae": 3.14,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": -1.578517,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.646492,
+              0.393701
+            ],
+            "holdout_raw_mae": 3.27,
+            "holdout_mos_mae": 2.08,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -16.895891,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.897417,
+              0.102138,
+              0.159897
+            ],
+            "holdout_raw_mae": 7.1,
+            "holdout_mos_mae": 3.6,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -3.361263,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.756558,
+              0.30403,
+              0.066847
+            ],
+            "holdout_raw_mae": 4.17,
+            "holdout_mos_mae": 2.92,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ6468": {
+      "meta": {
+        "name": "Petrified Forest NP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ6468",
+        "lat": 34.8122,
+        "lon": -109.8925,
+        "elev_ft": 5446,
+        "clim_min_w": [
+          39.9139,
+          -19.7551,
+          -7.7319
+        ],
+        "clim_max_w": [
+          72.4508,
+          -21.7707,
+          -5.7632
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -4.857086,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.82882,
+              0.20256
+            ],
+            "holdout_raw_mae": 4.22,
+            "holdout_mos_mae": 2.18,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": -3.623862,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.616623,
+              0.41695,
+              0.244537
+            ],
+            "holdout_raw_mae": 4.51,
+            "holdout_mos_mae": 3.82,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -9.999172,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.930103,
+              0.054342,
+              0.145586
+            ],
+            "holdout_raw_mae": 4.79,
+            "holdout_mos_mae": 2.47,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -4.361743,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.828246,
+              0.198614
+            ],
+            "holdout_raw_mae": 3.74,
+            "holdout_mos_mae": 2.12,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": -3.437111,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.64068,
+              0.394615,
+              0.233139
+            ],
+            "holdout_raw_mae": 4.4,
+            "holdout_mos_mae": 3.84,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -4.238148,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.935485,
+              0.110082
+            ],
+            "holdout_raw_mae": 4.11,
+            "holdout_mos_mae": 2.33,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": -0.009768,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.489353,
+              0.530852
+            ],
+            "holdout_raw_mae": 4.26,
+            "holdout_mos_mae": 3.21,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -4.644766,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.951327,
+              0.098102
+            ],
+            "holdout_raw_mae": 4.04,
+            "holdout_mos_mae": 2.31,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -5.388921,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t",
+              "hrrr_lcdc",
+              "hrrr_wspd10_kt",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.637149,
+              0.233216,
+              0.099561,
+              0.245497,
+              0.181295
+            ],
+            "holdout_raw_mae": 4.94,
+            "holdout_mos_mae": 3.95,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 0.070324,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.491664,
+              0.527935
+            ],
+            "holdout_raw_mae": 4.34,
+            "holdout_mos_mae": 3.1,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -7.783713,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              1.025567,
+              0.052607
+            ],
+            "holdout_raw_mae": 4.14,
+            "holdout_mos_mae": 2.35,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -5.180667,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t",
+              "hrrr_lcdc",
+              "hrrr_wspd10_kt",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.650951,
+              0.206478,
+              0.108768,
+              0.232334,
+              0.191827
+            ],
+            "holdout_raw_mae": 4.73,
+            "holdout_mos_mae": 3.67,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ5494": {
+      "meta": {
+        "name": "Meteor Crater COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ5494",
+        "lat": 35.0283,
+        "lon": -111.0233,
+        "elev_ft": 5535,
+        "clim_min_w": [
+          43.2569,
+          -18.0601,
+          -6.1653
+        ],
+        "clim_max_w": [
+          69.0484,
+          -21.3043,
+          -5.6897
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -181.753479,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_thick_1000_500"
+            ],
+            "weights": [
+              0.336996,
+              0.349318,
+              0.034377
+            ],
+            "holdout_raw_mae": 7.74,
+            "holdout_mos_mae": 6.8,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": -0.030569,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.734198,
+              0.264156
+            ],
+            "holdout_raw_mae": 3.88,
+            "holdout_mos_mae": 3.68,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": 4.606836,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t",
+              "hrrr_tmp_500"
+            ],
+            "weights": [
+              0.563918,
+              0.382928,
+              0.330686
+            ],
+            "holdout_raw_mae": 7.35,
+            "holdout_mos_mae": 6.93,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -196.75149,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_thick_1000_500",
+              "norm_t"
+            ],
+            "weights": [
+              0.19647,
+              0.275478,
+              0.036897,
+              0.234851
+            ],
+            "holdout_raw_mae": 7.81,
+            "holdout_mos_mae": 6.92,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 0.436606,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.741444,
+              0.250982
+            ],
+            "holdout_raw_mae": 3.99,
+            "holdout_mos_mae": 3.87,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 6.701052,
+            "predictors": [
+              "hrrr_ext_t",
+              "norm_t",
+              "hrrr_tmp_500"
+            ],
+            "weights": [
+              0.563419,
+              0.353822,
+              0.366517
+            ],
+            "holdout_raw_mae": 7.05,
+            "holdout_mos_mae": 6.92,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 1.486286,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.518744,
+              0.4613
+            ],
+            "holdout_raw_mae": 4.0,
+            "holdout_mos_mae": 3.95,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": 4.789922,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_tmp_700",
+              "norm_t"
+            ],
+            "weights": [
+              0.308569,
+              0.265663,
+              0.479997,
+              0.238731
+            ],
+            "holdout_raw_mae": 7.16,
+            "holdout_mos_mae": 6.38,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 10.440928,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.603644,
+              0.235714,
+              -3.828793
+            ],
+            "holdout_raw_mae": 3.9,
+            "holdout_mos_mae": 3.84,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 1.222619,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.529768,
+              0.454673
+            ],
+            "holdout_raw_mae": 3.84,
+            "holdout_mos_mae": 3.92,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -108.35349,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_thick_1000_500",
+              "norm_t"
+            ],
+            "weights": [
+              0.382586,
+              0.252694,
+              0.020087,
+              0.217606
+            ],
+            "holdout_raw_mae": 7.26,
+            "holdout_mos_mae": 6.5,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 10.265097,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.608571,
+              0.233615,
+              -3.834999
+            ],
+            "holdout_raw_mae": 3.89,
+            "holdout_mos_mae": 3.9,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ8910": {
+      "meta": {
+        "name": "Twin Arrows COOP",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ8910",
+        "lat": 35.1583,
+        "lon": -111.275,
+        "elev_ft": 5920,
+        "clim_min_w": [
+          40.7312,
+          -18.0256,
+          -7.278
+        ],
+        "clim_max_w": [
+          68.2017,
+          -20.2462,
+          -6.0677
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -5.764894,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_wspd700_kt",
+              "hrrr_win_dp2m"
+            ],
+            "weights": [
+              0.707473,
+              0.196924,
+              0.128854,
+              0.099527
+            ],
+            "holdout_raw_mae": 3.71,
+            "holdout_mos_mae": 3.35,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 2.955293,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.677188,
+              0.281494
+            ],
+            "holdout_raw_mae": 1.75,
+            "holdout_mos_mae": 2.13,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -4.267369,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1",
+              "hrrr_wspd700_kt"
+            ],
+            "weights": [
+              0.815794,
+              0.082643,
+              -3.931204,
+              0.084562
+            ],
+            "holdout_raw_mae": 5.23,
+            "holdout_mos_mae": 3.3,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -4.899231,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_dp2m",
+              "hrrr_wspd700_kt",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.736381,
+              0.095916,
+              0.0909,
+              0.164711
+            ],
+            "holdout_raw_mae": 3.28,
+            "holdout_mos_mae": 3.46,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 3.329019,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.684527,
+              0.268928
+            ],
+            "holdout_raw_mae": 1.61,
+            "holdout_mos_mae": 2.14,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -9.190646,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "hrrr_wspd700_kt",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.832301,
+              0.058428,
+              0.099665,
+              0.146829
+            ],
+            "holdout_raw_mae": 4.67,
+            "holdout_mos_mae": 2.85,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.013123,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.566909,
+              0.391892
+            ],
+            "holdout_raw_mae": 1.78,
+            "holdout_mos_mae": 1.97,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -9.237007,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_wspd700_kt",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              0.952663,
+              0.106463,
+              0.060564
+            ],
+            "holdout_raw_mae": 4.47,
+            "holdout_mos_mae": 3.08,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -0.034068,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.689273,
+              0.280025,
+              0.180815
+            ],
+            "holdout_raw_mae": 1.94,
+            "holdout_mos_mae": 2.39,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.177519,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.577772,
+              0.379093
+            ],
+            "holdout_raw_mae": 1.63,
+            "holdout_mos_mae": 1.87,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -6.698188,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_wspd700_kt",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.804364,
+              0.116674,
+              0.174945
+            ],
+            "holdout_raw_mae": 4.46,
+            "holdout_mos_mae": 3.21,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 0.150478,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_wspd10_kt"
+            ],
+            "weights": [
+              0.707308,
+              0.25641,
+              0.187381
+            ],
+            "holdout_raw_mae": 1.72,
+            "holdout_mos_mae": 2.31,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ8904": {
+      "meta": {
+        "name": "Tuzigoot Nat'l Monument",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ8904",
+        "lat": 34.7708,
+        "lon": -112.0264,
+        "elev_ft": 3383,
+        "clim_min_w": [
+          47.1133,
+          -18.2961,
+          -7.5178
+        ],
+        "clim_max_w": [
+          81.9763,
+          -20.4272,
+          -6.2053
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -21.403034,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_tmp_700",
+              "hrrr_dlwrf"
+            ],
+            "weights": [
+              0.82074,
+              0.259438,
+              -0.428084,
+              0.044597
+            ],
+            "holdout_raw_mae": 8.19,
+            "holdout_mos_mae": 2.55,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 0.397916,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.741692,
+              0.288386
+            ],
+            "holdout_raw_mae": 3.13,
+            "holdout_mos_mae": 2.55,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -2.466029,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.804774,
+              0.123454,
+              -5.185387
+            ],
+            "holdout_raw_mae": 8.71,
+            "holdout_mos_mae": 3.11,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -11.260762,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_min"
+            ],
+            "weights": [
+              0.855104,
+              0.074004,
+              0.184607
+            ],
+            "holdout_raw_mae": 8.19,
+            "holdout_mos_mae": 2.41,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 0.856575,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.759719,
+              0.26416
+            ],
+            "holdout_raw_mae": 2.89,
+            "holdout_mos_mae": 2.46,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": -3.152501,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.825787,
+              0.121641,
+              -4.246785
+            ],
+            "holdout_raw_mae": 8.13,
+            "holdout_mos_mae": 3.06,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": -0.065183,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.628176,
+              0.401995
+            ],
+            "holdout_raw_mae": 3.0,
+            "holdout_mos_mae": 2.22,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": -9.484379,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_max",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.687243,
+              0.117018,
+              0.173054,
+              -3.033138
+            ],
+            "holdout_raw_mae": 8.01,
+            "holdout_mos_mae": 3.04,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": 1.851838,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.664523,
+              0.344106
+            ],
+            "holdout_raw_mae": 4.66,
+            "holdout_mos_mae": 2.66,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 0.050752,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.619841,
+              0.409226
+            ],
+            "holdout_raw_mae": 3.11,
+            "holdout_mos_mae": 2.23,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -10.006025,
+            "predictors": [
+              "hrrr_ext_t",
+              "hrrr_win_rh",
+              "obs_prev_max",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.684032,
+              0.123975,
+              0.179309,
+              -2.969236
+            ],
+            "holdout_raw_mae": 7.85,
+            "holdout_mos_mae": 3.01,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": 1.303194,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.661094,
+              0.353844
+            ],
+            "holdout_raw_mae": 4.74,
+            "holdout_mos_mae": 2.94,
+            "sample_size": 423
+          }
+        }
+      }
+    },
+    "AZ5635": {
+      "meta": {
+        "name": "Montezuma Castle Nat'l Mon",
+        "network": "AZCLIMATE",
+        "iem_id": "AZ5635",
+        "lat": 34.6114,
+        "lon": -111.835,
+        "elev_ft": 3180,
+        "clim_min_w": [
+          43.7266,
+          -18.8705,
+          -7.3212
+        ],
+        "clim_max_w": [
+          81.7589,
+          -19.7857,
+          -5.9502
+        ]
+      },
+      "cycles": {
+        "00Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              9,
+              12,
+              14
+            ],
+            "intercept": -22.934111,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_tmp_700",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              1.00661,
+              0.255297,
+              -0.508682,
+              0.073308
+            ],
+            "holdout_raw_mae": 11.12,
+            "holdout_mos_mae": 2.48,
+            "sample_size": 425
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              20,
+              21,
+              23
+            ],
+            "intercept": 1.45842,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "norm_t"
+            ],
+            "weights": [
+              0.552364,
+              0.24993,
+              0.195091
+            ],
+            "holdout_raw_mae": 4.53,
+            "holdout_mos_mae": 3.64,
+            "sample_size": 425
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              33,
+              36
+            ],
+            "intercept": -6.697181,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.602337,
+              0.265579,
+              0.129845,
+              -4.520613
+            ],
+            "holdout_raw_mae": 12.2,
+            "holdout_mos_mae": 3.23,
+            "sample_size": 425
+          }
+        },
+        "06Z": {
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              3,
+              6,
+              8
+            ],
+            "intercept": -20.117952,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_tmp_700",
+              "hrrr_win_rh"
+            ],
+            "weights": [
+              0.952174,
+              0.25886,
+              -0.415228,
+              0.062637
+            ],
+            "holdout_raw_mae": 11.14,
+            "holdout_mos_mae": 2.31,
+            "sample_size": 424
+          },
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              14,
+              15,
+              17
+            ],
+            "intercept": 4.39972,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.656857,
+              0.308607
+            ],
+            "holdout_raw_mae": 4.32,
+            "holdout_mos_mae": 3.65,
+            "sample_size": 424
+          },
+          "min_2": {
+            "kind": "min",
+            "label": "Morning Min (Day 2)",
+            "fhrs": [
+              27,
+              30,
+              32
+            ],
+            "intercept": 4.449803,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_win_dp2m",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.391196,
+              0.235994,
+              0.234119,
+              -5.00474
+            ],
+            "holdout_raw_mae": 11.58,
+            "holdout_mos_mae": 3.19,
+            "sample_size": 424
+          }
+        },
+        "12Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              8,
+              9,
+              11
+            ],
+            "intercept": 3.223004,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.506371,
+              0.469727
+            ],
+            "holdout_raw_mae": 4.51,
+            "holdout_mos_mae": 3.36,
+            "sample_size": 424
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              21,
+              24,
+              26
+            ],
+            "intercept": 2.028897,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_win_dp2m",
+              "cos_doy_1",
+              "cos_doy_2"
+            ],
+            "weights": [
+              0.422879,
+              0.260922,
+              0.217366,
+              -4.18641,
+              -1.506037
+            ],
+            "holdout_raw_mae": 11.53,
+            "holdout_mos_mae": 3.17,
+            "sample_size": 424
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              32,
+              33,
+              35
+            ],
+            "intercept": -0.991214,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_wspd10_kt",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.773327,
+              0.223169,
+              0.315911,
+              0.076233
+            ],
+            "holdout_raw_mae": 5.34,
+            "holdout_mos_mae": 4.04,
+            "sample_size": 424
+          }
+        },
+        "18Z": {
+          "max_1": {
+            "kind": "max",
+            "label": "Afternoon Max (Today)",
+            "fhrs": [
+              2,
+              3,
+              5
+            ],
+            "intercept": 3.166512,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max"
+            ],
+            "weights": [
+              0.491847,
+              0.485748
+            ],
+            "holdout_raw_mae": 4.53,
+            "holdout_mos_mae": 3.34,
+            "sample_size": 423
+          },
+          "min_1": {
+            "kind": "min",
+            "label": "Morning Min (Day 1)",
+            "fhrs": [
+              15,
+              18,
+              20
+            ],
+            "intercept": -8.294497,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_min",
+              "hrrr_win_rh",
+              "cos_doy_1"
+            ],
+            "weights": [
+              0.640331,
+              0.263133,
+              0.130587,
+              -3.413526
+            ],
+            "holdout_raw_mae": 11.19,
+            "holdout_mos_mae": 3.14,
+            "sample_size": 423
+          },
+          "max_2": {
+            "kind": "max",
+            "label": "Afternoon Max (Day 1)",
+            "fhrs": [
+              26,
+              27,
+              29
+            ],
+            "intercept": -0.417459,
+            "predictors": [
+              "hrrr_ext_t",
+              "obs_prev_max",
+              "hrrr_wspd10_kt",
+              "hrrr_lcdc"
+            ],
+            "weights": [
+              0.740811,
+              0.252734,
+              0.262378,
+              0.071796
+            ],
+            "holdout_raw_mae": 5.28,
+            "holdout_mos_mae": 4.09,
+            "sample_size": 423
+          }
+        }
+      }
+    }
+  },
+  "generated_utc": "2026-11-14T00:10:07Z",
+  "training_window": "2020-12-03 to 2026-11-09"
+}
