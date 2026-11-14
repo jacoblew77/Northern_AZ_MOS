@@ -120,9 +120,10 @@
       if (!stn) return;
 
       const netLabel = stn.network === "AZCLIMATE" ? "NWS COOP" : "ASOS/AWOS";
+      const obsTag = stn.obs_date_label ? ` (${stn.obs_date_label})` : "";
       document.getElementById("stn-title").textContent = `${stn.id} — ${stn.name}`;
       document.getElementById("stn-sub").textContent =
-        `Elevation: ${stn.elev_ft.toLocaleString()} ft | Network: ${netLabel} | Prior Obs: ${stn.prev_obs_min}°F / ${stn.prev_obs_max}°F`;
+        `Elevation: ${stn.elev_ft.toLocaleString()} ft | Network: ${netLabel} | Persistence Obs${obsTag}: ${stn.prev_obs_min}°F / ${stn.prev_obs_max}°F`;
 
       const cardsEl = document.getElementById("period-cards");
       cardsEl.innerHTML = "";
