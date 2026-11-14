@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-11-13 23:43 UTC",
-  "updated_mst": "2026-11-13 04:43 PM MST",
+  "updated_utc": "2026-11-14 00:23 UTC",
+  "updated_mst": "2026-11-13 05:23 PM MST",
   "hrrr_init_utc": "2026-11-13 18:00Z",
   "synoptic_cycle": "18Z",
   "stations": {
@@ -11,6 +11,7 @@
       "lat": 35.2303,
       "lon": -111.8222,
       "elev_ft": 7152,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 23.0,
       "prev_obs_max": 59.0,
       "periods": [
@@ -20,71 +21,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 49.1,
-          "mos_f": 59.0,
-          "delta_f": 9.9,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 53.7,
+          "delta_f": 4.6,
+          "holdout_mos_mae": 1.72,
           "holdout_raw_mae": 2.2,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.7072,
+              "contrib": 3.71
             },
             {
               "term": "hrrr_ext_t",
               "value": 49.06,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.6977,
+              "contrib": 34.23
             },
             {
               "term": "obs_prev_max",
               "value": 59.0,
-              "weight": 1.0,
-              "contrib": 59.0
+              "weight": 0.2669,
+              "contrib": 15.75
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 34.7,
-          "mos_f": 34.2,
-          "delta_f": -0.6,
-          "holdout_mos_mae": 3.56,
+          "mos_f": 36.4,
+          "delta_f": 1.7,
+          "holdout_mos_mae": 3.68,
           "holdout_raw_mae": 12.4,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -24.5801,
-              "contrib": -24.58
+              "weight": -30.82,
+              "contrib": -30.82
             },
             {
               "term": "hrrr_ext_t",
               "value": 34.72,
-              "weight": 0.8985,
-              "contrib": 31.2
+              "weight": 0.8373,
+              "contrib": 29.07
             },
             {
               "term": "hrrr_win_rh",
               "value": 99.6,
-              "weight": 0.1817,
-              "contrib": 18.1
+              "weight": 0.2173,
+              "contrib": 21.64
             },
             {
               "term": "hrrr_wspd700_kt",
               "value": 31.98,
-              "weight": 0.178,
-              "contrib": 5.69
+              "weight": 0.1561,
+              "contrib": 4.99
             },
             {
-              "term": "obs_prev_min",
-              "value": 23.0,
-              "weight": 0.1633,
-              "contrib": 3.76
+              "term": "obs_prev_max",
+              "value": 59.0,
+              "weight": 0.196,
+              "contrib": 11.56
             }
           ]
         },
@@ -94,28 +95,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 38.2,
-          "mos_f": 47.1,
-          "delta_f": 8.9,
-          "holdout_mos_mae": 2.01,
+          "mos_f": 45.0,
+          "delta_f": 6.8,
+          "holdout_mos_mae": 2.05,
           "holdout_raw_mae": 2.79,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 3.0513,
-              "contrib": 3.05
+              "weight": 3.7268,
+              "contrib": 3.73
             },
             {
               "term": "hrrr_ext_t",
               "value": 38.17,
-              "weight": 0.6461,
-              "contrib": 24.66
+              "weight": 0.7592,
+              "contrib": 28.98
             },
             {
               "term": "obs_prev_max",
               "value": 59.0,
-              "weight": 0.3286,
-              "contrib": 19.39
+              "weight": 0.2085,
+              "contrib": 12.3
             }
           ]
         }
@@ -310,8 +311,9 @@
       "lat": 35.1403,
       "lon": -111.6692,
       "elev_ft": 7011,
-      "prev_obs_min": 28.4,
-      "prev_obs_max": 55.1,
+      "obs_date_label": "Thu, Nov 12",
+      "prev_obs_min": 26.0,
+      "prev_obs_max": 60.0,
       "periods": [
         {
           "key": "max_1",
@@ -319,35 +321,29 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 51.3,
-          "mos_f": 55.1,
-          "delta_f": 3.8,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 51.7,
+          "delta_f": 0.4,
+          "holdout_mos_mae": 1.41,
           "holdout_raw_mae": 1.37,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.3807,
+              "contrib": 3.38
             },
             {
               "term": "hrrr_ext_t",
               "value": 51.31,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 55.07,
-              "weight": 1.0,
-              "contrib": 55.07
+              "weight": 0.9421,
+              "contrib": 48.34
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 37.2,
           "mos_f": 35.7,
@@ -597,8 +593,9 @@
       "lat": 35.9524,
       "lon": -112.147,
       "elev_ft": 6609,
-      "prev_obs_min": 25.7,
-      "prev_obs_max": 56.2,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 26.0,
+      "prev_obs_max": 56.5,
       "periods": [
         {
           "key": "max_1",
@@ -606,71 +603,65 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 54.9,
-          "mos_f": 56.2,
-          "delta_f": 1.3,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 55.4,
+          "delta_f": 0.5,
+          "holdout_mos_mae": 1.62,
           "holdout_raw_mae": 1.85,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.4571,
+              "contrib": 0.46
             },
             {
               "term": "hrrr_ext_t",
               "value": 54.91,
-              "weight": 0.0,
-              "contrib": 0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 56.2,
-              "weight": 1.0,
-              "contrib": 56.2
+              "weight": 1.0003,
+              "contrib": 54.93
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 37.6,
-          "mos_f": 31.1,
-          "delta_f": -6.6,
-          "holdout_mos_mae": 2.98,
+          "mos_f": 33.1,
+          "delta_f": -4.5,
+          "holdout_mos_mae": 3.5,
           "holdout_raw_mae": 9.13,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -8.4917,
-              "contrib": -8.49
+              "weight": -8.906,
+              "contrib": -8.91
             },
             {
               "term": "hrrr_ext_t",
               "value": 37.65,
-              "weight": 0.6295,
-              "contrib": 23.7
+              "weight": 0.7033,
+              "contrib": 26.48
             },
             {
               "term": "hrrr_win_dp2m",
               "value": 36.97,
-              "weight": 0.1412,
-              "contrib": 5.22
+              "weight": 0.2259,
+              "contrib": 8.35
+            },
+            {
+              "term": "hrrr_v10_kt",
+              "value": 10.66,
+              "weight": 0.3037,
+              "contrib": 3.24
             },
             {
               "term": "obs_prev_min",
-              "value": 25.72,
-              "weight": 0.2974,
-              "contrib": 7.65
-            },
-            {
-              "term": "hrrr_mcdc",
-              "value": 75.0,
-              "weight": 0.0396,
-              "contrib": 2.97
+              "value": 26.0,
+              "weight": 0.1528,
+              "contrib": 3.97
             }
           ]
         },
@@ -680,28 +671,22 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 42.2,
-          "mos_f": 44.7,
-          "delta_f": 2.5,
-          "holdout_mos_mae": 2.03,
+          "mos_f": 42.2,
+          "delta_f": 0.0,
+          "holdout_mos_mae": 2.32,
           "holdout_raw_mae": 2.32,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.9868,
-              "contrib": -0.99
+              "weight": -0.0238,
+              "contrib": -0.02
             },
             {
               "term": "hrrr_ext_t",
               "value": 42.17,
-              "weight": 0.8114,
-              "contrib": 34.22
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 56.2,
-              "weight": 0.2041,
-              "contrib": 11.47
+              "weight": 1.0008,
+              "contrib": 42.21
             }
           ]
         }
@@ -896,8 +881,9 @@
       "lat": 36.9261,
       "lon": -111.4483,
       "elev_ft": 4316,
-      "prev_obs_min": 47.0,
-      "prev_obs_max": 61.0,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 42.6,
+      "prev_obs_max": 60.7,
       "periods": [
         {
           "key": "max_1",
@@ -905,35 +891,29 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 65.9,
-          "mos_f": 61.0,
-          "delta_f": -4.9,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 65.5,
+          "delta_f": -0.4,
+          "holdout_mos_mae": 1.69,
           "holdout_raw_mae": 1.63,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": -1.7959,
+              "contrib": -1.8
             },
             {
               "term": "hrrr_ext_t",
               "value": 65.94,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 61.0,
-              "weight": 1.0,
-              "contrib": 61.0
+              "weight": 1.0208,
+              "contrib": 67.31
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 47.0,
           "mos_f": 47.5,
@@ -961,28 +941,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 53.1,
-          "mos_f": 54.0,
-          "delta_f": 1.0,
-          "holdout_mos_mae": 2.01,
+          "mos_f": 53.0,
+          "delta_f": -0.1,
+          "holdout_mos_mae": 2.33,
           "holdout_raw_mae": 2.28,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -2.8977,
-              "contrib": -2.9
+              "weight": -3.2516,
+              "contrib": -3.25
             },
             {
               "term": "hrrr_ext_t",
               "value": 53.09,
-              "weight": 0.7665,
-              "contrib": 40.69
+              "weight": 0.8677,
+              "contrib": 46.06
             },
             {
               "term": "obs_prev_max",
-              "value": 61.0,
-              "weight": 0.2663,
-              "contrib": 16.24
+              "value": 60.72,
+              "weight": 0.1678,
+              "contrib": 10.19
             }
           ]
         }
@@ -1177,8 +1157,9 @@
       "lat": 35.0219,
       "lon": -110.7225,
       "elev_ft": 4941,
-      "prev_obs_min": 33.8,
-      "prev_obs_max": 63.1,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 34.1,
+      "prev_obs_max": 63.5,
       "periods": [
         {
           "key": "max_1",
@@ -1186,35 +1167,29 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 65.4,
-          "mos_f": 63.1,
-          "delta_f": -2.2,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 67.3,
+          "delta_f": 2.0,
+          "holdout_mos_mae": 1.38,
           "holdout_raw_mae": 2.52,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 2.6907,
+              "contrib": 2.69
             },
             {
               "term": "hrrr_ext_t",
               "value": 65.38,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 63.13,
-              "weight": 1.0,
-              "contrib": 63.13
+              "weight": 0.9889,
+              "contrib": 64.65
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 41.2,
           "mos_f": 40.4,
@@ -1248,28 +1223,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 53.2,
-          "mos_f": 56.4,
-          "delta_f": 3.2,
-          "holdout_mos_mae": 1.82,
+          "mos_f": 56.7,
+          "delta_f": 3.5,
+          "holdout_mos_mae": 1.8,
           "holdout_raw_mae": 2.44,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0665,
-              "contrib": 0.07
+              "weight": 1.0873,
+              "contrib": 1.09
             },
             {
               "term": "hrrr_ext_t",
               "value": 53.2,
-              "weight": 0.7766,
-              "contrib": 41.32
+              "weight": 0.9941,
+              "contrib": 52.89
             },
             {
-              "term": "obs_prev_max",
-              "value": 63.13,
-              "weight": 0.2376,
-              "contrib": 15.0
+              "term": "hrrr_u10_kt",
+              "value": 15.44,
+              "weight": 0.1757,
+              "contrib": 2.71
             }
           ]
         }
@@ -1464,8 +1439,9 @@
       "lat": 34.6545,
       "lon": -112.4196,
       "elev_ft": 5045,
-      "prev_obs_min": 37.2,
-      "prev_obs_max": 63.6,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 37.5,
+      "prev_obs_max": 63.9,
       "periods": [
         {
           "key": "max_1",
@@ -1473,59 +1449,53 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 60.5,
-          "mos_f": 63.6,
-          "delta_f": 3.1,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 59.9,
+          "delta_f": -0.6,
+          "holdout_mos_mae": 1.41,
           "holdout_raw_mae": 1.19,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 2.0138,
+              "contrib": 2.01
             },
             {
               "term": "hrrr_ext_t",
               "value": 60.48,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 63.61,
-              "weight": 1.0,
-              "contrib": 63.61
+              "weight": 0.957,
+              "contrib": 57.88
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 41.8,
-          "mos_f": 37.6,
-          "delta_f": -4.2,
-          "holdout_mos_mae": 2.47,
+          "mos_f": 37.7,
+          "delta_f": -4.1,
+          "holdout_mos_mae": 2.65,
           "holdout_raw_mae": 4.04,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -4.1238,
-              "contrib": -4.12
+              "weight": -4.6006,
+              "contrib": -4.6
             },
             {
               "term": "hrrr_ext_t",
               "value": 41.81,
-              "weight": 0.7868,
-              "contrib": 32.9
+              "weight": 0.859,
+              "contrib": 35.92
             },
             {
               "term": "obs_prev_min",
-              "value": 37.23,
-              "weight": 0.2378,
-              "contrib": 8.85
+              "value": 37.53,
+              "weight": 0.1712,
+              "contrib": 6.42
             }
           ]
         },
@@ -1745,8 +1715,9 @@
       "lat": 34.2655,
       "lon": -110.0056,
       "elev_ft": 6415,
-      "prev_obs_min": 35.2,
-      "prev_obs_max": 59.2,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 35.5,
+      "prev_obs_max": 59.5,
       "periods": [
         {
           "key": "max_1",
@@ -1754,35 +1725,35 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 57.4,
-          "mos_f": 59.2,
-          "delta_f": 1.8,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 59.1,
+          "delta_f": 1.7,
+          "holdout_mos_mae": 1.47,
           "holdout_raw_mae": 1.9,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.2637,
+              "contrib": 3.26
             },
             {
               "term": "hrrr_ext_t",
               "value": 57.39,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.7109,
+              "contrib": 40.8
             },
             {
               "term": "obs_prev_max",
-              "value": 59.18,
-              "weight": 1.0,
-              "contrib": 59.18
+              "value": 59.49,
+              "weight": 0.2534,
+              "contrib": 15.07
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 40.0,
           "mos_f": 40.0,
@@ -1816,28 +1787,34 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 43.7,
-          "mos_f": 51.0,
-          "delta_f": 7.3,
-          "holdout_mos_mae": 1.89,
+          "mos_f": 54.1,
+          "delta_f": 10.4,
+          "holdout_mos_mae": 2.13,
           "holdout_raw_mae": 2.39,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 1.7437,
-              "contrib": 1.74
+              "weight": 0.8852,
+              "contrib": 0.89
             },
             {
               "term": "hrrr_ext_t",
               "value": 43.68,
-              "weight": 0.5707,
-              "contrib": 24.93
+              "weight": 0.8203,
+              "contrib": 35.83
             },
             {
               "term": "obs_prev_max",
-              "value": 59.18,
-              "weight": 0.4105,
-              "contrib": 24.3
+              "value": 59.49,
+              "weight": 0.1712,
+              "contrib": 10.18
+            },
+            {
+              "term": "hrrr_lcdc",
+              "value": 100.0,
+              "weight": 0.072,
+              "contrib": 7.2
             }
           ]
         }
@@ -2032,8 +2009,9 @@
       "lat": 34.5184,
       "lon": -109.3789,
       "elev_ft": 5737,
-      "prev_obs_min": 33.0,
-      "prev_obs_max": 63.0,
+      "obs_date_label": "Thu, Nov 12",
+      "prev_obs_min": 31.0,
+      "prev_obs_max": 66.0,
       "periods": [
         {
           "key": "max_1",
@@ -2041,35 +2019,29 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 65.1,
-          "mos_f": 63.0,
-          "delta_f": -2.1,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 66.4,
+          "delta_f": 1.3,
+          "holdout_mos_mae": 0.96,
           "holdout_raw_mae": 1.67,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 1.6362,
+              "contrib": 1.64
             },
             {
               "term": "hrrr_ext_t",
               "value": 65.09,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 63.0,
-              "weight": 1.0,
-              "contrib": 63.0
+              "weight": 0.9946,
+              "contrib": 64.74
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 40.0,
           "mos_f": 35.0,
@@ -2097,28 +2069,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 50.6,
-          "mos_f": 53.3,
-          "delta_f": 2.7,
-          "holdout_mos_mae": 1.52,
+          "mos_f": 51.7,
+          "delta_f": 1.1,
+          "holdout_mos_mae": 1.48,
           "holdout_raw_mae": 1.7,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.4063,
-              "contrib": -0.41
+              "weight": 9.3415,
+              "contrib": 9.34
             },
             {
               "term": "hrrr_ext_t",
               "value": 50.61,
-              "weight": 0.8123,
-              "contrib": 41.11
+              "weight": 0.8784,
+              "contrib": 44.46
             },
             {
-              "term": "obs_prev_max",
-              "value": 63.0,
-              "weight": 0.1998,
-              "contrib": 12.59
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -3.0484,
+              "contrib": -2.1
             }
           ]
         }
@@ -2313,8 +2285,9 @@
       "lat": 34.8486,
       "lon": -111.7884,
       "elev_ft": 4830,
-      "prev_obs_min": 53.6,
-      "prev_obs_max": 62.6,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 48.0,
+      "prev_obs_max": 66.7,
       "periods": [
         {
           "key": "max_1",
@@ -2322,35 +2295,29 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 64.6,
-          "mos_f": 62.6,
-          "delta_f": -2.0,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 63.9,
+          "delta_f": -0.7,
+          "holdout_mos_mae": 1.71,
           "holdout_raw_mae": 1.71,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.3148,
+              "contrib": 0.31
             },
             {
               "term": "hrrr_ext_t",
               "value": 64.59,
-              "weight": 0.0,
-              "contrib": 0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 62.6,
-              "weight": 1.0,
-              "contrib": 62.6
+              "weight": 0.9845,
+              "contrib": 63.59
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 48.2,
           "mos_f": 44.5,
@@ -2384,28 +2351,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 49.8,
-          "mos_f": 52.0,
-          "delta_f": 2.2,
-          "holdout_mos_mae": 2.22,
+          "mos_f": 53.2,
+          "delta_f": 3.4,
+          "holdout_mos_mae": 2.31,
           "holdout_raw_mae": 2.5,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.1807,
-              "contrib": -0.18
+              "weight": -1.8944,
+              "contrib": -1.89
             },
             {
               "term": "hrrr_ext_t",
               "value": 49.82,
-              "weight": 0.7897,
-              "contrib": 39.35
+              "weight": 1.0106,
+              "contrib": 50.35
             },
             {
-              "term": "obs_prev_max",
-              "value": 62.6,
-              "weight": 0.2058,
-              "contrib": 12.88
+              "term": "hrrr_lcdc",
+              "value": 100.0,
+              "weight": 0.0472,
+              "contrib": 4.72
             }
           ]
         }
@@ -2600,8 +2567,9 @@
       "lat": 34.2568,
       "lon": -111.3393,
       "elev_ft": 5157,
-      "prev_obs_min": 43.5,
-      "prev_obs_max": 63.1,
+      "obs_date_label": "Thu, Nov 12",
+      "prev_obs_min": 44.6,
+      "prev_obs_max": 66.2,
       "periods": [
         {
           "key": "max_1",
@@ -2609,59 +2577,53 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 60.1,
-          "mos_f": 63.1,
-          "delta_f": 3.0,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 59.9,
+          "delta_f": -0.2,
+          "holdout_mos_mae": 1.07,
           "holdout_raw_mae": 1.16,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 1.0592,
+              "contrib": 1.06
             },
             {
               "term": "hrrr_ext_t",
               "value": 60.09,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 63.07,
-              "weight": 1.0,
-              "contrib": 63.07
+              "weight": 0.9797,
+              "contrib": 58.87
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 44.7,
-          "mos_f": 43.1,
-          "delta_f": -1.6,
-          "holdout_mos_mae": 2.07,
+          "mos_f": 43.4,
+          "delta_f": -1.3,
+          "holdout_mos_mae": 2.24,
           "holdout_raw_mae": 2.6,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.7006,
-              "contrib": -0.7
+              "weight": -2.85,
+              "contrib": -2.85
             },
             {
               "term": "hrrr_ext_t",
               "value": 44.74,
-              "weight": 0.5901,
-              "contrib": 26.4
+              "weight": 0.7646,
+              "contrib": 34.2
             },
             {
-              "term": "obs_prev_min",
-              "value": 43.47,
-              "weight": 0.4006,
-              "contrib": 17.41
+              "term": "obs_prev_max",
+              "value": 66.2,
+              "weight": 0.1818,
+              "contrib": 12.03
             }
           ]
         },
@@ -2671,28 +2633,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 47.9,
-          "mos_f": 51.8,
-          "delta_f": 3.9,
-          "holdout_mos_mae": 1.45,
+          "mos_f": 53.1,
+          "delta_f": 5.1,
+          "holdout_mos_mae": 1.61,
           "holdout_raw_mae": 1.73,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 2.0553,
-              "contrib": 2.06
+              "weight": 0.8705,
+              "contrib": 0.87
             },
             {
               "term": "hrrr_ext_t",
               "value": 47.91,
-              "weight": 0.7554,
-              "contrib": 36.2
+              "weight": 0.9793,
+              "contrib": 46.92
             },
             {
-              "term": "obs_prev_max",
-              "value": 63.07,
-              "weight": 0.2143,
-              "contrib": 13.51
+              "term": "hrrr_lcdc",
+              "value": 100.0,
+              "weight": 0.0527,
+              "contrib": 5.27
             }
           ]
         }
@@ -2887,8 +2849,9 @@
       "lat": 35.6571,
       "lon": -109.0603,
       "elev_ft": 6745,
-      "prev_obs_min": 25.2,
-      "prev_obs_max": 58.1,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 25.6,
+      "prev_obs_max": 58.4,
       "periods": [
         {
           "key": "max_1",
@@ -2896,71 +2859,65 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 56.7,
-          "mos_f": 58.1,
-          "delta_f": 1.4,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 59.9,
+          "delta_f": 3.1,
+          "holdout_mos_mae": 2.25,
           "holdout_raw_mae": 2.01,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 2.2078,
+              "contrib": 2.21
             },
             {
               "term": "hrrr_ext_t",
               "value": 56.71,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 58.12,
-              "weight": 1.0,
-              "contrib": 58.12
+              "weight": 1.0165,
+              "contrib": 57.65
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 38.1,
-          "mos_f": 35.5,
-          "delta_f": -2.6,
-          "holdout_mos_mae": 3.25,
+          "mos_f": 35.9,
+          "delta_f": -2.2,
+          "holdout_mos_mae": 3.42,
           "holdout_raw_mae": 6.65,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -7.1977,
-              "contrib": -7.2
+              "weight": -0.0415,
+              "contrib": -0.04
             },
             {
               "term": "hrrr_ext_t",
               "value": 38.09,
-              "weight": 0.6194,
-              "contrib": 23.59
+              "weight": 0.6125,
+              "contrib": 23.33
             },
             {
               "term": "hrrr_win_dp2m",
               "value": 36.52,
-              "weight": 0.1991,
-              "contrib": 7.27
+              "weight": 0.3177,
+              "contrib": 11.6
             },
             {
-              "term": "obs_prev_min",
-              "value": 25.25,
-              "weight": 0.2965,
-              "contrib": 7.49
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -4.9603,
+              "contrib": -3.41
             },
             {
               "term": "hrrr_wspd700_kt",
               "value": 34.32,
-              "weight": 0.1253,
-              "contrib": 4.3
+              "weight": 0.1289,
+              "contrib": 4.43
             }
           ]
         },
@@ -2970,28 +2927,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 43.1,
-          "mos_f": 49.6,
-          "delta_f": 6.5,
-          "holdout_mos_mae": 2.19,
+          "mos_f": 48.3,
+          "delta_f": 5.2,
+          "holdout_mos_mae": 2.32,
           "holdout_raw_mae": 2.32,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 1.4884,
-              "contrib": 1.49
+              "weight": 1.8897,
+              "contrib": 1.89
             },
             {
               "term": "hrrr_ext_t",
               "value": 43.07,
-              "weight": 0.7174,
-              "contrib": 30.9
+              "weight": 0.8279,
+              "contrib": 35.66
             },
             {
               "term": "obs_prev_max",
-              "value": 58.12,
-              "weight": 0.2954,
-              "contrib": 17.17
+              "value": 58.44,
+              "weight": 0.1842,
+              "contrib": 10.77
             }
           ]
         }
@@ -3186,8 +3143,9 @@
       "lat": 35.3055,
       "lon": -112.1944,
       "elev_ft": 6691,
-      "prev_obs_min": 31.8,
-      "prev_obs_max": 58.0,
+      "obs_date_label": "Thu, Nov 12 (Clim)",
+      "prev_obs_min": 32.0,
+      "prev_obs_max": 58.3,
       "periods": [
         {
           "key": "max_1",
@@ -3195,35 +3153,29 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 53.5,
-          "mos_f": 58.0,
-          "delta_f": 4.6,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 54.2,
+          "delta_f": 0.8,
+          "holdout_mos_mae": 1.3,
           "holdout_raw_mae": 1.38,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 2.0465,
+              "contrib": 2.05
             },
             {
               "term": "hrrr_ext_t",
               "value": 53.45,
-              "weight": -0.0,
-              "contrib": -0.0
-            },
-            {
-              "term": "obs_prev_max",
-              "value": 58.03,
-              "weight": 1.0,
-              "contrib": 58.03
+              "weight": 0.9766,
+              "contrib": 52.2
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 38.1,
           "mos_f": 35.1,
@@ -3467,6 +3419,7 @@
       "lat": 36.1056,
       "lon": -112.095,
       "elev_ft": 2530,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 46.0,
       "prev_obs_max": 67.0,
       "periods": [
@@ -3476,65 +3429,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 70.4,
-          "mos_f": 67.0,
-          "delta_f": -3.4,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 72.3,
+          "delta_f": 1.9,
+          "holdout_mos_mae": 2.96,
           "holdout_raw_mae": 5.91,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 3.4504,
+              "contrib": 3.45
             },
             {
               "term": "hrrr_ext_t",
               "value": 70.38,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.6064,
+              "contrib": 42.68
             },
             {
               "term": "obs_prev_max",
               "value": 67.0,
-              "weight": 1.0,
-              "contrib": 67.0
+              "weight": 0.39,
+              "contrib": 26.13
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 51.7,
-          "mos_f": 47.4,
-          "delta_f": -4.3,
-          "holdout_mos_mae": 3.55,
+          "mos_f": 50.5,
+          "delta_f": -1.2,
+          "holdout_mos_mae": 3.85,
           "holdout_raw_mae": 5.25,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -4.2293,
-              "contrib": -4.23
+              "weight": 98.6564,
+              "contrib": 98.66
             },
             {
               "term": "hrrr_ext_t",
               "value": 51.74,
-              "weight": 0.3999,
-              "contrib": 20.69
+              "weight": 0.6467,
+              "contrib": 33.46
             },
             {
               "term": "obs_prev_min",
               "value": 46.0,
-              "weight": 0.3584,
-              "contrib": 16.48
+              "weight": 0.2284,
+              "contrib": 10.51
             },
             {
               "term": "norm_t",
-              "value": 46.72,
-              "weight": 0.31,
-              "contrib": 14.48
+              "value": 46.71,
+              "weight": 0.3291,
+              "contrib": 15.37
+            },
+            {
+              "term": "hrrr_hgt_500",
+              "value": 5592.02,
+              "weight": -0.0192,
+              "contrib": -107.5
             }
           ]
         },
@@ -3544,28 +3503,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 58.6,
-          "mos_f": 64.2,
-          "delta_f": 5.6,
-          "holdout_mos_mae": 2.51,
+          "mos_f": 63.8,
+          "delta_f": 5.2,
+          "holdout_mos_mae": 3.46,
           "holdout_raw_mae": 6.52,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -1.5961,
-              "contrib": -1.6
+              "weight": -0.3778,
+              "contrib": -0.38
             },
             {
               "term": "hrrr_ext_t",
               "value": 58.6,
-              "weight": 0.5837,
-              "contrib": 34.2
+              "weight": 0.7109,
+              "contrib": 41.66
             },
             {
               "term": "obs_prev_max",
               "value": 67.0,
-              "weight": 0.4713,
-              "contrib": 31.58
+              "weight": 0.3356,
+              "contrib": 22.49
             }
           ]
         }
@@ -3760,6 +3719,7 @@
       "lat": 33.8492,
       "lon": -109.1436,
       "elev_ft": 8050,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 29.0,
       "prev_obs_max": 58.0,
       "periods": [
@@ -3769,71 +3729,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 49.0,
-          "mos_f": 58.0,
-          "delta_f": 9.0,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 53.6,
+          "delta_f": 4.6,
+          "holdout_mos_mae": 2.52,
           "holdout_raw_mae": 3.19,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.5951,
+              "contrib": 3.6
             },
             {
               "term": "hrrr_ext_t",
               "value": 48.95,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.6467,
+              "contrib": 31.66
             },
             {
               "term": "obs_prev_max",
               "value": 58.0,
-              "weight": 1.0,
-              "contrib": 58.0
+              "weight": 0.3156,
+              "contrib": 18.3
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 34.9,
-          "mos_f": 32.6,
-          "delta_f": -2.3,
-          "holdout_mos_mae": 3.89,
+          "mos_f": 32.3,
+          "delta_f": -2.6,
+          "holdout_mos_mae": 4.13,
           "holdout_raw_mae": 11.01,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -13.7386,
-              "contrib": -13.74
+              "weight": -10.8789,
+              "contrib": -10.88
             },
             {
               "term": "hrrr_ext_t",
               "value": 34.95,
-              "weight": 0.7175,
-              "contrib": 25.07
+              "weight": 0.7933,
+              "contrib": 27.72
             },
             {
               "term": "hrrr_win_rh",
               "value": 91.27,
-              "weight": 0.1105,
-              "contrib": 10.08
-            },
-            {
-              "term": "obs_prev_min",
-              "value": 29.0,
-              "weight": 0.2579,
-              "contrib": 7.48
+              "weight": 0.1516,
+              "contrib": 13.83
             },
             {
               "term": "hrrr_wspd700_kt",
               "value": 23.35,
-              "weight": 0.1602,
-              "contrib": 3.74
+              "weight": 0.1622,
+              "contrib": 3.79
+            },
+            {
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -3.077,
+              "contrib": -2.12
             }
           ]
         },
@@ -3843,28 +3803,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 37.0,
-          "mos_f": 46.7,
-          "delta_f": 9.6,
-          "holdout_mos_mae": 2.86,
+          "mos_f": 45.1,
+          "delta_f": 8.1,
+          "holdout_mos_mae": 2.99,
           "holdout_raw_mae": 3.33,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 1.4555,
-              "contrib": 1.46
+              "weight": 2.7028,
+              "contrib": 2.7
             },
             {
               "term": "hrrr_ext_t",
               "value": 37.04,
-              "weight": 0.5903,
-              "contrib": 21.87
+              "weight": 0.6821,
+              "contrib": 25.27
             },
             {
               "term": "obs_prev_max",
               "value": 58.0,
-              "weight": 0.4029,
-              "contrib": 23.37
+              "weight": 0.2961,
+              "contrib": 17.17
             }
           ]
         }
@@ -4059,6 +4019,7 @@
       "lat": 34.1361,
       "lon": -109.2864,
       "elev_ft": 7060,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 28.0,
       "prev_obs_max": 65.0,
       "periods": [
@@ -4068,71 +4029,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 56.9,
-          "mos_f": 65.0,
-          "delta_f": 8.1,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 61.6,
+          "delta_f": 4.6,
+          "holdout_mos_mae": 2.49,
           "holdout_raw_mae": 4.16,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 2.8996,
+              "contrib": 2.9
             },
             {
               "term": "hrrr_ext_t",
               "value": 56.94,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.6787,
+              "contrib": 38.64
             },
             {
               "term": "obs_prev_max",
               "value": 65.0,
-              "weight": 1.0,
-              "contrib": 65.0
+              "weight": 0.3079,
+              "contrib": 20.01
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 36.3,
-          "mos_f": 32.4,
-          "delta_f": -3.9,
-          "holdout_mos_mae": 3.72,
+          "mos_f": 32.6,
+          "delta_f": -3.7,
+          "holdout_mos_mae": 4.11,
           "holdout_raw_mae": 10.01,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -18.0188,
-              "contrib": -18.02
+              "weight": -15.9476,
+              "contrib": -15.95
             },
             {
               "term": "hrrr_ext_t",
               "value": 36.3,
-              "weight": 0.8565,
-              "contrib": 31.09
+              "weight": 0.9479,
+              "contrib": 34.41
             },
             {
               "term": "hrrr_win_rh",
               "value": 74.83,
-              "weight": 0.1134,
-              "contrib": 8.49
+              "weight": 0.1576,
+              "contrib": 11.79
             },
             {
               "term": "hrrr_wspd700_kt",
               "value": 23.92,
-              "weight": 0.1694,
-              "contrib": 4.05
+              "weight": 0.1913,
+              "contrib": 4.58
             },
             {
-              "term": "obs_prev_min",
-              "value": 28.0,
-              "weight": 0.2423,
-              "contrib": 6.78
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -3.2723,
+              "contrib": -2.25
             }
           ]
         },
@@ -4142,28 +4103,34 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 46.1,
-          "mos_f": 57.1,
-          "delta_f": 11.0,
-          "holdout_mos_mae": 2.3,
+          "mos_f": 60.1,
+          "delta_f": 13.9,
+          "holdout_mos_mae": 2.66,
           "holdout_raw_mae": 3.69,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 3.5373,
-              "contrib": 3.54
+              "weight": 2.3906,
+              "contrib": 2.39
             },
             {
               "term": "hrrr_ext_t",
               "value": 46.11,
-              "weight": 0.5103,
-              "contrib": 23.53
+              "weight": 0.7228,
+              "contrib": 33.33
             },
             {
               "term": "obs_prev_max",
               "value": 65.0,
-              "weight": 0.4625,
-              "contrib": 30.06
+              "weight": 0.2726,
+              "contrib": 17.72
+            },
+            {
+              "term": "hrrr_lcdc",
+              "value": 91.67,
+              "weight": 0.0723,
+              "contrib": 6.62
             }
           ]
         }
@@ -4358,8 +4325,9 @@
       "lat": 35.2413,
       "lon": -112.1929,
       "elev_ft": 6909,
-      "prev_obs_min": 35.0,
-      "prev_obs_max": 64.0,
+      "obs_date_label": "Thu, Nov 12",
+      "prev_obs_min": 38.0,
+      "prev_obs_max": 60.0,
       "periods": [
         {
           "key": "max_1",
@@ -4367,65 +4335,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 51.5,
-          "mos_f": 64.0,
-          "delta_f": 12.5,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 57.8,
+          "delta_f": 6.2,
+          "holdout_mos_mae": 2.03,
           "holdout_raw_mae": 3.37,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.2082,
+              "contrib": 3.21
             },
             {
               "term": "hrrr_ext_t",
               "value": 51.54,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.4402,
+              "contrib": 22.69
             },
             {
               "term": "obs_prev_max",
-              "value": 64.0,
-              "weight": 1.0,
-              "contrib": 64.0
+              "value": 60.0,
+              "weight": 0.5316,
+              "contrib": 31.89
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 36.9,
-          "mos_f": 35.5,
-          "delta_f": -1.3,
-          "holdout_mos_mae": 3.67,
+          "mos_f": 37.5,
+          "delta_f": 0.7,
+          "holdout_mos_mae": 3.51,
           "holdout_raw_mae": 6.67,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -7.2176,
-              "contrib": -7.22
+              "weight": -15.9905,
+              "contrib": -15.99
             },
             {
               "term": "hrrr_ext_t",
               "value": 36.86,
-              "weight": 0.7254,
-              "contrib": 26.74
+              "weight": 0.8158,
+              "contrib": 30.07
             },
             {
               "term": "hrrr_win_rh",
               "value": 94.67,
-              "weight": 0.0774,
-              "contrib": 7.33
+              "weight": 0.1155,
+              "contrib": 10.93
             },
             {
-              "term": "obs_prev_min",
-              "value": 35.0,
-              "weight": 0.2483,
-              "contrib": 8.69
+              "term": "obs_prev_max",
+              "value": 60.0,
+              "weight": 0.1617,
+              "contrib": 9.7
+            },
+            {
+              "term": "hrrr_wspd700_kt",
+              "value": 31.96,
+              "weight": 0.0883,
+              "contrib": 2.82
             }
           ]
         },
@@ -4435,28 +4409,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 40.1,
-          "mos_f": 53.7,
-          "delta_f": 13.6,
-          "holdout_mos_mae": 2.35,
+          "mos_f": 49.6,
+          "delta_f": 9.5,
+          "holdout_mos_mae": 2.91,
           "holdout_raw_mae": 4.66,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 3.0799,
-              "contrib": 3.08
+              "weight": 4.5576,
+              "contrib": 4.56
             },
             {
               "term": "hrrr_ext_t",
               "value": 40.15,
-              "weight": 0.4936,
-              "contrib": 19.82
+              "weight": 0.627,
+              "contrib": 25.17
             },
             {
               "term": "obs_prev_max",
-              "value": 64.0,
-              "weight": 0.4813,
-              "contrib": 30.8
+              "value": 60.0,
+              "weight": 0.3315,
+              "contrib": 19.89
             }
           ]
         }
@@ -4651,6 +4625,7 @@
       "lat": 34.2333,
       "lon": -111.3333,
       "elev_ft": 4915,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 35.0,
       "prev_obs_max": 68.0,
       "periods": [
@@ -4660,65 +4635,65 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 60.5,
-          "mos_f": 68.0,
-          "delta_f": 7.5,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 65.5,
+          "delta_f": 4.9,
+          "holdout_mos_mae": 1.74,
           "holdout_raw_mae": 1.95,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.3133,
+              "contrib": 3.31
             },
             {
               "term": "hrrr_ext_t",
               "value": 60.54,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.5563,
+              "contrib": 33.68
             },
             {
               "term": "obs_prev_max",
               "value": 68.0,
-              "weight": 1.0,
-              "contrib": 68.0
+              "weight": 0.4188,
+              "contrib": 28.48
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 45.0,
-          "mos_f": 42.2,
-          "delta_f": -2.7,
-          "holdout_mos_mae": 2.82,
+          "mos_f": 43.0,
+          "delta_f": -1.9,
+          "holdout_mos_mae": 2.85,
           "holdout_raw_mae": 8.77,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -11.4688,
-              "contrib": -11.47
+              "weight": -13.3134,
+              "contrib": -13.31
             },
             {
               "term": "hrrr_ext_t",
               "value": 44.96,
-              "weight": 0.7168,
-              "contrib": 32.23
+              "weight": 0.809,
+              "contrib": 36.37
             },
             {
               "term": "hrrr_win_rh",
               "value": 96.33,
-              "weight": 0.1115,
-              "contrib": 10.74
+              "weight": 0.1246,
+              "contrib": 12.01
             },
             {
               "term": "obs_prev_min",
               "value": 35.0,
-              "weight": 0.3066,
-              "contrib": 10.73
+              "weight": 0.2273,
+              "contrib": 7.96
             }
           ]
         },
@@ -4728,28 +4703,34 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 48.5,
-          "mos_f": 60.0,
-          "delta_f": 11.6,
-          "holdout_mos_mae": 2.0,
+          "mos_f": 60.9,
+          "delta_f": 12.4,
+          "holdout_mos_mae": 2.07,
           "holdout_raw_mae": 3.03,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 4.4234,
-              "contrib": 4.42
+              "weight": 4.0791,
+              "contrib": 4.08
             },
             {
               "term": "hrrr_ext_t",
               "value": 48.47,
-              "weight": 0.4887,
-              "contrib": 23.69
+              "weight": 0.7369,
+              "contrib": 35.72
             },
             {
               "term": "obs_prev_max",
               "value": 68.0,
-              "weight": 0.4693,
-              "contrib": 31.91
+              "weight": 0.2283,
+              "contrib": 15.53
+            },
+            {
+              "term": "hrrr_lcdc",
+              "value": 100.0,
+              "weight": 0.0558,
+              "contrib": 5.58
             }
           ]
         }
@@ -4944,6 +4925,7 @@
       "lat": 36.6786,
       "lon": -110.5419,
       "elev_ft": 7286,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 40.0,
       "prev_obs_max": 59.0,
       "periods": [
@@ -4953,65 +4935,65 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 53.5,
-          "mos_f": 59.0,
-          "delta_f": 5.5,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 56.2,
+          "delta_f": 2.7,
+          "holdout_mos_mae": 2.61,
           "holdout_raw_mae": 3.6,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": -1.5969,
+              "contrib": -1.6
             },
             {
               "term": "hrrr_ext_t",
               "value": 53.45,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.6546,
+              "contrib": 34.99
             },
             {
               "term": "obs_prev_max",
               "value": 59.0,
-              "weight": 1.0,
-              "contrib": 59.0
+              "weight": 0.3862,
+              "contrib": 22.79
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 36.7,
-          "mos_f": 33.2,
+          "mos_f": 33.1,
           "delta_f": -3.6,
-          "holdout_mos_mae": 2.56,
+          "holdout_mos_mae": 2.76,
           "holdout_raw_mae": 3.02,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 1.4621,
-              "contrib": 1.46
+              "weight": 1.0989,
+              "contrib": 1.1
             },
             {
               "term": "hrrr_ext_t",
               "value": 36.75,
-              "weight": 0.6376,
-              "contrib": 23.43
+              "weight": 0.7246,
+              "contrib": 26.63
             },
             {
               "term": "obs_prev_min",
               "value": 40.0,
-              "weight": 0.3425,
-              "contrib": 13.7
+              "weight": 0.259,
+              "contrib": 10.36
             },
             {
               "term": "hrrr_wspd10_kt",
               "value": 18.25,
-              "weight": -0.2967,
-              "contrib": -5.41
+              "weight": -0.2714,
+              "contrib": -4.95
             }
           ]
         },
@@ -5021,28 +5003,40 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 39.0,
-          "mos_f": 48.2,
-          "delta_f": 9.3,
-          "holdout_mos_mae": 3.05,
+          "mos_f": 47.2,
+          "delta_f": 8.2,
+          "holdout_mos_mae": 3.34,
           "holdout_raw_mae": 4.95,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.3461,
-              "contrib": 0.35
+              "weight": -3.1399,
+              "contrib": -3.14
             },
             {
               "term": "hrrr_ext_t",
               "value": 38.96,
-              "weight": 0.5801,
-              "contrib": 22.6
+              "weight": 0.6474,
+              "contrib": 25.22
             },
             {
               "term": "obs_prev_max",
               "value": 59.0,
-              "weight": 0.4285,
-              "contrib": 25.28
+              "weight": 0.1747,
+              "contrib": 10.31
+            },
+            {
+              "term": "hrrr_u10_kt",
+              "value": 17.23,
+              "weight": 0.1752,
+              "contrib": 3.02
+            },
+            {
+              "term": "norm_t",
+              "value": 54.18,
+              "weight": 0.2177,
+              "contrib": 11.8
             }
           ]
         }
@@ -5237,6 +5231,7 @@
       "lat": 36.1536,
       "lon": -109.5389,
       "elev_ft": 5610,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 32.0,
       "prev_obs_max": 61.0,
       "periods": [
@@ -5246,65 +5241,65 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 61.3,
-          "mos_f": 61.0,
-          "delta_f": -0.3,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 62.1,
+          "delta_f": 0.8,
+          "holdout_mos_mae": 2.08,
           "holdout_raw_mae": 3.27,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": -1.5785,
+              "contrib": -1.58
             },
             {
               "term": "hrrr_ext_t",
               "value": 61.33,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.6465,
+              "contrib": 39.65
             },
             {
               "term": "obs_prev_max",
               "value": 61.0,
-              "weight": 1.0,
-              "contrib": 61.0
+              "weight": 0.3937,
+              "contrib": 24.02
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 42.3,
-          "mos_f": 37.8,
-          "delta_f": -4.4,
-          "holdout_mos_mae": 3.38,
+          "mos_f": 39.1,
+          "delta_f": -3.1,
+          "holdout_mos_mae": 3.6,
           "holdout_raw_mae": 7.1,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -10.6029,
-              "contrib": -10.6
+              "weight": -16.8959,
+              "contrib": -16.9
             },
             {
               "term": "hrrr_ext_t",
               "value": 42.26,
-              "weight": 0.8556,
-              "contrib": 36.16
-            },
-            {
-              "term": "obs_prev_min",
-              "value": 32.0,
-              "weight": 0.2163,
-              "contrib": 6.92
+              "weight": 0.8974,
+              "contrib": 37.92
             },
             {
               "term": "hrrr_win_rh",
               "value": 81.6,
-              "weight": 0.0658,
-              "contrib": 5.37
+              "weight": 0.1021,
+              "contrib": 8.33
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 61.0,
+              "weight": 0.1599,
+              "contrib": 9.75
             }
           ]
         },
@@ -5314,28 +5309,34 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 49.8,
-          "mos_f": 55.7,
-          "delta_f": 5.9,
-          "holdout_mos_mae": 2.3,
+          "mos_f": 57.2,
+          "delta_f": 7.4,
+          "holdout_mos_mae": 2.92,
           "holdout_raw_mae": 4.17,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.4518,
-              "contrib": -0.45
+              "weight": -3.3613,
+              "contrib": -3.36
             },
             {
               "term": "hrrr_ext_t",
               "value": 49.82,
-              "weight": 0.5396,
-              "contrib": 26.88
+              "weight": 0.7566,
+              "contrib": 37.7
             },
             {
               "term": "obs_prev_max",
               "value": 61.0,
-              "weight": 0.4805,
-              "contrib": 29.31
+              "weight": 0.304,
+              "contrib": 18.55
+            },
+            {
+              "term": "hrrr_lcdc",
+              "value": 65.33,
+              "weight": 0.0668,
+              "contrib": 4.37
             }
           ]
         }
@@ -5530,6 +5531,7 @@
       "lat": 34.8122,
       "lon": -109.8925,
       "elev_ft": 5446,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 30.0,
       "prev_obs_max": 64.0,
       "periods": [
@@ -5539,59 +5541,59 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 61.4,
-          "mos_f": 64.0,
+          "mos_f": 64.1,
           "delta_f": 2.6,
-          "holdout_mos_mae": 0.0,
+          "holdout_mos_mae": 3.1,
           "holdout_raw_mae": 4.34,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.0703,
+              "contrib": 0.07
             },
             {
               "term": "hrrr_ext_t",
               "value": 61.44,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 0.4917,
+              "contrib": 30.21
             },
             {
               "term": "obs_prev_max",
               "value": 64.0,
-              "weight": 1.0,
-              "contrib": 64.0
+              "weight": 0.5279,
+              "contrib": 33.79
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 42.6,
-          "mos_f": 36.3,
-          "delta_f": -6.3,
-          "holdout_mos_mae": 2.26,
+          "mos_f": 40.5,
+          "delta_f": -2.1,
+          "holdout_mos_mae": 2.35,
           "holdout_raw_mae": 4.14,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -4.6842,
-              "contrib": -4.68
+              "weight": -7.7837,
+              "contrib": -7.78
             },
             {
               "term": "hrrr_ext_t",
               "value": 42.59,
-              "weight": 0.7928,
-              "contrib": 33.77
+              "weight": 1.0256,
+              "contrib": 43.68
             },
             {
-              "term": "obs_prev_min",
-              "value": 30.0,
-              "weight": 0.2417,
-              "contrib": 7.25
+              "term": "hrrr_win_rh",
+              "value": 87.13,
+              "weight": 0.0526,
+              "contrib": 4.58
             }
           ]
         },
@@ -5601,34 +5603,46 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 47.3,
-          "mos_f": 65.9,
-          "delta_f": 18.5,
-          "holdout_mos_mae": 3.24,
+          "mos_f": 64.8,
+          "delta_f": 17.5,
+          "holdout_mos_mae": 3.67,
           "holdout_raw_mae": 4.73,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -1.2396,
-              "contrib": -1.24
+              "weight": -5.1807,
+              "contrib": -5.18
             },
             {
               "term": "hrrr_ext_t",
               "value": 47.35,
-              "weight": 0.5059,
-              "contrib": 23.95
+              "weight": 0.651,
+              "contrib": 30.82
             },
             {
-              "term": "obs_prev_max",
-              "value": 64.0,
-              "weight": 0.5191,
-              "contrib": 33.22
+              "term": "norm_t",
+              "value": 61.67,
+              "weight": 0.2065,
+              "contrib": 12.73
             },
             {
               "term": "hrrr_lcdc",
               "value": 100.0,
-              "weight": 0.0992,
-              "contrib": 9.92
+              "weight": 0.1088,
+              "contrib": 10.88
+            },
+            {
+              "term": "hrrr_wspd10_kt",
+              "value": 14.15,
+              "weight": 0.2323,
+              "contrib": 3.29
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 64.0,
+              "weight": 0.1918,
+              "contrib": 12.28
             }
           ]
         }
@@ -5823,6 +5837,7 @@
       "lat": 35.0283,
       "lon": -111.0233,
       "elev_ft": 5535,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 32.0,
       "prev_obs_max": 60.0,
       "periods": [
@@ -5832,65 +5847,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 61.9,
-          "mos_f": 60.0,
-          "delta_f": -1.9,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 61.3,
+          "delta_f": -0.6,
+          "holdout_mos_mae": 3.92,
           "holdout_raw_mae": 3.84,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 1.2226,
+              "contrib": 1.22
             },
             {
               "term": "hrrr_ext_t",
               "value": 61.89,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.5298,
+              "contrib": 32.79
             },
             {
               "term": "obs_prev_max",
               "value": 60.0,
-              "weight": 1.0,
-              "contrib": 60.0
+              "weight": 0.4547,
+              "contrib": 27.28
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 41.5,
-          "mos_f": 34.8,
-          "delta_f": -6.7,
-          "holdout_mos_mae": 5.9,
+          "mos_f": 34.9,
+          "delta_f": -6.6,
+          "holdout_mos_mae": 6.5,
           "holdout_raw_mae": 7.26,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -2.095,
-              "contrib": -2.1
+              "weight": -108.3535,
+              "contrib": -108.35
             },
             {
               "term": "hrrr_ext_t",
               "value": 41.47,
-              "weight": 0.3572,
-              "contrib": 14.82
+              "weight": 0.3826,
+              "contrib": 15.87
             },
             {
               "term": "obs_prev_min",
               "value": 32.0,
-              "weight": 0.4193,
-              "contrib": 13.42
+              "weight": 0.2527,
+              "contrib": 8.09
+            },
+            {
+              "term": "hrrr_thick_1000_500",
+              "value": 5554.72,
+              "weight": 0.0201,
+              "contrib": 111.58
             },
             {
               "term": "norm_t",
-              "value": 35.34,
-              "weight": 0.2454,
-              "contrib": 8.67
+              "value": 35.32,
+              "weight": 0.2176,
+              "contrib": 7.69
             }
           ]
         },
@@ -5900,28 +5921,34 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 49.5,
-          "mos_f": 54.1,
-          "delta_f": 4.6,
-          "holdout_mos_mae": 3.55,
+          "mos_f": 51.8,
+          "delta_f": 2.3,
+          "holdout_mos_mae": 3.9,
           "holdout_raw_mae": 3.89,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.2816,
-              "contrib": 0.28
+              "weight": 10.2651,
+              "contrib": 10.27
             },
             {
               "term": "hrrr_ext_t",
               "value": 49.53,
-              "weight": 0.5308,
-              "contrib": 26.29
+              "weight": 0.6086,
+              "contrib": 30.14
             },
             {
               "term": "obs_prev_max",
               "value": 60.0,
-              "weight": 0.4594,
-              "contrib": 27.56
+              "weight": 0.2336,
+              "contrib": 14.02
+            },
+            {
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -3.835,
+              "contrib": -2.64
             }
           ]
         }
@@ -6116,6 +6143,7 @@
       "lat": 35.1583,
       "lon": -111.275,
       "elev_ft": 5920,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 33.0,
       "prev_obs_max": 60.0,
       "periods": [
@@ -6125,65 +6153,65 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 60.1,
-          "mos_f": 60.0,
-          "delta_f": -0.1,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 60.6,
+          "delta_f": 0.6,
+          "holdout_mos_mae": 1.87,
           "holdout_raw_mae": 1.63,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.1775,
+              "contrib": 3.18
             },
             {
               "term": "hrrr_ext_t",
               "value": 60.09,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.5778,
+              "contrib": 34.72
             },
             {
               "term": "obs_prev_max",
               "value": 60.0,
-              "weight": 1.0,
-              "contrib": 60.0
+              "weight": 0.3791,
+              "contrib": 22.75
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 40.2,
-          "mos_f": 34.8,
-          "delta_f": -5.4,
-          "holdout_mos_mae": 2.79,
+          "mos_f": 35.3,
+          "delta_f": -4.9,
+          "holdout_mos_mae": 3.21,
           "holdout_raw_mae": 4.46,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -5.5674,
-              "contrib": -5.57
+              "weight": -6.6982,
+              "contrib": -6.7
             },
             {
               "term": "hrrr_ext_t",
               "value": 40.24,
-              "weight": 0.6953,
-              "contrib": 27.98
-            },
-            {
-              "term": "obs_prev_min",
-              "value": 33.0,
-              "weight": 0.2839,
-              "contrib": 9.37
+              "weight": 0.8044,
+              "contrib": 32.36
             },
             {
               "term": "hrrr_wspd700_kt",
               "value": 33.44,
-              "weight": 0.0908,
-              "contrib": 3.04
+              "weight": 0.1167,
+              "contrib": 3.9
+            },
+            {
+              "term": "obs_prev_min",
+              "value": 33.0,
+              "weight": 0.1749,
+              "contrib": 5.77
             }
           ]
         },
@@ -6193,28 +6221,34 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 46.2,
-          "mos_f": 53.0,
-          "delta_f": 6.8,
+          "mos_f": 50.8,
+          "delta_f": 4.6,
           "holdout_mos_mae": 2.31,
           "holdout_raw_mae": 1.72,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.8536,
-              "contrib": 0.85
+              "weight": 0.1505,
+              "contrib": 0.15
             },
             {
               "term": "hrrr_ext_t",
               "value": 46.16,
-              "weight": 0.5014,
-              "contrib": 23.14
+              "weight": 0.7073,
+              "contrib": 32.65
             },
             {
               "term": "obs_prev_max",
               "value": 60.0,
-              "weight": 0.4828,
-              "contrib": 28.97
+              "weight": 0.2564,
+              "contrib": 15.38
+            },
+            {
+              "term": "hrrr_wspd10_kt",
+              "value": 13.9,
+              "weight": 0.1874,
+              "contrib": 2.6
             }
           ]
         }
@@ -6409,6 +6443,7 @@
       "lat": 34.7708,
       "lon": -112.0264,
       "elev_ft": 3383,
+      "obs_date_label": "Thu, Nov 12",
       "prev_obs_min": 43.0,
       "prev_obs_max": 78.0,
       "periods": [
@@ -6418,65 +6453,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 68.0,
-          "mos_f": 78.0,
-          "delta_f": 10.0,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 74.1,
+          "delta_f": 6.1,
+          "holdout_mos_mae": 2.23,
           "holdout_raw_mae": 3.11,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.0508,
+              "contrib": 0.05
             },
             {
               "term": "hrrr_ext_t",
               "value": 67.96,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.6198,
+              "contrib": 42.13
             },
             {
               "term": "obs_prev_max",
               "value": 78.0,
-              "weight": 1.0,
-              "contrib": 78.0
+              "weight": 0.4092,
+              "contrib": 31.92
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 47.1,
-          "mos_f": 44.0,
-          "delta_f": -3.1,
-          "holdout_mos_mae": 2.78,
+          "mos_f": 44.8,
+          "delta_f": -2.4,
+          "holdout_mos_mae": 3.01,
           "holdout_raw_mae": 7.85,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -8.6197,
-              "contrib": -8.62
+              "weight": -10.006,
+              "contrib": -10.01
             },
             {
               "term": "hrrr_ext_t",
               "value": 47.12,
-              "weight": 0.6862,
-              "contrib": 32.34
-            },
-            {
-              "term": "obs_prev_min",
-              "value": 43.0,
-              "weight": 0.3213,
-              "contrib": 13.82
+              "weight": 0.684,
+              "contrib": 32.23
             },
             {
               "term": "hrrr_win_rh",
               "value": 85.47,
-              "weight": 0.0754,
-              "contrib": 6.45
+              "weight": 0.124,
+              "contrib": 10.6
+            },
+            {
+              "term": "obs_prev_max",
+              "value": 78.0,
+              "weight": 0.1793,
+              "contrib": 13.99
+            },
+            {
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -2.9692,
+              "contrib": -2.04
             }
           ]
         },
@@ -6486,28 +6527,28 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 57.4,
-          "mos_f": 69.6,
-          "delta_f": 12.2,
-          "holdout_mos_mae": 2.39,
+          "mos_f": 66.8,
+          "delta_f": 9.5,
+          "holdout_mos_mae": 2.94,
           "holdout_raw_mae": 4.74,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 1.6151,
-              "contrib": 1.62
+              "weight": 1.3032,
+              "contrib": 1.3
             },
             {
               "term": "hrrr_ext_t",
               "value": 57.36,
-              "weight": 0.4947,
-              "contrib": 28.38
+              "weight": 0.6611,
+              "contrib": 37.92
             },
             {
               "term": "obs_prev_max",
               "value": 78.0,
-              "weight": 0.5075,
-              "contrib": 39.58
+              "weight": 0.3538,
+              "contrib": 27.6
             }
           ]
         }
@@ -6702,8 +6743,9 @@
       "lat": 34.6114,
       "lon": -111.835,
       "elev_ft": 3180,
-      "prev_obs_min": 37.0,
-      "prev_obs_max": 77.0,
+      "obs_date_label": "Thu, Nov 12",
+      "prev_obs_min": 39.0,
+      "prev_obs_max": 75.0,
       "periods": [
         {
           "key": "max_1",
@@ -6711,65 +6753,71 @@
           "label": "Afternoon Max (Today)",
           "verify_date": "Fri, Nov 13",
           "raw_hrrr_f": 68.6,
-          "mos_f": 77.0,
-          "delta_f": 8.4,
-          "holdout_mos_mae": 0.0,
+          "mos_f": 73.4,
+          "delta_f": 4.7,
+          "holdout_mos_mae": 3.34,
           "holdout_raw_mae": 4.53,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 0.0,
-              "contrib": 0.0
+              "weight": 3.1665,
+              "contrib": 3.17
             },
             {
               "term": "hrrr_ext_t",
               "value": 68.64,
-              "weight": -0.0,
-              "contrib": -0.0
+              "weight": 0.4918,
+              "contrib": 33.76
             },
             {
               "term": "obs_prev_max",
-              "value": 77.0,
-              "weight": 1.0,
-              "contrib": 77.0
+              "value": 75.0,
+              "weight": 0.4857,
+              "contrib": 36.43
             }
           ]
         },
         {
           "key": "min_1",
           "kind": "min",
-          "label": "Overnight Min (Day 1)",
+          "label": "Morning Min (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 48.7,
-          "mos_f": 40.7,
-          "delta_f": -8.0,
-          "holdout_mos_mae": 2.99,
+          "mos_f": 41.2,
+          "delta_f": -7.4,
+          "holdout_mos_mae": 3.14,
           "holdout_raw_mae": 11.19,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": -12.7707,
-              "contrib": -12.77
+              "weight": -8.2945,
+              "contrib": -8.29
             },
             {
               "term": "hrrr_ext_t",
               "value": 48.67,
-              "weight": 0.5949,
-              "contrib": 28.96
+              "weight": 0.6403,
+              "contrib": 31.17
             },
             {
               "term": "obs_prev_min",
-              "value": 37.0,
-              "weight": 0.4546,
-              "contrib": 16.82
+              "value": 39.0,
+              "weight": 0.2631,
+              "contrib": 10.26
             },
             {
               "term": "hrrr_win_rh",
               "value": 80.03,
-              "weight": 0.096,
-              "contrib": 7.69
+              "weight": 0.1306,
+              "contrib": 10.45
+            },
+            {
+              "term": "cos_doy_1",
+              "value": 0.69,
+              "weight": -3.4135,
+              "contrib": -2.35
             }
           ]
         },
@@ -6779,34 +6827,40 @@
           "label": "Afternoon Max (Day 1)",
           "verify_date": "Sat, Nov 14",
           "raw_hrrr_f": 54.5,
-          "mos_f": 67.0,
-          "delta_f": 12.5,
-          "holdout_mos_mae": 3.72,
+          "mos_f": 68.6,
+          "delta_f": 14.1,
+          "holdout_mos_mae": 4.09,
           "holdout_raw_mae": 5.28,
           "breakdown": [
             {
               "term": "Intercept",
               "value": 1.0,
-              "weight": 1.8082,
-              "contrib": 1.81
+              "weight": -0.4175,
+              "contrib": -0.42
             },
             {
               "term": "hrrr_ext_t",
               "value": 54.55,
-              "weight": 0.5132,
-              "contrib": 27.99
+              "weight": 0.7408,
+              "contrib": 40.41
             },
             {
               "term": "obs_prev_max",
-              "value": 77.0,
-              "weight": 0.4568,
-              "contrib": 35.18
+              "value": 75.0,
+              "weight": 0.2527,
+              "contrib": 18.96
             },
             {
               "term": "hrrr_wspd10_kt",
               "value": 9.45,
-              "weight": 0.2185,
-              "contrib": 2.06
+              "weight": 0.2624,
+              "contrib": 2.48
+            },
+            {
+              "term": "hrrr_lcdc",
+              "value": 100.0,
+              "weight": 0.0718,
+              "contrib": 7.18
             }
           ]
         }
