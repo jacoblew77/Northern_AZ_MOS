@@ -1,6 +1,6 @@
 """
 train_mos.py — Plug-and-Play Multi-Station HRRRv4 MOS Trainer (Pure Model + Climatology)
-- Excludes obs_prev_min / obs_prev_max so equations never rely on 1–2 day lagged COOP/ASOS reports.
+- Excludes obs_prev_min / obs_prev_max so equations never rely on 1-2 day lagged COOP/ASOS reports.
 - Designed to run rapidly inside GitHub Actions (.github/workflows/train_mos.yml) or locally.
 - Supports incremental training for newly added stations in stations.json, or --retrain-all.
 """
@@ -479,4 +479,74 @@ def main():
     unique_runs = [
         datetime.datetime(d.year, d.month, d.day, hr)
         for d in init_dates
-        for hr in (0, 6, 1
+        for hr in (0, 6, 12, 18)
+    ]
+
+    data_store = asyncio.run(download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, resolved_specs))
+
+    candidate_cols = [
+        "hrrr_ext_t", "hrrr_win_dp2m", "hrrr_win_dpd", "hrrr_win_rh",
+        "hrrr_tmp_500", "hrrr_tmp_700", "hrrr_hgt_500", "hrrr_thick_1000_500", "hrrr_lapse_500_700",
+        "hrrr_lcdc", "hrrr_mcdc", "hrrr_hcdc", "hrrr_tcdc", "hrrr_dlwrf", "hrrr_dswrf",
+        "hrrr_pwat", "hrrr_qpf_in", "hrrr_snow_in",
+        "hrrr_u10_kt", "hrrr_v10_kt", "hrrr_wspd10_kt", "hrrr_wspd700_kt",
+        "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2", "norm_t",
+    ]
+
+    equations_bundle["generated_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    equations_bundle["training_window"] = f"{START_DATE} to {END_DATE}"
+
+    for stn_id, meta in valid_targets.items():
+        obs_df = obs_by_stn[stn_id]
+        stn_runs = data_store[stn_id]
+        equations_bundle["stations"][stn_id] = {"meta": meta, "cycles": {}}
+
+        for cyc, periods in CYCLE_PERIODS.items():
+            cyc_hr = int(cyc.replace("Z", ""))
+            equations_bundle["stations"][stn_id]["cycles"][cyc] = {}
+
+            for period in periods:
+                rows = []
+                for init_dt, var_arrays in stn_runs.items():
+                    if init_dt.hour != cyc_hr:
+                        continue
+                    v_date = pd.Timestamp(get_verify_date_mst(init_dt, period["fhrs"]))
+                    if v_date not in obs_df.index:
+                        continue
+
+                    feats = extract_period_features(var_arrays, period, init_dt, meta)
+                    if not feats:
+                        continue
+                    feats["target"] = float(obs_df.loc[v_date, "obs_min" if period["kind"] == "min" else "obs_max"])
+                    feats["verify_date"] = v_date
+                    rows.append(feats)
+
+                df_p = pd.DataFrame(rows).sort_values("verify_date")
+                split_idx = int(len(df_p) * 0.75)
+                tr_df, te_df = df_p.iloc[:split_idx], df_p.iloc[split_idx:]
+
+                sel_vars, wts = forward_screening_regression(tr_df, "target", candidate_cols)
+                te_pred = np.column_stack([np.ones(len(te_df)), te_df[sel_vars].values]) @ wts
+                mos_mae = float(np.mean(np.abs(te_pred - te_df["target"].values)))
+                raw_mae = float(np.mean(np.abs(te_df["hrrr_ext_t"].values - te_df["target"].values)))
+
+                equations_bundle["stations"][stn_id]["cycles"][cyc][period["key"]] = {
+                    "kind": period["kind"],
+                    "label": period["label"],
+                    "fhrs": period["fhrs"],
+                    "intercept": round(float(wts[0]), 6),
+                    "predictors": sel_vars,
+                    "weights": [round(float(w), 6) for w in wts[1:]],
+                    "holdout_raw_mae": round(raw_mae, 2),
+                    "holdout_mos_mae": round(mos_mae, 2),
+                    "sample_size": len(df_p),
+                }
+                print(f"[{stn_id} | {cyc} | {period['key']}] Raw MAE: {raw_mae:.2f}°F -> MOS MAE: {mos_mae:.2f}°F (n={len(df_p)})")
+
+    with open(OUTPUT_EQ_FILE, "w") as f:
+        json.dump(equations_bundle, f, indent=2)
+    print(f"\nSaved {len(equations_bundle['stations'])} trained stations to {OUTPUT_EQ_FILE}!")
+
+
+if __name__ == "__main__":
+    main()
