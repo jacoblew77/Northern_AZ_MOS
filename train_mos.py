@@ -1,7 +1,10 @@
 """
 train_mos.py — Plug-and-Play Multi-Station HRRRv4 MOS Trainer (Pure Model + Climatology)
 - Excludes obs_prev_min / obs_prev_max so equations never rely on 1-2 day lagged COOP/ASOS reports.
-- Designed to run rapidly inside GitHub Actions (.github/workflows/train_mos.yml) or locally.
+- Includes --discover-coop to automatically query IEM's AZCLIMATE network metadata, verify
+  every active WFO Flagstaff CWA COOP station (including Bagdad, Bellemont, Jerome, Seligman,
+  Grand Canyon, etc.) across the 2020-2026 training window and current month, and add them
+  to stations.json before training.
 - Supports incremental training for newly added stations in stations.json, or --retrain-all.
 """
 import argparse
@@ -13,6 +16,7 @@ import logging
 import math
 import os
 import pickle
+import re
 import warnings
 
 import aiohttp
@@ -34,6 +38,7 @@ END_DATE = (datetime.date.today() - datetime.timedelta(days=4)).strftime("%Y-%m-
 SAMPLE_STEP_DAYS = 3
 MAX_CONCURRENT_RUNS = 180
 OUTPUT_EQ_FILE = "mos_equations.json"
+STATIONS_FILE = "stations.json"
 CACHE_DIR = "zarr_pixel_cache"
 
 CYCLE_PERIODS = {
@@ -95,6 +100,97 @@ def create_sync_session() -> requests.Session:
     retries = Retry(total=4, backoff_factor=0.6, status_forcelist=[429, 500, 502, 503, 504], raise_on_status=False)
     s.mount("https://", HTTPAdapter(max_retries=retries))
     return s
+
+
+def format_coop_name(raw_name: str) -> str:
+    """Formats uppercase IEM COOP names cleanly while preserving meteorological/park acronyms."""
+    words = raw_name.strip().title().split()
+    acronyms = {"Wfo", "Np", "Nm", "Rs", "Ap", "Us", "Az", "Nne", "Nnw", "Sse", "Ssw", "Ene", "Ese", "Wnw", "Wsw", "Ne", "Nw", "Se", "Sw"}
+    cleaned = []
+    for w in words:
+        if w in acronyms:
+            cleaned.append(w.upper())
+        elif re.match(r"^\d+(N|S|E|W|Ne|Nw|Se|Sw|Nne|Nnw|Sse|Ssw|Ene|Ese|Wnw|Wsw)$", w):
+            cleaned.append(w.upper())
+        else:
+            cleaned.append(w)
+    name = " ".join(cleaned)
+    if not any(tag in name for tag in ("COOP", "NP", "NM", "WFO", "Ranch", "Monument", "Mon")):
+        name = f"{name} COOP"
+    return name
+
+
+def discover_active_northern_az_coop(existing_stations: dict) -> dict:
+    """
+    Queries IEM's official AZCLIMATE GeoJSON metadata feed, filters for all stations in
+    WFO Flagstaff's CWA (wfo == 'FGZ' or Northern AZ counties), and verifies each candidate
+    has >= 1,400 valid daily High/Low rows since 2020-12-03 AND active observations within
+    the last 30 days.
+    """
+    print("Querying IEM AZCLIMATE metadata to discover all active Northern AZ COOP sites...")
+    session = create_sync_session()
+    geo_url = "https://mesonet.agron.iastate.edu/geojson/network/AZCLIMATE.geojson"
+    resp = session.get(geo_url, timeout=30)
+    resp.raise_for_status()
+    geo = resp.json()
+
+    fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
+    recent_cutoff = pd.Timestamp(datetime.date.today() - datetime.timedelta(days=30))
+    updated = dict(existing_stations)
+    added_count = 0
+
+    for feat in geo.get("features", []):
+        stn_id = str(feat.get("id", "")).strip().upper()
+        if not stn_id.startswith("AZ") or stn_id in updated:
+            continue
+
+        props = feat.get("properties", {})
+        coords = feat.get("geometry", {}).get("coordinates", [None, None])
+        lon, lat = coords[0], coords[1]
+        if lat is None or lon is None:
+            continue
+
+        wfo = str(props.get("wfo", "")).strip().upper()
+        county = str(props.get("county", "")).strip().title()
+        archive_end = props.get("archive_end")
+
+        if archive_end and str(archive_end) < "2026-01-01":
+            continue
+
+        in_fgz = (wfo == "FGZ") or (county in fgz_counties and float(lat) >= 33.75)
+        if not in_fgz:
+            continue
+
+        raw_name = str(props.get("sname", stn_id))
+        elev_m = props.get("elevation")
+        elev_ft = int(round(float(elev_m) * 3.28084)) if elev_m is not None else 5000
+
+        meta_cand = {
+            "name": format_coop_name(raw_name),
+            "network": "AZCLIMATE",
+            "iem_id": stn_id,
+            "lat": round(float(lat), 4),
+            "lon": round(float(lon), 4),
+            "elev_ft": elev_ft,
+        }
+
+        try:
+            obs_df = fetch_station_daily_obs(stn_id, meta_cand, START_DATE, datetime.date.today().strftime("%Y-%m-%d"))
+            if len(obs_df) < 1400:
+                print(f"  [-] Skipping {stn_id} ({meta_cand['name']}): insufficient 2020-2026 days ({len(obs_df)}).")
+                continue
+            if obs_df.index.max() < recent_cutoff:
+                print(f"  [-] Skipping {stn_id} ({meta_cand['name']}): inactive (last obs {obs_df.index.max().date()}).")
+                continue
+
+            updated[stn_id] = meta_cand
+            added_count += 1
+            print(f"  [+] Verified active COOP site: {stn_id} — {meta_cand['name']} ({elev_ft} ft, {len(obs_df)} days, latest {obs_df.index.max().date()})")
+        except Exception as exc:
+            print(f"  [-] Skipping {stn_id} ({raw_name}): error checking IEM ({exc})")
+
+    print(f"COOP discovery complete: added {added_count} new active Northern AZ COOP station(s).")
+    return updated
 
 
 def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
@@ -428,10 +524,16 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations instead of only newly added ones.")
+    parser.add_argument("--discover-coop", action="store_true", help="Auto-discover all active Northern AZ COOP sites from IEM and add to stations.json.")
     args = parser.parse_args()
 
-    with open("stations.json", "r") as f:
+    with open(STATIONS_FILE, "r") as f:
         all_stations = json.load(f)
+
+    if args.discover_coop:
+        all_stations = discover_active_northern_az_coop(all_stations)
+        with open(STATIONS_FILE, "w") as f:
+            json.dump(all_stations, f, indent=2)
 
     if os.path.exists(OUTPUT_EQ_FILE) and not args.retrain_all:
         with open(OUTPUT_EQ_FILE, "r") as f:
@@ -442,8 +544,7 @@ def main():
             if old_id not in all_stations:
                 del equations_bundle["stations"][old_id]
         if not target_stations:
-            print(f"All {len(all_stations)} stations in stations.json are already trained in {OUTPUT_EQ_FILE}!")
-            print("Run 'python train_mos.py --retrain-all' to retrain all weights.")
+            print(f"All {len(all_stations)} stations in {STATIONS_FILE} are already trained in {OUTPUT_EQ_FILE}!")
             return
         print(f"Incremental mode: training {len(target_stations)} newly added station(s): {list(target_stations.keys())}")
     else:
