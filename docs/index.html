@@ -37,12 +37,22 @@
     .box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
     .box-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
     .box h3 { font-size: 0.88rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .window-sub { font-size: 0.78rem; color: var(--muted); margin: -6px 0 10px; }
     .mae-pill { font-size: 0.78rem; color: #38bdf8; background: #0f172a; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; }
     .btn-group { display: flex; align-items: center; gap: 4px; }
     table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-    th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--border); }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     th { color: var(--muted); font-weight: 600; }
-    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .pred-row { cursor: pointer; transition: background 0.12s; }
+    .pred-row:hover { background: rgba(56, 189, 248, 0.06); }
+    .pred-cell { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .pred-title { font-weight: 600; color: var(--text); }
+    .pred-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.72rem; color: var(--muted); background: #0f172a; border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; }
+    .info-btn { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--accent); background: rgba(56, 189, 248, 0.12); color: var(--accent); font-size: 11px; font-weight: 800; font-style: italic; font-family: Georgia, serif; cursor: pointer; flex-shrink: 0; line-height: 1; }
+    .info-btn:hover, .info-btn.open { background: var(--accent); color: #0f172a; }
+    .info-drawer td { background: #0f172a; padding: 9px 12px; border-bottom: 1px solid var(--border); color: #cbd5e1; font-size: 0.8rem; line-height: 1.45; }
+    .info-meta { margin-top: 5px; color: #38bdf8; font-size: 0.76rem; font-weight: 600; }
     .pin-label { background: #1e293b; color: #f8fafc; border: 1.5px solid #38bdf8; border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
     .pin-label.coop { border-color: #a78bfa; }
   </style>
@@ -100,9 +110,10 @@
         <div class="box-head">
           <h3 id="breakdown-title">MOS Equation Predictor Breakdown</h3>
         </div>
+        <div class="window-sub" id="breakdown-window">Click any ⓘ button below to inspect parameter physics &amp; averaging window</div>
         <table>
           <thead>
-            <tr><th>Predictor</th><th class="num">Value</th><th class="num">Weight</th><th class="num">Contrib (°F)</th></tr>
+            <tr><th>Parameter</th><th class="num">Value</th><th class="num">Weight</th><th class="num">Contrib (°F)</th></tr>
           </thead>
           <tbody id="breakdown-body"></tbody>
         </table>
@@ -117,9 +128,212 @@
     let activeNetwork = "ALL";
     let activeVerifKind = "min";
     let activeVerifCycle = "06Z";
+    let openInfoTerms = new Set();
     let markersLayer = L.layerGroup();
     let chartInstance = null;
     let verifChartInstance = null;
+
+    const FALLBACK_WINDOWS = {
+      "00Z": { min_1: "f09, f12, f14 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_1: "f20, f21, f23 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_2: "f33, f36 (09Z, 12Z / 2:00 AM–5:00 AM MST)" },
+      "06Z": { min_1: "f03, f06, f08 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_1: "f14, f15, f17 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_2: "f27, f30, f32 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)" },
+      "12Z": { max_1: "f08, f09, f11 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_1: "f21, f24, f26 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_2: "f32, f33, f35 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)" },
+      "18Z": { max_1: "f02, f03, f05 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_1: "f15, f18, f20 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_2: "f26, f27, f29 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)" }
+    };
+
+    function getPredictorInfo(term, period, cycleName) {
+      const winText = period.window_desc || (FALLBACK_WINDOWS[cycleName] && FALLBACK_WINDOWS[cycleName][period.key]) || "target forecast hours";
+      const isMin = period.kind === "min";
+
+      const catalog = {
+        Intercept: {
+          title: "Regression Intercept",
+          unit: "°F",
+          agg: "Constant equation baseline",
+          desc: "Station-specific constant offset (°F) from the multiple linear regression model before adding HRRR physical and seasonal predictors."
+        },
+        hrrr_ext_t: {
+          title: isMin ? "Raw HRRR Window Min 2m Temp" : "Raw HRRR Window Max 2m Temp",
+          unit: "°F",
+          agg: isMin ? "Minimum across window hours" : "Maximum across window hours",
+          desc: isMin
+            ? "Coldest raw 2-meter air temperature (°F) simulated by HRRR across the overnight/morning target window. Serves as the primary baseline predictor."
+            : "Warmest raw 2-meter air temperature (°F) simulated by HRRR across the afternoon heating target window. Serves as the primary baseline predictor."
+        },
+        hrrr_win_temp: {
+          title: "Mean 2m Temperature",
+          unit: "°F",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 2-meter air temperature (°F) across the target forecast window."
+        },
+        hrrr_win_dp2m: {
+          title: "Mean 2m Dewpoint",
+          unit: "°F",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 2-meter dewpoint temperature (°F) across the target window. Higher boundary-layer moisture inhibits nocturnal radiational cooling and moderates daytime highs."
+        },
+        hrrr_win_dpd: {
+          title: "Mean 2m Dewpoint Depression",
+          unit: "°F",
+          agg: "Mean (T − Td) across window hours",
+          desc: "Average spread between 2-meter temperature and dewpoint (T − Td, °F). Larger spreads indicate dry high-desert air with stronger overnight radiational cooling and steeper daytime lapse rates."
+        },
+        hrrr_win_rh: {
+          title: "Mean 2m Relative Humidity",
+          unit: "%",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 2-meter relative humidity (%) across the target forecast window."
+        },
+        hrrr_u10_kt: {
+          title: "Mean 10m U-Wind (West–East)",
+          unit: "kt",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 10-meter zonal wind component (knots; positive = westerly wind from the west, negative = easterly). Captures local downslope/upslope terrain flow."
+        },
+        hrrr_v10_kt: {
+          title: "Mean 10m V-Wind (South–North)",
+          unit: "kt",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 10-meter meridional wind component (knots; positive = southerly wind from the south, negative = northerly). Captures warm or cold air advection across the Mogollon Rim."
+        },
+        hrrr_wspd10_kt: {
+          title: "Mean 10m Wind Speed",
+          unit: "kt",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 10-meter wind speed magnitude (knots). Stronger winds mix the nocturnal boundary layer and prevent cold-air drainage inversions from pooling in valleys."
+        },
+        hrrr_wspd700_kt: {
+          title: "Mean 700 mb Wind Speed",
+          unit: "kt",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 700 mb (~10,000 ft MSL) ridge-level wind speed (knots), reflecting synoptic flow strength and mechanical mixing potential over the Colorado Plateau."
+        },
+        hrrr_lcdc: {
+          title: "Mean Low Cloud Cover",
+          unit: "%",
+          agg: "Mean across window hours",
+          desc: "Average HRRR low-level cloud fraction (%). Low clouds strongly trap outgoing longwave radiation at night (warmer lows) and block daytime solar insolation (cooler highs)."
+        },
+        hrrr_mcdc: {
+          title: "Mean Mid-Level Cloud Cover",
+          unit: "%",
+          agg: "Mean across window hours",
+          desc: "Average HRRR mid-level cloud fraction (%) across the target forecast window."
+        },
+        hrrr_hcdc: {
+          title: "Mean High Cloud Cover",
+          unit: "%",
+          agg: "Mean across window hours",
+          desc: "Average HRRR high-level cirrus cloud fraction (%) across the target forecast window."
+        },
+        hrrr_tcdc: {
+          title: "Mean Total Cloud Cover",
+          unit: "%",
+          agg: "Mean across window hours",
+          desc: "Average HRRR entire-atmosphere total cloud cover (%) across the target window, regulating both daytime solar heating and nighttime radiative heat loss."
+        },
+        hrrr_tmp_500: {
+          title: "Mean 500 mb Temperature",
+          unit: "°C",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 500 mb (~18,000 ft MSL) air temperature (°C), representing deep-layer synoptic airmass warmth aloft."
+        },
+        hrrr_tmp_700: {
+          title: "Mean 700 mb Temperature",
+          unit: "°C",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 700 mb (~10,000 ft MSL) free-atmosphere temperature (°C)—near Flagstaff/Rim elevation, capturing ambient airmass temperature above shallow surface inversions."
+        },
+        hrrr_hgt_500: {
+          title: "Mean 500 mb Geopotential Height",
+          unit: "gpm",
+          agg: "Mean across window hours",
+          desc: "Average HRRR 500 mb geopotential height (meters), distinguishing upper-level troughs from warm subtropical ridges."
+        },
+        hrrr_thick_1000_500: {
+          title: "Mean 1000–500 mb Thickness",
+          unit: "gpm",
+          agg: "Mean (Z500 − Z1000) across window hours",
+          desc: "Average HRRR 1000–500 mb layer thickness (meters), proportional to the column-mean virtual temperature of the lower troposphere."
+        },
+        hrrr_lapse_500_700: {
+          title: "Mean 700–500 mb Temp Difference",
+          unit: "°C",
+          agg: "Mean (T500 − T700) across window hours",
+          desc: "Average HRRR temperature change from 700 mb to 500 mb (T500 − T700, °C). More negative values indicate steeper mid-level lapse rates and deeper afternoon mixing."
+        },
+        hrrr_pwat: {
+          title: "Mean Precipitable Water (PWAT)",
+          unit: "mm",
+          agg: "Mean across window hours",
+          desc: "Average HRRR column-integrated precipitable water (mm). Higher PWAT enhances downward infrared greenhouse warming at night and reduces diurnal temperature range."
+        },
+        hrrr_qpf_in: {
+          title: "Window Accumulated Precipitation (QPF)",
+          unit: "in",
+          agg: "Cumulative QPF from 6h before window to window end",
+          desc: "HRRR accumulated liquid-equivalent precipitation (inches) from 6 hours prior to the window start through the final hour of the window (APCP[end] − APCP[start−6h]). Captures evaporative and cloud-shield cooling."
+        },
+        hrrr_snow_in: {
+          title: "Mean Snow Depth on Ground",
+          unit: "in",
+          agg: "Mean across window hours",
+          desc: "Average HRRR modeled snow depth (inches) across the target window. Snow cover sharply increases surface albedo (cooler afternoons) and promotes intense overnight radiational cooling."
+        },
+        hrrr_dlwrf: {
+          title: "Mean Downward Longwave Radiation",
+          unit: "W/m²",
+          agg: "Mean across window hours",
+          desc: "Average HRRR downward longwave (infrared) radiative flux at the surface (W/m²). Directly measures greenhouse warming emitted back to the surface by clouds and water vapor."
+        },
+        hrrr_dswrf: {
+          title: "Mean Downward Shortwave Radiation",
+          unit: "W/m²",
+          agg: "Mean across window hours",
+          desc: "Average HRRR downward shortwave solar radiation flux at the surface (W/m²), measuring direct daytime solar heating."
+        },
+        norm_t: {
+          title: "Station Climatological Normal",
+          unit: "°F",
+          agg: `Daily harmonic normal for ${period.verify_date}`,
+          desc: "Station's smooth annual harmonic normal Max or Min temperature (°F) on the verification date, fitted from its 2020–2026 IEM daily record. Anchors forecasts toward seasonal climatology at longer lead times."
+        },
+        sin_doy_1: {
+          title: "Annual Seasonal Harmonic (sin)",
+          unit: "unitless",
+          agg: `Calendar Day-of-Year on ${period.verify_date}`,
+          desc: "First-order annual sine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias across winter and summer regimes."
+        },
+        cos_doy_1: {
+          title: "Annual Seasonal Harmonic (cos)",
+          unit: "unitless",
+          agg: `Calendar Day-of-Year on ${period.verify_date}`,
+          desc: "First-order annual cosine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias between mid-winter and mid-summer."
+        },
+        sin_doy_2: {
+          title: "Semi-Annual Seasonal Harmonic (sin)",
+          unit: "unitless",
+          agg: `Calendar Day-of-Year on ${period.verify_date}`,
+          desc: "Second-order (6-month) sine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon transition bias patterns."
+        },
+        cos_doy_2: {
+          title: "Semi-Annual Seasonal Harmonic (cos)",
+          unit: "unitless",
+          agg: `Calendar Day-of-Year on ${period.verify_date}`,
+          desc: "Second-order (6-month) cosine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon transition bias patterns."
+        }
+      };
+
+      const entry = catalog[term] || {
+        title: term,
+        unit: "",
+        agg: "Window predictor",
+        desc: "HRRR model predictor selected by forward stepwise screening regression."
+      };
+
+      const isWindowTerm = !["Intercept", "norm_t", "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2"].includes(term);
+      const timeDetail = isWindowTerm ? `${entry.agg} — Window: ${winText}` : entry.agg;
+      return { ...entry, timeDetail };
+    }
 
     const darkOsm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
@@ -241,6 +455,62 @@
       });
     }
 
+    function renderBreakdownTable(activeP) {
+      const cyc = forecastData.synoptic_cycle || "";
+      const winText = activeP.window_desc || (FALLBACK_WINDOWS[cyc] && FALLBACK_WINDOWS[cyc][activeP.key]) || "";
+      document.getElementById("breakdown-title").textContent = `Equation Breakdown — ${activeP.label} (${activeP.verify_date})`;
+      document.getElementById("breakdown-window").textContent = winText
+        ? `Target Window: ${winText} • Click ⓘ on any row for details`
+        : "Click ⓘ on any row for parameter details";
+
+      const tbody = document.getElementById("breakdown-body");
+      tbody.innerHTML = "";
+
+      activeP.breakdown.forEach(row => {
+        const info = getPredictorInfo(row.term, activeP, cyc);
+        const isOpen = openInfoTerms.has(row.term);
+        const valDisplay = (row.term === "Intercept" || !info.unit || info.unit === "unitless")
+          ? `${row.value}`
+          : `${row.value} ${info.unit}`;
+
+        const tr = document.createElement("tr");
+        tr.className = "pred-row";
+        tr.innerHTML = `
+          <td>
+            <div class="pred-cell">
+              <span class="pred-title">${info.title}</span>
+              <span class="pred-code">${row.term}</span>
+              <button type="button" class="info-btn ${isOpen ? "open" : ""}" title="Show parameter description &amp; time window">i</button>
+            </div>
+          </td>
+          <td class="num">${valDisplay}</td>
+          <td class="num">${row.weight}</td>
+          <td class="num">${row.contrib >= 0 ? "+" : ""}${row.contrib.toFixed(2)}°F</td>
+        `;
+        tr.onclick = () => {
+          if (openInfoTerms.has(row.term)) {
+            openInfoTerms.delete(row.term);
+          } else {
+            openInfoTerms.add(row.term);
+          }
+          renderBreakdownTable(activeP);
+        };
+        tbody.appendChild(tr);
+
+        if (isOpen) {
+          const detailTr = document.createElement("tr");
+          detailTr.className = "info-drawer";
+          detailTr.innerHTML = `
+            <td colspan="4">
+              <div>${info.desc}</div>
+              <div class="info-meta">Time Frame &amp; Aggregation: ${info.timeDetail}</div>
+            </td>
+          `;
+          tbody.appendChild(detailTr);
+        }
+      });
+    }
+
     function renderStation(stnId) {
       selectedStn = stnId;
       const stn = forecastData.stations[stnId];
@@ -278,15 +548,7 @@
 
       const activeP = stn.periods[selectedPeriodIdx] || stn.periods[0];
       if (activeP) {
-        document.getElementById("breakdown-title").textContent = `Equation Breakdown — ${activeP.label} (${activeP.verify_date})`;
-        document.getElementById("breakdown-body").innerHTML = activeP.breakdown.map(row => `
-          <tr>
-            <td>${row.term}</td>
-            <td class="num">${row.value}</td>
-            <td class="num">${row.weight}</td>
-            <td class="num">${row.contrib >= 0 ? "+" : ""}${row.contrib.toFixed(2)}°F</td>
-          </tr>
-        `).join("");
+        renderBreakdownTable(activeP);
       }
 
       const ctx = document.getElementById("trajChart").getContext("2d");
