@@ -16,7 +16,7 @@
     .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .filter-btn, .vtoggle-btn, .vcyc-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 600; }
     .filter-btn.active, .vtoggle-btn.active, .vcyc-btn.active { color: var(--text); border-color: var(--accent); background: #1e293b; }
-    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; }
+    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; max-width: 270px; }
     .meta-badge { font-size: 0.8rem; color: var(--muted); background: #0f172a; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); }
     .layout { display: grid; grid-template-columns: 1.15fr 1fr; height: calc(100vh - 56px); }
     @media (max-width: 960px) { .layout { grid-template-columns: 1fr; height: auto; } #map { height: 420px; } }
@@ -53,7 +53,7 @@
     .info-btn:hover, .info-btn.open { background: var(--accent); color: #0f172a; }
     .info-drawer td { background: #0f172a; padding: 9px 12px; border-bottom: 1px solid var(--border); color: #cbd5e1; font-size: 0.8rem; line-height: 1.45; }
     .info-meta { margin-top: 5px; color: #38bdf8; font-size: 0.76rem; font-weight: 600; }
-    .pin-label { background: #1e293b; color: #f8fafc; border: 1.5px solid #38bdf8; border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+    .pin-label { display: inline-block; transform: translate(-50%, -50%); background: #1e293b; color: #f8fafc; border: 1.5px solid #38bdf8; border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.55); }
     .pin-label.coop { border-color: #a78bfa; }
   </style>
 </head>
@@ -61,7 +61,7 @@
   <header>
     <h1>Northern AZ HRRRv4 MOS — WFO Flagstaff CWA</h1>
     <div class="controls">
-      <button class="filter-btn active" data-net="ALL">All (24)</button>
+      <button class="filter-btn active" data-net="ALL">All</button>
       <button class="filter-btn" data-net="AZ_ASOS">ASOS/AWOS</button>
       <button class="filter-btn" data-net="AZCLIMATE">COOP</button>
       <select id="stn-select"></select>
@@ -139,6 +139,15 @@
       "12Z": { max_1: "f08, f09, f11 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_1: "f21, f24, f26 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_2: "f32, f33, f35 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)" },
       "18Z": { max_1: "f02, f03, f05 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_1: "f15, f18, f20 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_2: "f26, f27, f29 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)" }
     };
+
+    function getMapTileLabel(stn) {
+      if (stn.network !== "AZCLIMATE") return stn.id;
+      return stn.name
+        .replace(/\s*\([^)]*\)/g, "")
+        .replace(/\s+COOP$/i, "")
+        .replace(/\s+Nat'l Mon(?:ument)?$/i, "")
+        .trim();
+    }
 
     function getPredictorInfo(term, period, cycleName) {
       const winText = period.window_desc || (FALLBACK_WINDOWS[cycleName] && FALLBACK_WINDOWS[cycleName][period.key]) || "target forecast hours";
@@ -370,9 +379,14 @@
       Object.values(forecastData.stations).forEach(stn => {
         if (activeNetwork !== "ALL" && stn.network !== activeNetwork) return;
         const p0 = stn.periods[0];
-        const badge = p0 ? `${stn.id}: ${p0.mos_f.toFixed(0)}°` : stn.id;
+        const tileName = getMapTileLabel(stn);
+        const badge = p0 ? `${tileName}: ${p0.mos_f.toFixed(0)}°` : tileName;
         const cls = stn.network === "AZCLIMATE" ? "pin-label coop" : "pin-label";
-        const icon = L.divIcon({ className: "", html: `<div class="${cls}">${badge}</div>`, iconSize: [74, 22] });
+        const icon = L.divIcon({
+          className: "",
+          html: `<div class="${cls}" title="${stn.id} — ${stn.name}">${badge}</div>`,
+          iconSize: null
+        });
         L.marker([stn.lat, stn.lon], { icon })
           .addTo(markersLayer)
           .on("click", () => {
@@ -617,18 +631,25 @@
           document.querySelectorAll(".vcyc-btn").forEach(b => b.classList.toggle("active", b.dataset.vcyc === activeVerifCycle));
         }
 
-        const stnIds = Object.keys(data.stations);
-        document.querySelector('[data-net="ALL"]').textContent = `All (${stnIds.length})`;
+        const allVals = Object.values(data.stations);
+        const asosCount = allVals.filter(s => s.network !== "AZCLIMATE").length;
+        const coopCount = allVals.filter(s => s.network === "AZCLIMATE").length;
+        document.querySelector('[data-net="ALL"]').textContent = `All (${allVals.length})`;
+        document.querySelector('[data-net="AZ_ASOS"]').textContent = `ASOS/AWOS (${asosCount})`;
+        document.querySelector('[data-net="AZCLIMATE"]').textContent = `COOP (${coopCount})`;
+
         document.getElementById("run-meta").textContent =
           `HRRR: ${data.hrrr_init_utc} (${data.synoptic_cycle}) | Updated: ${data.updated_mst}`;
 
         const selectEl = document.getElementById("stn-select");
-        stnIds.sort().forEach(id => {
-          const opt = document.createElement("option");
-          opt.value = id;
-          opt.textContent = `${id} — ${data.stations[id].name}`;
-          selectEl.appendChild(opt);
-        });
+        allVals
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .forEach(stn => {
+            const opt = document.createElement("option");
+            opt.value = stn.id;
+            opt.textContent = stn.network === "AZCLIMATE" ? `${stn.name} (${stn.id})` : `${stn.id} — ${stn.name}`;
+            selectEl.appendChild(opt);
+          });
         selectEl.value = selectedStn;
         selectEl.onchange = () => { selectedPeriodIdx = 0; renderStation(selectEl.value); };
 
