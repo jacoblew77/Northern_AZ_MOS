@@ -1,7 +1,8 @@
 """
 update_forecast.py — Operational 6-Hourly HRRR MOS Runner + Multi-Cycle 7-Day Verification
 1. Fetches the latest complete 48-hr synoptic HRRR run (00Z, 06Z, 12Z, 18Z) from AWS S3.
-2. Computes MOS forecasts using pure HRRR predictors + seasonal harmonic climatology.
+2. Computes MOS forecasts using pure HRRR predictors + seasonal harmonic climatology across
+   Airports (AZ_ASOS), NWS COOP (AZCLIMATE), NOAA USCRN (USCRN), and RAWS (AZ_DCP).
 3. Maintains docs/verification_history.json keyed by station, date, and synoptic cycle
    (00Z, 06Z, 12Z, 18Z), auto-backfilling missing cycles across the past 7 days from AWS S3,
    and exports cycle-selectable 7-day verification metrics into docs/latest_forecasts.json.
@@ -75,7 +76,7 @@ def eval_harmonic_norm(w: list, doy: int) -> float:
 
 
 def fetch_station_obs_window(stn_id: str, meta: dict, start_dt: datetime.date, end_dt: datetime.date) -> tuple:
-    """Fetches daily High/Low observations from IEM across [start_dt, end_dt] as a dict keyed by ISO date."""
+    """Fetches daily High/Low observations from IEM across [start_dt, end_dt] for ASOS, COOP, USCRN, or RAWS."""
     session = create_sync_session()
     if meta["network"] == "AZCLIMATE":
         url = (
@@ -110,11 +111,15 @@ def fetch_station_obs_window(stn_id: str, meta: dict, start_dt: datetime.date, e
             for _, row in df.iterrows():
                 if pd.isna(row["dt"]):
                     continue
-                d_iso = row["dt"].isoformat()
-                obs_map[d_iso] = {
-                    "min": None if pd.isna(row["obs_min"]) else round(float(row["obs_min"]), 1),
-                    "max": None if pd.isna(row["obs_max"]) else round(float(row["obs_max"]), 1),
-                }
+                mn = None if pd.isna(row["obs_min"]) else round(float(row["obs_min"]), 1)
+                mx = None if pd.isna(row["obs_max"]) else round(float(row["obs_max"]), 1)
+                if mn is not None and not (-55.0 <= mn <= 135.0):
+                    mn = None
+                if mx is not None and not (-55.0 <= mx <= 135.0):
+                    mx = None
+                if mn is not None and mx is not None and mx < mn:
+                    mn, mx = None, None
+                obs_map[row["dt"].isoformat()] = {"min": mn, "max": mx}
     except Exception:
         pass
     return stn_id, obs_map
