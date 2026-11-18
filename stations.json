@@ -1,26 +1,498 @@
 {
-  "KFGZ":   {"name": "WFO Bellemont (COOP)",          "network": "AZCLIMATE", "iem_id": "AZ0678", "lat": 35.2303, "lon": -111.8222, "elev_ft": 7152},
-  "KFLG":   {"name": "Flagstaff Pulliam Airport",     "network": "AZ_ASOS",   "iem_id": "FLG",    "lat": 35.1403, "lon": -111.6692, "elev_ft": 7011},
-  "KGCN":   {"name": "Grand Canyon Nat'l Park Arpt",  "network": "AZ_ASOS",   "iem_id": "GCN",    "lat": 35.9524, "lon": -112.1470, "elev_ft": 6609},
-  "KPGA":   {"name": "Page Municipal Airport",        "network": "AZ_ASOS",   "iem_id": "PGA",    "lat": 36.9261, "lon": -111.4483, "elev_ft": 4316},
-  "KINW":   {"name": "Winslow-Lindbergh Regional",    "network": "AZ_ASOS",   "iem_id": "INW",    "lat": 35.0219, "lon": -110.7225, "elev_ft": 4941},
-  "KPRC":   {"name": "Prescott Regional Airport",     "network": "AZ_ASOS",   "iem_id": "PRC",    "lat": 34.6545, "lon": -112.4196, "elev_ft": 5045},
-  "KSOW":   {"name": "Show Low Regional Airport",     "network": "AZ_ASOS",   "iem_id": "SOW",    "lat": 34.2655, "lon": -110.0056, "elev_ft": 6415},
-  "KSJN":   {"name": "St. Johns Industrial Air Park", "network": "AZ_ASOS",   "iem_id": "SJN",    "lat": 34.5184, "lon": -109.3789, "elev_ft": 5737},
-  "KSEZ":   {"name": "Sedona Airport",                "network": "AZ_ASOS",   "iem_id": "SEZ",    "lat": 34.8486, "lon": -111.7884, "elev_ft": 4830},
-  "KPAN":   {"name": "Payson Airport",                "network": "AZ_ASOS",   "iem_id": "PAN",    "lat": 34.2568, "lon": -111.3393, "elev_ft": 5157},
-  "KRQE":   {"name": "Window Rock Airport",           "network": "AZ_ASOS",   "iem_id": "RQE",    "lat": 35.6571, "lon": -109.0603, "elev_ft": 6745},
-  "KCMR":   {"name": "Williams / Clark Field",        "network": "AZ_ASOS",   "iem_id": "CMR",    "lat": 35.3055, "lon": -112.1944, "elev_ft": 6691},
-  "AZ6471": {"name": "Phantom Ranch (Grand Canyon)",  "network": "AZCLIMATE", "iem_id": "AZ6471", "lat": 36.1056, "lon": -112.0950, "elev_ft": 2530},
-  "AZ0159": {"name": "Alpine COOP",                   "network": "AZCLIMATE", "iem_id": "AZ0159", "lat": 33.8492, "lon": -109.1436, "elev_ft": 8050},
-  "AZ8162": {"name": "Springerville COOP",            "network": "AZCLIMATE", "iem_id": "AZ8162", "lat": 34.1361, "lon": -109.2864, "elev_ft": 7060},
-  "AZ9359": {"name": "Williams COOP",                 "network": "AZCLIMATE", "iem_id": "AZ9359", "lat": 35.2413, "lon": -112.1929, "elev_ft": 6909},
-  "AZ6323": {"name": "Payson COOP",                   "network": "AZCLIMATE", "iem_id": "AZ6323", "lat": 34.2333, "lon": -111.3333, "elev_ft": 4915},
-  "AZ0750": {"name": "Betatakin (Navajo Nat'l Mon)",  "network": "AZCLIMATE", "iem_id": "AZ0750", "lat": 36.6786, "lon": -110.5419, "elev_ft": 7286},
-  "AZ1248": {"name": "Canyon de Chelly COOP",         "network": "AZCLIMATE", "iem_id": "AZ1248", "lat": 36.1536, "lon": -109.5389, "elev_ft": 5610},
-  "AZ6468": {"name": "Petrified Forest NP",           "network": "AZCLIMATE", "iem_id": "AZ6468", "lat": 34.8122, "lon": -109.8925, "elev_ft": 5446},
-  "AZ5494": {"name": "Meteor Crater COOP",            "network": "AZCLIMATE", "iem_id": "AZ5494", "lat": 35.0283, "lon": -111.0233, "elev_ft": 5535},
-  "AZ8910": {"name": "Twin Arrows COOP",              "network": "AZCLIMATE", "iem_id": "AZ8910", "lat": 35.1583, "lon": -111.2750, "elev_ft": 5920},
-  "AZ8904": {"name": "Tuzigoot Nat'l Monument",       "network": "AZCLIMATE", "iem_id": "AZ8904", "lat": 34.7708, "lon": -112.0264, "elev_ft": 3383},
-  "AZ5635": {"name": "Montezuma Castle Nat'l Mon",    "network": "AZCLIMATE", "iem_id": "AZ5635", "lat": 34.6114, "lon": -111.8350, "elev_ft": 3180}
+  "KFGZ": {
+    "name": "WFO Bellemont (COOP)",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0678",
+    "lat": 35.2303,
+    "lon": -111.8222,
+    "elev_ft": 7152
+  },
+  "KFLG": {
+    "name": "Flagstaff Pulliam Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "FLG",
+    "lat": 35.1403,
+    "lon": -111.6692,
+    "elev_ft": 7011
+  },
+  "KGCN": {
+    "name": "Grand Canyon Nat'l Park Arpt",
+    "network": "AZ_ASOS",
+    "iem_id": "GCN",
+    "lat": 35.9524,
+    "lon": -112.147,
+    "elev_ft": 6609
+  },
+  "KPGA": {
+    "name": "Page Municipal Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "PGA",
+    "lat": 36.9261,
+    "lon": -111.4483,
+    "elev_ft": 4316
+  },
+  "KINW": {
+    "name": "Winslow-Lindbergh Regional",
+    "network": "AZ_ASOS",
+    "iem_id": "INW",
+    "lat": 35.0219,
+    "lon": -110.7225,
+    "elev_ft": 4941
+  },
+  "KPRC": {
+    "name": "Prescott Regional Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "PRC",
+    "lat": 34.6545,
+    "lon": -112.4196,
+    "elev_ft": 5045
+  },
+  "KSOW": {
+    "name": "Show Low Regional Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "SOW",
+    "lat": 34.2655,
+    "lon": -110.0056,
+    "elev_ft": 6415
+  },
+  "KSJN": {
+    "name": "St. Johns Industrial Air Park",
+    "network": "AZ_ASOS",
+    "iem_id": "SJN",
+    "lat": 34.5184,
+    "lon": -109.3789,
+    "elev_ft": 5737
+  },
+  "KSEZ": {
+    "name": "Sedona Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "SEZ",
+    "lat": 34.8486,
+    "lon": -111.7884,
+    "elev_ft": 4830
+  },
+  "KPAN": {
+    "name": "Payson Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "PAN",
+    "lat": 34.2568,
+    "lon": -111.3393,
+    "elev_ft": 5157
+  },
+  "KRQE": {
+    "name": "Window Rock Airport",
+    "network": "AZ_ASOS",
+    "iem_id": "RQE",
+    "lat": 35.6571,
+    "lon": -109.0603,
+    "elev_ft": 6745
+  },
+  "KCMR": {
+    "name": "Williams / Clark Field",
+    "network": "AZ_ASOS",
+    "iem_id": "CMR",
+    "lat": 35.3055,
+    "lon": -112.1944,
+    "elev_ft": 6691
+  },
+  "AZ6471": {
+    "name": "Phantom Ranch (Grand Canyon)",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ6471",
+    "lat": 36.1056,
+    "lon": -112.095,
+    "elev_ft": 2530
+  },
+  "AZ0159": {
+    "name": "Alpine COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0159",
+    "lat": 33.8492,
+    "lon": -109.1436,
+    "elev_ft": 8050
+  },
+  "AZ8162": {
+    "name": "Springerville COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ8162",
+    "lat": 34.1361,
+    "lon": -109.2864,
+    "elev_ft": 7060
+  },
+  "AZ9359": {
+    "name": "Williams COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ9359",
+    "lat": 35.2413,
+    "lon": -112.1929,
+    "elev_ft": 6909
+  },
+  "AZ6323": {
+    "name": "Payson COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ6323",
+    "lat": 34.2333,
+    "lon": -111.3333,
+    "elev_ft": 4915
+  },
+  "AZ0750": {
+    "name": "Betatakin (Navajo Nat'l Mon)",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0750",
+    "lat": 36.6786,
+    "lon": -110.5419,
+    "elev_ft": 7286
+  },
+  "AZ1248": {
+    "name": "Canyon de Chelly COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ1248",
+    "lat": 36.1536,
+    "lon": -109.5389,
+    "elev_ft": 5610
+  },
+  "AZ6468": {
+    "name": "Petrified Forest NP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ6468",
+    "lat": 34.8122,
+    "lon": -109.8925,
+    "elev_ft": 5446
+  },
+  "AZ5494": {
+    "name": "Meteor Crater COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ5494",
+    "lat": 35.0283,
+    "lon": -111.0233,
+    "elev_ft": 5535
+  },
+  "AZ8910": {
+    "name": "Twin Arrows COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ8910",
+    "lat": 35.1583,
+    "lon": -111.275,
+    "elev_ft": 5920
+  },
+  "AZ8904": {
+    "name": "Tuzigoot Nat'l Monument",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ8904",
+    "lat": 34.7708,
+    "lon": -112.0264,
+    "elev_ft": 3383
+  },
+  "AZ5635": {
+    "name": "Montezuma Castle Nat'l Mon",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ5635",
+    "lat": 34.6114,
+    "lon": -111.835,
+    "elev_ft": 3180
+  },
+  "AZ0000": {
+    "name": "Arizona Average COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0000",
+    "lat": 34.2932,
+    "lon": -111.6646,
+    "elev_ft": 2490
+  },
+  "AZ0586": {
+    "name": "Bagdad COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0586",
+    "lat": 34.5972,
+    "lon": -113.1739,
+    "elev_ft": 12976
+  },
+  "AZ0678": {
+    "name": "Bellemont WFO",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0678",
+    "lat": 35.2302,
+    "lon": -111.8221,
+    "elev_ft": 7152
+  },
+  "AZ0871": {
+    "name": "Blue Ridge RS COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ0871",
+    "lat": 34.6108,
+    "lon": -111.1922,
+    "elev_ft": 22572
+  },
+  "AZ1001": {
+    "name": "Bright Angel RS COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ1001",
+    "lat": 36.2147,
+    "lon": -112.0619,
+    "elev_ft": 26247
+  },
+  "AZ2109": {
+    "name": "Cordes COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ2109",
+    "lat": 34.305,
+    "lon": -112.165,
+    "elev_ft": 12372
+  },
+  "AZ3009": {
+    "name": "Flagstaff 4 SW COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3009",
+    "lat": 35.1611,
+    "lon": -111.7311,
+    "elev_ft": 23376
+  },
+  "AZ3010": {
+    "name": "Flagstaff AP COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3010",
+    "lat": 35.1442,
+    "lon": -111.6664,
+    "elev_ft": 22976
+  },
+  "AZ3013": {
+    "name": "Flagstaff 14N COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3013",
+    "lat": 35.3835,
+    "lon": -111.7293,
+    "elev_ft": 8140
+  },
+  "AZ3160": {
+    "name": "Ft Valley COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3160",
+    "lat": 35.2681,
+    "lon": -111.7428,
+    "elev_ft": 24104
+  },
+  "AZ3448": {
+    "name": "Gisela COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3448",
+    "lat": 34.1111,
+    "lon": -111.2758,
+    "elev_ft": 2900
+  },
+  "AZ3582": {
+    "name": "Grand Canyon Visitor Center COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3582",
+    "lat": 36.0597,
+    "lon": -112.1098,
+    "elev_ft": 7083
+  },
+  "AZ3584": {
+    "name": "Grand Canyon East Entrance COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3584",
+    "lat": 36.0353,
+    "lon": -111.8304,
+    "elev_ft": 7480
+  },
+  "AZ3828": {
+    "name": "Happy Jack RS COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3828",
+    "lat": 34.7433,
+    "lon": -111.4139,
+    "elev_ft": 24541
+  },
+  "AZ3961": {
+    "name": "Heber Black Mesa RS COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ3961",
+    "lat": 34.3925,
+    "lon": -110.5581,
+    "elev_ft": 21621
+  },
+  "AZ4453": {
+    "name": "Jerome COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ4453",
+    "lat": 34.7522,
+    "lon": -112.1114,
+    "elev_ft": 16240
+  },
+  "AZ5412": {
+    "name": "Mc Nary 2N COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ5412",
+    "lat": 34.1142,
+    "lon": -109.8589,
+    "elev_ft": 24081
+  },
+  "AZ5825": {
+    "name": "Natural Bridge COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ5825",
+    "lat": 34.3222,
+    "lon": -111.4533,
+    "elev_ft": 4626
+  },
+  "AZ6190": {
+    "name": "Painted Desert NP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ6190",
+    "lat": 35.068,
+    "lon": -109.7688,
+    "elev_ft": 5760
+  },
+  "AZ6653": {
+    "name": "Pleasant Valley R S COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ6653",
+    "lat": 34.0989,
+    "lon": -110.9442,
+    "elev_ft": 16568
+  },
+  "AZ6796": {
+    "name": "Prescott COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ6796",
+    "lat": 34.5706,
+    "lon": -112.4322,
+    "elev_ft": 17077
+  },
+  "AZ7435": {
+    "name": "Saint Johns COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ7435",
+    "lat": 34.5172,
+    "lon": -109.4028,
+    "elev_ft": 18996
+  },
+  "AZ7488": {
+    "name": "Sanders COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ7488",
+    "lat": 35.2239,
+    "lon": -109.3222,
+    "elev_ft": 19203
+  },
+  "AZ7716": {
+    "name": "Seligman COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ7716",
+    "lat": 35.3322,
+    "lon": -112.8797,
+    "elev_ft": 17224
+  },
+  "AZ7855": {
+    "name": "Show Low AP COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ7855",
+    "lat": 34.2639,
+    "lon": -110.0075,
+    "elev_ft": 21033
+  },
+  "AZ8326": {
+    "name": "Sunrise Mountain COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ8326",
+    "lat": 33.9733,
+    "lon": -109.563,
+    "elev_ft": 9370
+  },
+  "AZ8329": {
+    "name": "Sunset Crater NM",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ8329",
+    "lat": 35.3694,
+    "lon": -111.5436,
+    "elev_ft": 22900
+  },
+  "AZ8468": {
+    "name": "Teec Nos Pos COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ8468",
+    "lat": 36.9233,
+    "lon": -109.09,
+    "elev_ft": 17356
+  },
+  "AZ9156": {
+    "name": "Walnut Canyon N.M. COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ9156",
+    "lat": 35.1706,
+    "lon": -111.5067,
+    "elev_ft": 6716
+  },
+  "AZ9158": {
+    "name": "Walnut Creek COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ9158",
+    "lat": 34.9281,
+    "lon": -112.8097,
+    "elev_ft": 16699
+  },
+  "AZ9370": {
+    "name": "Williams 35 NNW COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ9370",
+    "lat": 35.7552,
+    "lon": -112.3374,
+    "elev_ft": 5990
+  },
+  "AZ9439": {
+    "name": "Winslow AP COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ9439",
+    "lat": 35.0281,
+    "lon": -110.7208,
+    "elev_ft": 16030
+  },
+  "AZ9542": {
+    "name": "Wupatki NM",
+    "network": "AZCLIMATE",
+    "iem_id": "AZ9542",
+    "lat": 35.5247,
+    "lon": -111.3703,
+    "elev_ft": 16102
+  },
+  "AZC002": {
+    "name": "Arizona - Northeast Climate Division COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZC002",
+    "lat": 35.6057,
+    "lon": -110.7682,
+    "elev_ft": 5097
+  },
+  "AZC003": {
+    "name": "Arizona - North Central Climate Division COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZC003",
+    "lat": 34.5994,
+    "lon": -112.5533,
+    "elev_ft": 5946
+  },
+  "AZC004": {
+    "name": "Arizona - East Central Climate Division COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZC004",
+    "lat": 33.8001,
+    "lon": -110.8121,
+    "elev_ft": 3247
+  },
+  "AZTFLG": {
+    "name": "Flagstaff Area COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZTFLG",
+    "lat": 35.1403,
+    "lon": -111.6722,
+    "elev_ft": 7014
+  },
+  "AZTINW": {
+    "name": "Winslow Area COOP",
+    "network": "AZCLIMATE",
+    "iem_id": "AZTINW",
+    "lat": 35.0219,
+    "lon": -110.7225,
+    "elev_ft": 4896
+  }
 }
