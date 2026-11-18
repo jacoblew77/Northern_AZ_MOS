@@ -3,10 +3,15 @@ name: Train Northern AZ HRRR MOS Equations
 on:
   workflow_dispatch:
     inputs:
-      retrain_all:
-        description: 'Retrain ALL stations from scratch (uncheck to train only newly added stations)'
+      discover_coop:
+        description: 'Auto-discover & add all active Northern AZ COOP sites from IEM'
         required: true
         default: true
+        type: boolean
+      retrain_all:
+        description: 'Retrain ALL stations from scratch (leave unchecked to train only newly discovered sites)'
+        required: true
+        default: false
         type: boolean
 
 permissions:
@@ -33,20 +38,23 @@ jobs:
             hrrr-zarr-cache-
 
       - name: Install training packages
-        run: pip install -q aiohttp fsspec numcodecs numpy pandas requests tqdm "zarr<3"
+        run: pip install -q aiohttp fsspec numcodecs "numpy<2" pandas requests tqdm "zarr<3"
 
       - name: Run HRRR MOS regression training
         run: |
-          if [ "${{ github.event.inputs.retrain_all }}" = "true" ]; then
-            python train_mos.py --retrain-all
-          else
-            python train_mos.py
+          ARGS=""
+          if [ "${{ github.event.inputs.discover_coop }}" = "true" ]; then
+            ARGS="$ARGS --discover-coop"
           fi
+          if [ "${{ github.event.inputs.retrain_all }}" = "true" ]; then
+            ARGS="$ARGS --retrain-all"
+          fi
+          python -u train_mos.py $ARGS
 
-      - name: Commit updated mos_equations.json
+      - name: Commit updated stations.json and mos_equations.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mos_equations.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Retrain HRRR MOS equations (no persistence predictors) [skip ci]"
+          git add stations.json mos_equations.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Discover & train active Northern AZ COOP stations [skip ci]"
           git push
