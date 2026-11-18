@@ -293,6 +293,16 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
     }
 
 
+def format_fhr_window_desc(init_dt: datetime.datetime, fhrs: list, az_tz: zoneinfo.ZoneInfo) -> str:
+    """Formats the exact forecast hours, UTC hours, and MST local times for UI tooltips."""
+    parts = []
+    for fh in fhrs:
+        v_utc = (init_dt + datetime.timedelta(hours=fh)).replace(tzinfo=datetime.timezone.utc)
+        v_mst = v_utc.astimezone(az_tz)
+        parts.append(f"f{fh:02d} ({v_utc.strftime('%HZ')} / {v_mst.strftime('%I:%M %p').lstrip('0')} MST)")
+    return ", ".join(parts)
+
+
 def find_init_for_verify_date(target_v_date: datetime.date, cyc: str, fhrs: list) -> datetime.datetime:
     """Finds the exact UTC initialization datetime for `cyc` whose `fhrs` verify on `target_v_date`."""
     cyc_hr = int(cyc.replace("Z", ""))
@@ -454,7 +464,6 @@ def main():
         obs_futures = [pool.submit(fetch_station_obs_window, sid, sinfo["meta"], obs_start, today_mst) for sid, sinfo in stations.items()]
         obs_maps = {sid: omap for sid, omap in (f.result() for f in obs_futures)}
 
-    # Load existing verification history (schema v2: records[stn_id][date_iso][cycle][kind])
     hist_records = {}
     if os.path.exists(HIST_JSON):
         with open(HIST_JSON, "r") as f:
@@ -533,6 +542,8 @@ def main():
                 "key": p_key,
                 "kind": kind,
                 "label": eq["label"],
+                "fhrs": eq["fhrs"],
+                "window_desc": format_fhr_window_desc(chosen_init, eq["fhrs"], az_tz),
                 "verify_date": verify_dt.strftime("%a, %b %d"),
                 "raw_hrrr_f": round(raw_val, 1),
                 "mos_f": round(mos_val, 1),
