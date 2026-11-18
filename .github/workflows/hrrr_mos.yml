@@ -29,13 +29,13 @@ jobs:
       - name: Install Python packages
         run: pip install -q numpy pandas requests eccodes
 
-      - name: Generate latest 48-hr HRRR MOS forecasts
+      - name: Generate latest 48-hr HRRR MOS forecasts & 7-day verification
         run: python update_forecast.py
 
-      - name: Commit updated forecast JSON
+      - name: Commit updated forecast and verification JSON
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/latest_forecasts.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update HRRR MOS forecasts [skip ci]"
+          git add docs/latest_forecasts.json docs/verification_history.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update HRRR MOS forecasts & verification [skip ci]"
           git push
