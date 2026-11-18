@@ -8,16 +8,16 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; --coop: #a78bfa; }
+    :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; --coop: #a78bfa; --uscrn: #34d399; --raws: #fbbf24; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
     header { padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     header h1 { font-size: 1.1rem; font-weight: 700; }
-    .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .filter-btn, .vtoggle-btn, .vcyc-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 600; }
+    .controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .filter-btn, .vtoggle-btn, .vcyc-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; cursor: pointer; font-size: 0.76rem; font-weight: 600; }
     .filter-btn.active, .vtoggle-btn.active, .vcyc-btn.active { color: var(--text); border-color: var(--accent); background: #1e293b; }
-    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; max-width: 270px; }
-    .meta-badge { font-size: 0.8rem; color: var(--muted); background: #0f172a; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); }
+    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; max-width: 280px; }
+    .meta-badge { font-size: 0.78rem; color: var(--muted); background: #0f172a; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); }
     .layout { display: grid; grid-template-columns: 1.15fr 1fr; height: calc(100vh - 56px); }
     @media (max-width: 960px) { .layout { grid-template-columns: 1fr; height: auto; } #map { height: 420px; } }
     #map { width: 100%; height: 100%; z-index: 1; background: #0f172a; }
@@ -53,8 +53,10 @@
     .info-btn:hover, .info-btn.open { background: var(--accent); color: #0f172a; }
     .info-drawer td { background: #0f172a; padding: 9px 12px; border-bottom: 1px solid var(--border); color: #cbd5e1; font-size: 0.8rem; line-height: 1.45; }
     .info-meta { margin-top: 5px; color: #38bdf8; font-size: 0.76rem; font-weight: 600; }
-    .pin-label { display: inline-block; transform: translate(-50%, -50%); background: #1e293b; color: #f8fafc; border: 1.5px solid #38bdf8; border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.55); }
-    .pin-label.coop { border-color: #a78bfa; }
+    .pin-label { display: inline-block; transform: translate(-50%, -50%); background: #1e293b; color: #f8fafc; border: 1.5px solid var(--accent); border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.55); }
+    .pin-label.coop { border-color: var(--coop); }
+    .pin-label.uscrn { border-color: var(--uscrn); }
+    .pin-label.raws { border-color: var(--raws); }
   </style>
 </head>
 <body>
@@ -62,8 +64,10 @@
     <h1>Northern AZ HRRRv4 MOS — WFO Flagstaff CWA</h1>
     <div class="controls">
       <button class="filter-btn active" data-net="ALL">All</button>
-      <button class="filter-btn" data-net="AZ_ASOS">ASOS/AWOS</button>
-      <button class="filter-btn" data-net="AZCLIMATE">COOP</button>
+      <button class="filter-btn" data-net="AZ_ASOS" style="border-bottom:2px solid #38bdf8;">Airports</button>
+      <button class="filter-btn" data-net="AZCLIMATE" style="border-bottom:2px solid #a78bfa;">COOP</button>
+      <button class="filter-btn" data-net="USCRN" style="border-bottom:2px solid #34d399;">USCRN</button>
+      <button class="filter-btn" data-net="AZ_DCP" style="border-bottom:2px solid #fbbf24;">RAWS</button>
       <select id="stn-select"></select>
       <div class="meta-badge" id="run-meta">Loading HRRR run...</div>
     </div>
@@ -74,7 +78,7 @@
     <div class="panel">
       <div class="stn-header">
         <h2 id="stn-title">Select a Station</h2>
-        <p id="stn-sub">Click any ASOS/AWOS (cyan) or COOP (violet) pin on the map</p>
+        <p id="stn-sub">Click any Airport (cyan), COOP (violet), USCRN (green), or RAWS (amber) pin</p>
       </div>
 
       <div class="cards" id="period-cards"></div>
@@ -133,6 +137,13 @@
     let chartInstance = null;
     let verifChartInstance = null;
 
+    const NETWORK_LABELS = {
+      AZ_ASOS: "ASOS/AWOS",
+      AZCLIMATE: "NWS COOP",
+      USCRN: "NOAA USCRN",
+      AZ_DCP: "RAWS"
+    };
+
     const FALLBACK_WINDOWS = {
       "00Z": { min_1: "f09, f12, f14 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_1: "f20, f21, f23 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_2: "f33, f36 (09Z, 12Z / 2:00 AM–5:00 AM MST)" },
       "06Z": { min_1: "f03, f06, f08 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_1: "f14, f15, f17 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_2: "f27, f30, f32 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)" },
@@ -141,12 +152,19 @@
     };
 
     function getMapTileLabel(stn) {
-      if (stn.network !== "AZCLIMATE") return stn.id;
+      if (stn.network === "AZ_ASOS") return stn.id;
       return stn.name
         .replace(/\s*\([^)]*\)/g, "")
-        .replace(/\s+COOP$/i, "")
+        .replace(/\s+(?:COOP|USCRN)$/i, "")
         .replace(/\s+Nat'l Mon(?:ument)?$/i, "")
         .trim();
+    }
+
+    function getPinClass(net) {
+      if (net === "AZCLIMATE") return "pin-label coop";
+      if (net === "USCRN") return "pin-label uscrn";
+      if (net === "AZ_DCP") return "pin-label raws";
+      return "pin-label";
     }
 
     function getPredictorInfo(term, period, cycleName) {
@@ -304,7 +322,7 @@
           title: "Station Climatological Normal",
           unit: "°F",
           agg: `Daily harmonic normal for ${period.verify_date}`,
-          desc: "Station's smooth annual harmonic normal Max or Min temperature (°F) on the verification date, fitted from its 2020–2026 IEM daily record. Anchors forecasts toward seasonal climatology at longer lead times."
+          desc: "Station's smooth annual harmonic normal Max or Min temperature (°F) on the verification date, fitted from its 2020–2026 daily record. Anchors forecasts toward seasonal climatology at longer lead times."
         },
         sin_doy_1: {
           title: "Annual Seasonal Harmonic (sin)",
@@ -381,10 +399,10 @@
         const p0 = stn.periods[0];
         const tileName = getMapTileLabel(stn);
         const badge = p0 ? `${tileName}: ${p0.mos_f.toFixed(0)}°` : tileName;
-        const cls = stn.network === "AZCLIMATE" ? "pin-label coop" : "pin-label";
+        const cls = getPinClass(stn.network);
         const icon = L.divIcon({
           className: "",
-          html: `<div class="${cls}" title="${stn.id} — ${stn.name}">${badge}</div>`,
+          html: `<div class="${cls}" title="${stn.id} — ${stn.name} (${NETWORK_LABELS[stn.network] || stn.network})">${badge}</div>`,
           iconSize: null
         });
         L.marker([stn.lat, stn.lon], { icon })
@@ -530,7 +548,7 @@
       const stn = forecastData.stations[stnId];
       if (!stn) return;
 
-      const netLabel = stn.network === "AZCLIMATE" ? "NWS COOP" : "ASOS/AWOS";
+      const netLabel = NETWORK_LABELS[stn.network] || stn.network;
       const obsStr = (stn.prev_obs_min !== null && stn.prev_obs_max !== null)
         ? ` | Latest Obs (${stn.obs_date_label}): ${stn.prev_obs_min}°F / ${stn.prev_obs_max}°F`
         : "";
@@ -632,11 +650,15 @@
         }
 
         const allVals = Object.values(data.stations);
-        const asosCount = allVals.filter(s => s.network !== "AZCLIMATE").length;
+        const asosCount = allVals.filter(s => s.network === "AZ_ASOS").length;
         const coopCount = allVals.filter(s => s.network === "AZCLIMATE").length;
+        const uscrnCount = allVals.filter(s => s.network === "USCRN").length;
+        const rawsCount = allVals.filter(s => s.network === "AZ_DCP").length;
         document.querySelector('[data-net="ALL"]').textContent = `All (${allVals.length})`;
-        document.querySelector('[data-net="AZ_ASOS"]').textContent = `ASOS/AWOS (${asosCount})`;
+        document.querySelector('[data-net="AZ_ASOS"]').textContent = `Airports (${asosCount})`;
         document.querySelector('[data-net="AZCLIMATE"]').textContent = `COOP (${coopCount})`;
+        document.querySelector('[data-net="USCRN"]').textContent = `USCRN (${uscrnCount})`;
+        document.querySelector('[data-net="AZ_DCP"]').textContent = `RAWS (${rawsCount})`;
 
         document.getElementById("run-meta").textContent =
           `HRRR: ${data.hrrr_init_utc} (${data.synoptic_cycle}) | Updated: ${data.updated_mst}`;
@@ -647,7 +669,9 @@
           .forEach(stn => {
             const opt = document.createElement("option");
             opt.value = stn.id;
-            opt.textContent = stn.network === "AZCLIMATE" ? `${stn.name} (${stn.id})` : `${stn.id} — ${stn.name}`;
+            opt.textContent = stn.network === "AZ_ASOS"
+              ? `${stn.id} — ${stn.name}`
+              : `${stn.name} [${NETWORK_LABELS[stn.network] || stn.network}]`;
             selectEl.appendChild(opt);
           });
         selectEl.value = selectedStn;
