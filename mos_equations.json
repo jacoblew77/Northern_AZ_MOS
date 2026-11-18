@@ -9,14 +9,14 @@
         "lon": -111.8222,
         "elev_ft": 7152,
         "clim_min_w": [
-          28.7689,
-          -15.5739,
-          -7.4921
+          28.7795,
+          -15.5594,
+          -7.5073
         ],
         "clim_max_w": [
-          63.0009,
-          -18.413,
-          -6.6759
+          63.0004,
+          -18.4141,
+          -6.6756
         ]
       },
       "cycles": {
@@ -60,17 +60,17 @@
               21,
               23
             ],
-            "intercept": 3.952947,
+            "intercept": 11.605584,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.786631,
-              0.179908
+              0.842248,
+              -2.739711
             ],
             "holdout_raw_mae": 2.24,
-            "holdout_mos_mae": 1.99,
+            "holdout_mos_mae": 2.11,
             "sample_size": 425
           },
           "min_2": {
@@ -80,7 +80,7 @@
               33,
               36
             ],
-            "intercept": -26.489261,
+            "intercept": -26.495959,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
@@ -88,10 +88,10 @@
               "norm_t"
             ],
             "weights": [
-              0.825261,
-              0.192488,
-              0.179214,
-              0.299434
+              0.82537,
+              0.192457,
+              0.179281,
+              0.299426
             ],
             "holdout_raw_mae": 12.75,
             "holdout_mos_mae": 4.0,
@@ -136,17 +136,15 @@
               15,
               17
             ],
-            "intercept": 4.221395,
+            "intercept": 6.070613,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.793497,
-              0.167077
+              0.934764
             ],
             "holdout_raw_mae": 2.13,
-            "holdout_mos_mae": 2.04,
+            "holdout_mos_mae": 2.16,
             "sample_size": 424
           },
           "min_2": {
@@ -157,21 +155,21 @@
               30,
               32
             ],
-            "intercept": -25.103464,
+            "intercept": -25.538396,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "obs_prev_min"
+              "norm_t"
             ],
             "weights": [
-              0.92146,
-              0.193533,
-              0.174816,
-              0.135794
+              0.857455,
+              0.203559,
+              0.162026,
+              0.22802
             ],
             "holdout_raw_mae": 12.61,
-            "holdout_mos_mae": 3.83,
+            "holdout_mos_mae": 3.93,
             "sample_size": 424
           }
         },
@@ -184,17 +182,15 @@
               9,
               11
             ],
-            "intercept": 3.366463,
+            "intercept": 5.541604,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.684966,
-              0.284555
+              0.943928
             ],
             "holdout_raw_mae": 2.05,
-            "holdout_mos_mae": 1.72,
+            "holdout_mos_mae": 1.99,
             "sample_size": 424
           },
           "min_1": {
@@ -205,21 +201,21 @@
               24,
               26
             ],
-            "intercept": -30.658573,
+            "intercept": -26.417083,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.83722,
-              0.217094,
-              0.157702,
-              0.192366
+              0.867462,
+              0.204615,
+              0.187043,
+              0.225497
             ],
             "holdout_raw_mae": 12.41,
-            "holdout_mos_mae": 3.63,
+            "holdout_mos_mae": 3.8,
             "sample_size": 424
           },
           "max_2": {
@@ -230,17 +226,17 @@
               33,
               35
             ],
-            "intercept": 4.549263,
+            "intercept": 3.474318,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.757643,
-              0.197846
+              0.799067,
+              0.17204
             ],
             "holdout_raw_mae": 3.01,
-            "holdout_mos_mae": 2.26,
+            "holdout_mos_mae": 2.65,
             "sample_size": 424
           }
         },
@@ -253,17 +249,15 @@
               3,
               5
             ],
-            "intercept": 3.707175,
+            "intercept": 5.8299,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.697656,
-              0.266908
+              0.939162
             ],
             "holdout_raw_mae": 2.2,
-            "holdout_mos_mae": 1.72,
+            "holdout_mos_mae": 2.08,
             "sample_size": 423
           },
           "min_1": {
@@ -274,21 +268,21 @@
               18,
               20
             ],
-            "intercept": -30.819979,
+            "intercept": -26.506612,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.837281,
-              0.217278,
-              0.156124,
-              0.195956
+              0.878794,
+              0.20438,
+              0.186762,
+              0.214244
             ],
             "holdout_raw_mae": 12.4,
-            "holdout_mos_mae": 3.68,
+            "holdout_mos_mae": 3.73,
             "sample_size": 423
           },
           "max_2": {
@@ -299,17 +293,17 @@
               27,
               29
             ],
-            "intercept": 3.726846,
+            "intercept": 2.221573,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.759158,
-              0.208531
+              0.792498,
+              0.19689
             ],
             "holdout_raw_mae": 2.79,
-            "holdout_mos_mae": 2.05,
+            "holdout_mos_mae": 2.41,
             "sample_size": 423
           }
         }
@@ -324,14 +318,14 @@
         "lon": -111.6692,
         "elev_ft": 7011,
         "clim_min_w": [
-          34.0808,
-          -16.2532,
-          -7.1784
+          34.0787,
+          -16.2557,
+          -7.1751
         ],
         "clim_max_w": [
-          62.5844,
-          -18.7517,
-          -6.9683
+          62.5853,
+          -18.7508,
+          -6.9701
         ]
       },
       "cycles": {
@@ -344,7 +338,7 @@
               12,
               14
             ],
-            "intercept": -8.779748,
+            "intercept": -8.778549,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
@@ -352,10 +346,10 @@
               "norm_t"
             ],
             "weights": [
-              0.657877,
-              0.217988,
-              0.145299,
-              0.242888
+              0.65782,
+              0.218009,
+              0.145293,
+              0.24292
             ],
             "holdout_raw_mae": 5.72,
             "holdout_mos_mae": 2.61,
@@ -387,7 +381,7 @@
               33,
               36
             ],
-            "intercept": -14.771769,
+            "intercept": -14.770965,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
@@ -395,10 +389,10 @@
               "norm_t"
             ],
             "weights": [
-              0.831498,
-              0.084691,
-              0.120636,
-              0.245745
+              0.831486,
+              0.084698,
+              0.120626,
+              0.245743
             ],
             "holdout_raw_mae": 6.04,
             "holdout_mos_mae": 2.93,
@@ -454,7 +448,7 @@
               30,
               32
             ],
-            "intercept": -7.687806,
+            "intercept": -7.686792,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
@@ -462,10 +456,10 @@
               "norm_t"
             ],
             "weights": [
-              0.716989,
-              0.176388,
-              0.132403,
-              0.179198
+              0.716969,
+              0.176401,
+              0.132395,
+              0.179196
             ],
             "holdout_raw_mae": 5.65,
             "holdout_mos_mae": 2.8,
@@ -514,7 +508,7 @@
               0.118048
             ],
             "holdout_raw_mae": 5.51,
-            "holdout_mos_mae": 2.64,
+            "holdout_mos_mae": 2.65,
             "sample_size": 424
           },
           "max_2": {
@@ -611,14 +605,14 @@
         "lon": -112.147,
         "elev_ft": 6609,
         "clim_min_w": [
-          31.0581,
-          -16.4374,
-          -7.7766
+          31.0623,
+          -16.4317,
+          -7.7827
         ],
         "clim_max_w": [
-          64.9408,
-          -20.4329,
-          -6.8358
+          64.9428,
+          -20.4306,
+          -6.8391
         ]
       },
       "cycles": {
@@ -631,19 +625,19 @@
               12,
               14
             ],
-            "intercept": -12.727137,
+            "intercept": -12.724511,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
               "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.851396,
-              0.281303,
-              0.310085
+              0.851322,
+              0.281388,
+              0.309755
             ],
             "holdout_raw_mae": 9.13,
-            "holdout_mos_mae": 3.11,
+            "holdout_mos_mae": 3.14,
             "sample_size": 425
           },
           "max_1": {
@@ -672,17 +666,17 @@
               33,
               36
             ],
-            "intercept": -20.895499,
+            "intercept": -20.861971,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh"
             ],
             "weights": [
-              1.075517,
-              0.147135
+              1.07452,
+              0.147067
             ],
             "holdout_raw_mae": 9.83,
-            "holdout_mos_mae": 3.71,
+            "holdout_mos_mae": 3.7,
             "sample_size": 425
           }
         },
@@ -735,23 +729,19 @@
               30,
               32
             ],
-            "intercept": -10.516471,
+            "intercept": -12.074904,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
-              "hrrr_wspd10_kt",
-              "obs_prev_min",
-              "hrrr_snow_in"
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.704,
-              0.269685,
-              0.347721,
-              0.134639,
-              -1.520662
+              0.834509,
+              0.281937,
+              0.31057
             ],
             "holdout_raw_mae": 9.42,
-            "holdout_mos_mae": 3.24,
+            "holdout_mos_mae": 3.6,
             "sample_size": 424
           }
         },
@@ -783,19 +773,17 @@
               24,
               26
             ],
-            "intercept": -18.007371,
+            "intercept": -19.688632,
             "predictors": [
               "hrrr_ext_t",
-              "hrrr_win_rh",
-              "obs_prev_min"
+              "hrrr_win_rh"
             ],
             "weights": [
-              0.943174,
-              0.125164,
-              0.133509
+              1.065161,
+              0.141642
             ],
             "holdout_raw_mae": 9.09,
-            "holdout_mos_mae": 3.52,
+            "holdout_mos_mae": 3.68,
             "sample_size": 424
           },
           "max_2": {
@@ -846,21 +834,19 @@
               18,
               20
             ],
-            "intercept": -8.906043,
+            "intercept": -11.741787,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
-              "hrrr_v10_kt",
-              "obs_prev_min"
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.703303,
-              0.225858,
-              0.303687,
-              0.152779
+              0.829113,
+              0.278443,
+              0.302617
             ],
             "holdout_raw_mae": 9.13,
-            "holdout_mos_mae": 3.5,
+            "holdout_mos_mae": 3.43,
             "sample_size": 423
           },
           "max_2": {
@@ -894,14 +880,14 @@
         "lon": -111.4483,
         "elev_ft": 4316,
         "clim_min_w": [
-          51.8875,
-          -21.6221,
-          -6.737
+          51.8898,
+          -21.6189,
+          -6.7403
         ],
         "clim_max_w": [
-          72.9572,
-          -25.4278,
-          -6.135
+          72.9588,
+          -25.4258,
+          -6.1374
         ]
       },
       "cycles": {
@@ -935,14 +921,14 @@
               21,
               23
             ],
-            "intercept": -4.107725,
+            "intercept": -4.108763,
             "predictors": [
               "hrrr_ext_t",
               "norm_t"
             ],
             "weights": [
-              0.843764,
-              0.202465
+              0.843767,
+              0.202473
             ],
             "holdout_raw_mae": 1.87,
             "holdout_mos_mae": 1.9,
@@ -1075,17 +1061,15 @@
               33,
               35
             ],
-            "intercept": -3.301645,
+            "intercept": -2.574845,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.854373,
-              0.181915
+              1.025977
             ],
             "holdout_raw_mae": 2.37,
-            "holdout_mos_mae": 2.36,
+            "holdout_mos_mae": 2.4,
             "sample_size": 424
           }
         },
@@ -1136,17 +1120,15 @@
               27,
               29
             ],
-            "intercept": -3.251614,
+            "intercept": -2.585555,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.867675,
-              0.16779
+              1.026004
             ],
             "holdout_raw_mae": 2.28,
-            "holdout_mos_mae": 2.33,
+            "holdout_mos_mae": 2.3,
             "sample_size": 423
           }
         }
@@ -1161,14 +1143,14 @@
         "lon": -110.7225,
         "elev_ft": 4941,
         "clim_min_w": [
-          42.2932,
-          -20.7764,
-          -7.4703
+          42.2961,
+          -20.7721,
+          -7.4744
         ],
         "clim_max_w": [
-          73.8424,
-          -21.859,
-          -5.4606
+          73.8422,
+          -21.8592,
+          -5.4604
         ]
       },
       "cycles": {
@@ -1333,7 +1315,7 @@
               -0.407248
             ],
             "holdout_raw_mae": 3.2,
-            "holdout_mos_mae": 2.72,
+            "holdout_mos_mae": 2.73,
             "sample_size": 424
           },
           "max_2": {
@@ -1354,7 +1336,7 @@
               0.178503
             ],
             "holdout_raw_mae": 2.63,
-            "holdout_mos_mae": 2.02,
+            "holdout_mos_mae": 2.01,
             "sample_size": 424
           }
         },
@@ -1432,14 +1414,14 @@
         "lon": -112.4196,
         "elev_ft": 5045,
         "clim_min_w": [
-          44.4386,
-          -18.299,
-          -6.945
+          44.442,
+          -18.2942,
+          -6.9499
         ],
         "clim_max_w": [
-          71.1617,
-          -18.1979,
-          -6.3972
+          71.1628,
+          -18.1968,
+          -6.3992
         ]
       },
       "cycles": {
@@ -1602,17 +1584,19 @@
               24,
               26
             ],
-            "intercept": -5.160054,
+            "intercept": 2.702041,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min"
+              "hrrr_win_dp2m",
+              "cos_doy_1"
             ],
             "weights": [
-              0.859407,
-              0.179807
+              0.787437,
+              0.117786,
+              -3.376064
             ],
             "holdout_raw_mae": 4.01,
-            "holdout_mos_mae": 2.49,
+            "holdout_mos_mae": 2.39,
             "sample_size": 424
           },
           "max_2": {
@@ -1663,17 +1647,19 @@
               18,
               20
             ],
-            "intercept": -4.600631,
+            "intercept": 2.570159,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min"
+              "hrrr_win_dp2m",
+              "cos_doy_1"
             ],
             "weights": [
-              0.85902,
-              0.171185
+              0.797371,
+              0.111526,
+              -3.107099
             ],
             "holdout_raw_mae": 4.04,
-            "holdout_mos_mae": 2.65,
+            "holdout_mos_mae": 2.5,
             "sample_size": 423
           },
           "max_2": {
@@ -1707,14 +1693,14 @@
         "lon": -110.0056,
         "elev_ft": 6415,
         "clim_min_w": [
-          41.8838,
-          -17.4426,
-          -6.928
+          41.8815,
+          -17.4453,
+          -6.9242
         ],
         "clim_max_w": [
-          67.925,
-          -19.2551,
-          -5.749
+          67.9213,
+          -19.2602,
+          -5.7438
         ]
       },
       "cycles": {
@@ -1748,17 +1734,17 @@
               21,
               23
             ],
-            "intercept": 2.37847,
+            "intercept": 11.662657,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.807462,
-              0.170476
+              0.835849,
+              -3.071039
             ],
             "holdout_raw_mae": 2.03,
-            "holdout_mos_mae": 1.94,
+            "holdout_mos_mae": 2.26,
             "sample_size": 425
           },
           "min_2": {
@@ -1814,17 +1800,15 @@
               15,
               17
             ],
-            "intercept": 2.509305,
+            "intercept": 4.113242,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.822327,
-              0.152956
+              0.951442
             ],
             "holdout_raw_mae": 2.22,
-            "holdout_mos_mae": 1.97,
+            "holdout_mos_mae": 2.02,
             "sample_size": 424
           },
           "min_2": {
@@ -1860,17 +1844,15 @@
               9,
               11
             ],
-            "intercept": 2.733343,
+            "intercept": 3.933621,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.728358,
-              0.243155
+              0.956082
             ],
             "holdout_raw_mae": 2.1,
-            "holdout_mos_mae": 1.63,
+            "holdout_mos_mae": 1.87,
             "sample_size": 424
           },
           "min_1": {
@@ -1891,7 +1873,7 @@
               0.269433
             ],
             "holdout_raw_mae": 3.25,
-            "holdout_mos_mae": 2.78,
+            "holdout_mos_mae": 2.76,
             "sample_size": 424
           },
           "max_2": {
@@ -1902,19 +1884,19 @@
               33,
               35
             ],
-            "intercept": 2.568016,
+            "intercept": 10.444766,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_u10_kt"
+              "hrrr_lcdc",
+              "cos_doy_1"
             ],
             "weights": [
-              0.71957,
-              0.24307,
-              0.135009
+              0.847604,
+              0.069666,
+              -3.280079
             ],
             "holdout_raw_mae": 2.58,
-            "holdout_mos_mae": 2.24,
+            "holdout_mos_mae": 2.5,
             "sample_size": 424
           }
         },
@@ -1927,17 +1909,15 @@
               3,
               5
             ],
-            "intercept": 3.26373,
+            "intercept": 4.757131,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.710938,
-              0.253408
+              0.944812
             ],
             "holdout_raw_mae": 1.9,
-            "holdout_mos_mae": 1.47,
+            "holdout_mos_mae": 1.64,
             "sample_size": 423
           },
           "min_1": {
@@ -1969,19 +1949,17 @@
               27,
               29
             ],
-            "intercept": 0.885242,
+            "intercept": 1.475687,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
               "hrrr_lcdc"
             ],
             "weights": [
-              0.82034,
-              0.171208,
-              0.07204
+              0.981542,
+              0.104094
             ],
             "holdout_raw_mae": 2.39,
-            "holdout_mos_mae": 2.13,
+            "holdout_mos_mae": 2.24,
             "sample_size": 423
           }
         }
@@ -1996,14 +1974,14 @@
         "lon": -109.3789,
         "elev_ft": 5737,
         "clim_min_w": [
-          39.7282,
-          -21.0342,
-          -6.9191
+          39.736,
+          -21.0244,
+          -6.9307
         ],
         "clim_max_w": [
-          72.4809,
-          -19.39,
-          -4.7781
+          72.4777,
+          -19.3941,
+          -4.7734
         ]
       },
       "cycles": {
@@ -2016,19 +1994,17 @@
               12,
               14
             ],
-            "intercept": -11.381444,
+            "intercept": -13.271744,
             "predictors": [
               "hrrr_ext_t",
-              "hrrr_tmp_700",
-              "obs_prev_min"
+              "hrrr_tmp_700"
             ],
             "weights": [
-              1.085218,
-              -0.426028,
-              0.14696
+              1.271453,
+              -0.520665
             ],
             "holdout_raw_mae": 5.8,
-            "holdout_mos_mae": 4.45,
+            "holdout_mos_mae": 4.24,
             "sample_size": 184
           },
           "max_1": {
@@ -2267,14 +2243,14 @@
         "lon": -111.7884,
         "elev_ft": 4830,
         "clim_min_w": [
-          53.1842,
-          -15.8059,
-          -7.0782
+          53.1881,
+          -15.801,
+          -7.0841
         ],
         "clim_max_w": [
-          74.9604,
-          -19.8376,
-          -6.439
+          74.9602,
+          -19.8382,
+          -6.4389
         ]
       },
       "cycles": {
@@ -2349,14 +2325,14 @@
               6,
               8
             ],
-            "intercept": 0.606963,
+            "intercept": 0.619075,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_v10_kt"
             ],
             "weights": [
-              0.965898,
-              -0.391712
+              0.965709,
+              -0.38821
             ],
             "holdout_raw_mae": 1.92,
             "holdout_mos_mae": 1.69,
@@ -2494,17 +2470,17 @@
               18,
               20
             ],
-            "intercept": 7.299656,
+            "intercept": 2.077319,
             "predictors": [
               "hrrr_ext_t",
-              "hrrr_dlwrf"
+              "hrrr_mcdc"
             ],
             "weights": [
-              1.09477,
-              -0.045786
+              0.958144,
+              -0.037517
             ],
             "holdout_raw_mae": 2.38,
-            "holdout_mos_mae": 2.19,
+            "holdout_mos_mae": 2.27,
             "sample_size": 421
           },
           "max_2": {
@@ -2540,14 +2516,14 @@
         "lon": -111.3393,
         "elev_ft": 5157,
         "clim_min_w": [
-          48.3695,
-          -15.2562,
-          -7.2971
+          48.3715,
+          -15.2534,
+          -7.3
         ],
         "clim_max_w": [
-          70.951,
-          -18.7189,
-          -6.4294
+          70.9492,
+          -18.7218,
+          -6.4271
         ]
       },
       "cycles": {
@@ -2597,14 +2573,14 @@
               33,
               36
             ],
-            "intercept": -2.652849,
+            "intercept": -2.653618,
             "predictors": [
               "hrrr_ext_t",
               "norm_t"
             ],
             "weights": [
-              0.840064,
-              0.179751
+              0.840089,
+              0.179735
             ],
             "holdout_raw_mae": 2.73,
             "holdout_mos_mae": 2.27,
@@ -2698,19 +2674,15 @@
               24,
               26
             ],
-            "intercept": -79.937953,
+            "intercept": 0.605856,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_hgt_500"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.624853,
-              0.203347,
-              0.014286
+              0.955627
             ],
             "holdout_raw_mae": 2.59,
-            "holdout_mos_mae": 2.14,
+            "holdout_mos_mae": 2.31,
             "sample_size": 424
           },
           "max_2": {
@@ -2763,17 +2735,15 @@
               18,
               20
             ],
-            "intercept": -2.84999,
+            "intercept": 0.228932,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.764574,
-              0.181751
+              0.962535
             ],
             "holdout_raw_mae": 2.6,
-            "holdout_mos_mae": 2.24,
+            "holdout_mos_mae": 2.33,
             "sample_size": 423
           },
           "max_2": {
@@ -2809,14 +2779,14 @@
         "lon": -109.0603,
         "elev_ft": 6745,
         "clim_min_w": [
-          32.8618,
-          -18.9005,
-          -6.956
+          32.8623,
+          -18.8996,
+          -6.9566
         ],
         "clim_max_w": [
-          66.8458,
-          -20.1025,
-          -6.5435
+          66.8457,
+          -20.103,
+          -6.5437
         ]
       },
       "cycles": {
@@ -3012,19 +2982,17 @@
               33,
               35
             ],
-            "intercept": 27.816368,
+            "intercept": 34.559156,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
               "hrrr_tmp_700"
             ],
             "weights": [
-              0.343264,
-              0.167775,
-              1.035653
+              0.39635,
+              1.235854
             ],
             "holdout_raw_mae": 2.26,
-            "holdout_mos_mae": 2.48,
+            "holdout_mos_mae": 2.97,
             "sample_size": 424
           }
         },
@@ -3081,17 +3049,17 @@
               27,
               29
             ],
-            "intercept": 1.889695,
+            "intercept": 31.626487,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_tmp_700"
             ],
             "weights": [
-              0.827906,
-              0.184216
+              0.452238,
+              1.120669
             ],
             "holdout_raw_mae": 2.32,
-            "holdout_mos_mae": 2.32,
+            "holdout_mos_mae": 2.85,
             "sample_size": 423
           }
         }
@@ -3106,14 +3074,14 @@
         "lon": -112.1944,
         "elev_ft": 6691,
         "clim_min_w": [
-          36.9116,
-          -16.1611,
-          -7.774
+          36.9141,
+          -16.1577,
+          -7.7776
         ],
         "clim_max_w": [
-          65.1995,
-          -18.4341,
-          -7.1411
+          65.1985,
+          -18.4359,
+          -7.1399
         ]
       },
       "cycles": {
@@ -3171,7 +3139,7 @@
               33,
               36
             ],
-            "intercept": -9.946559,
+            "intercept": -9.947977,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
@@ -3179,10 +3147,10 @@
               "norm_t"
             ],
             "weights": [
-              0.803442,
-              0.149299,
-              0.115132,
-              0.182522
+              0.803454,
+              0.149286,
+              0.115142,
+              0.182541
             ],
             "holdout_raw_mae": 6.46,
             "holdout_mos_mae": 3.34,
@@ -3198,16 +3166,16 @@
               6,
               8
             ],
-            "intercept": -6.60861,
+            "intercept": -6.580896,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
               "hrrr_v10_kt"
             ],
             "weights": [
-              0.888551,
-              0.185269,
-              0.33215
+              0.889229,
+              0.184007,
+              0.325205
             ],
             "holdout_raw_mae": 5.46,
             "holdout_mos_mae": 2.99,
@@ -3391,14 +3359,14 @@
         "lon": -112.095,
         "elev_ft": 2530,
         "clim_min_w": [
-          55.7685,
-          -19.7837,
-          -6.2564
+          55.7686,
+          -19.7833,
+          -6.2563
         ],
         "clim_max_w": [
-          83.2419,
-          -23.5203,
-          -5.8325
+          83.2372,
+          -23.5264,
+          -5.8253
         ]
       },
       "cycles": {
@@ -3411,21 +3379,23 @@
               12,
               14
             ],
-            "intercept": 120.724656,
+            "intercept": -8.189724,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_hgt_500",
-              "hrrr_win_rh"
+              "norm_t",
+              "hrrr_win_rh",
+              "hrrr_u10_kt",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.780061,
-              0.398533,
-              -0.023192,
-              0.073742
+              0.578937,
+              0.477808,
+              0.092939,
+              0.463864,
+              0.417382
             ],
             "holdout_raw_mae": 5.69,
-            "holdout_mos_mae": 3.85,
+            "holdout_mos_mae": 3.96,
             "sample_size": 425
           },
           "max_1": {
@@ -3436,17 +3406,19 @@
               21,
               23
             ],
-            "intercept": 2.578907,
+            "intercept": -0.351049,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "cos_doy_2"
             ],
             "weights": [
-              0.690874,
-              0.319463
+              0.71704,
+              0.325272,
+              -1.844625
             ],
             "holdout_raw_mae": 5.77,
-            "holdout_mos_mae": 3.39,
+            "holdout_mos_mae": 3.06,
             "sample_size": 425
           },
           "min_2": {
@@ -3456,21 +3428,19 @@
               33,
               36
             ],
-            "intercept": -11.672833,
+            "intercept": 111.187258,
             "predictors": [
               "hrrr_ext_t",
               "norm_t",
-              "obs_prev_max",
-              "hrrr_win_rh"
+              "hrrr_hgt_500"
             ],
             "weights": [
-              0.436105,
-              0.387736,
-              0.225747,
-              0.075627
+              0.641268,
+              0.609282,
+              -0.021949
             ],
             "holdout_raw_mae": 5.63,
-            "holdout_mos_mae": 3.85,
+            "holdout_mos_mae": 4.09,
             "sample_size": 425
           }
         },
@@ -3483,19 +3453,21 @@
               6,
               8
             ],
-            "intercept": 108.621266,
+            "intercept": -4.06747,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_hgt_500"
+              "norm_t",
+              "hrrr_win_rh",
+              "hrrr_u10_kt"
             ],
             "weights": [
-              0.710245,
-              0.415828,
-              -0.020141
+              0.636488,
+              0.393561,
+              0.08926,
+              0.309683
             ],
             "holdout_raw_mae": 5.16,
-            "holdout_mos_mae": 3.61,
+            "holdout_mos_mae": 4.05,
             "sample_size": 424
           },
           "max_1": {
@@ -3506,17 +3478,17 @@
               15,
               17
             ],
-            "intercept": 3.008907,
+            "intercept": 0.486652,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.704019,
-              0.303329
+              0.734369,
+              0.299871
             ],
             "holdout_raw_mae": 5.87,
-            "holdout_mos_mae": 3.15,
+            "holdout_mos_mae": 3.11,
             "sample_size": 424
           },
           "min_2": {
@@ -3527,21 +3499,21 @@
               30,
               32
             ],
-            "intercept": 104.383267,
+            "intercept": 122.822935,
             "predictors": [
               "hrrr_ext_t",
               "norm_t",
               "hrrr_hgt_500",
-              "obs_prev_max"
+              "sin_doy_2"
             ],
             "weights": [
-              0.624762,
-              0.353322,
-              -0.02089,
-              0.198298
+              0.688215,
+              0.564568,
+              -0.023943,
+              1.591304
             ],
             "holdout_raw_mae": 5.65,
-            "holdout_mos_mae": 3.93,
+            "holdout_mos_mae": 4.17,
             "sample_size": 424
           }
         },
@@ -3554,17 +3526,17 @@
               9,
               11
             ],
-            "intercept": 3.08559,
+            "intercept": 1.550707,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.603224,
-              0.395412
+              0.784124,
+              0.24239
             ],
             "holdout_raw_mae": 5.88,
-            "holdout_mos_mae": 3.01,
+            "holdout_mos_mae": 2.97,
             "sample_size": 424
           },
           "min_1": {
@@ -3575,21 +3547,21 @@
               24,
               26
             ],
-            "intercept": 100.321079,
+            "intercept": 119.952452,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
               "norm_t",
-              "hrrr_hgt_500"
+              "hrrr_hgt_500",
+              "sin_doy_2"
             ],
             "weights": [
-              0.661987,
-              0.232312,
-              0.314311,
-              -0.019561
+              0.702362,
+              0.543032,
+              -0.02336,
+              1.608256
             ],
             "holdout_raw_mae": 5.18,
-            "holdout_mos_mae": 3.83,
+            "holdout_mos_mae": 3.99,
             "sample_size": 424
           },
           "max_2": {
@@ -3600,17 +3572,17 @@
               33,
               35
             ],
-            "intercept": -0.142571,
+            "intercept": -3.465407,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.704375,
-              0.338864
+              0.68689,
+              0.390676
             ],
             "holdout_raw_mae": 6.51,
-            "holdout_mos_mae": 3.44,
+            "holdout_mos_mae": 3.49,
             "sample_size": 424
           }
         },
@@ -3623,17 +3595,17 @@
               3,
               5
             ],
-            "intercept": 3.450415,
+            "intercept": 2.340352,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.606424,
-              0.389961
+              0.793945,
+              0.226343
             ],
             "holdout_raw_mae": 5.91,
-            "holdout_mos_mae": 2.96,
+            "holdout_mos_mae": 2.85,
             "sample_size": 423
           },
           "min_1": {
@@ -3644,21 +3616,21 @@
               18,
               20
             ],
-            "intercept": 98.656374,
+            "intercept": -6.154774,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
               "norm_t",
-              "hrrr_hgt_500"
+              "hrrr_u10_kt",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.646668,
-              0.228388,
-              0.329112,
-              -0.019223
+              0.516347,
+              0.559154,
+              0.395758,
+              0.343427
             ],
             "holdout_raw_mae": 5.25,
-            "holdout_mos_mae": 3.85,
+            "holdout_mos_mae": 3.97,
             "sample_size": 423
           },
           "max_2": {
@@ -3669,17 +3641,17 @@
               27,
               29
             ],
-            "intercept": -0.377815,
+            "intercept": -3.615964,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.710906,
-              0.335637
+              0.694795,
+              0.385236
             ],
             "holdout_raw_mae": 6.52,
-            "holdout_mos_mae": 3.46,
+            "holdout_mos_mae": 3.35,
             "sample_size": 423
           }
         }
@@ -3694,14 +3666,14 @@
         "lon": -109.1436,
         "elev_ft": 8050,
         "clim_min_w": [
-          30.8068,
-          -14.7141,
-          -6.6635
+          30.8104,
+          -14.7091,
+          -6.6687
         ],
         "clim_max_w": [
-          63.1889,
-          -16.7102,
-          -5.2665
+          63.1836,
+          -16.7176,
+          -5.2589
         ]
       },
       "cycles": {
@@ -3741,17 +3713,17 @@
               21,
               23
             ],
-            "intercept": 3.800804,
+            "intercept": 14.679708,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.744234,
-              0.221146
+              0.788023,
+              -3.486783
             ],
             "holdout_raw_mae": 3.65,
-            "holdout_mos_mae": 2.95,
+            "holdout_mos_mae": 3.33,
             "sample_size": 425
           },
           "min_2": {
@@ -3815,17 +3787,17 @@
               15,
               17
             ],
-            "intercept": 4.122459,
+            "intercept": 2.34757,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.740911,
-              0.217583
+              0.762484,
+              0.219763
             ],
             "holdout_raw_mae": 3.33,
-            "holdout_mos_mae": 2.76,
+            "holdout_mos_mae": 2.94,
             "sample_size": 424
           },
           "min_2": {
@@ -3863,17 +3835,17 @@
               9,
               11
             ],
-            "intercept": 3.259795,
+            "intercept": 14.743723,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.630871,
-              0.337095
+              0.784969,
+              -3.672918
             ],
             "holdout_raw_mae": 3.42,
-            "holdout_mos_mae": 2.67,
+            "holdout_mos_mae": 3.24,
             "sample_size": 424
           },
           "min_1": {
@@ -3902,7 +3874,7 @@
               -2.306705
             ],
             "holdout_raw_mae": 10.93,
-            "holdout_mos_mae": 3.89,
+            "holdout_mos_mae": 3.9,
             "sample_size": 424
           },
           "max_2": {
@@ -3913,17 +3885,19 @@
               33,
               35
             ],
-            "intercept": 2.740648,
+            "intercept": 9.776057,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_lcdc",
+              "cos_doy_1"
             ],
             "weights": [
-              0.688133,
-              0.289775
+              0.861117,
+              0.068914,
+              -2.688727
             ],
             "holdout_raw_mae": 3.31,
-            "holdout_mos_mae": 2.97,
+            "holdout_mos_mae": 3.48,
             "sample_size": 424
           }
         },
@@ -3936,17 +3910,17 @@
               3,
               5
             ],
-            "intercept": 3.595051,
+            "intercept": 14.184089,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.646681,
-              0.315574
+              0.793391,
+              -3.35176
             ],
             "holdout_raw_mae": 3.19,
-            "holdout_mos_mae": 2.52,
+            "holdout_mos_mae": 3.07,
             "sample_size": 423
           },
           "min_1": {
@@ -3982,17 +3956,19 @@
               27,
               29
             ],
-            "intercept": 2.702751,
+            "intercept": 43.751845,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1",
+              "hrrr_tmp_700"
             ],
             "weights": [
-              0.682105,
-              0.296092
+              0.164507,
+              -4.157593,
+              1.225275
             ],
             "holdout_raw_mae": 3.33,
-            "holdout_mos_mae": 2.99,
+            "holdout_mos_mae": 3.41,
             "sample_size": 423
           }
         }
@@ -4007,14 +3983,14 @@
         "lon": -109.2864,
         "elev_ft": 7060,
         "clim_min_w": [
-          33.6395,
-          -17.4604,
-          -7.0485
+          33.6461,
+          -17.4515,
+          -7.0582
         ],
         "clim_max_w": [
-          69.4441,
-          -17.854,
-          -5.0458
+          69.4469,
+          -17.8503,
+          -5.05
         ]
       },
       "cycles": {
@@ -4027,23 +4003,21 @@
               12,
               14
             ],
-            "intercept": -23.727745,
+            "intercept": -19.713358,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "obs_prev_min",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.77087,
-              0.11869,
-              0.217128,
-              0.157278,
-              0.167545
+              0.764999,
+              0.127982,
+              0.239219,
+              0.359457
             ],
             "holdout_raw_mae": 10.19,
-            "holdout_mos_mae": 4.39,
+            "holdout_mos_mae": 4.33,
             "sample_size": 425
           },
           "max_1": {
@@ -4054,17 +4028,17 @@
               21,
               23
             ],
-            "intercept": 2.752056,
+            "intercept": 19.648806,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.716671,
-              0.276268
+              0.741731,
+              -5.135799
             ],
             "holdout_raw_mae": 4.4,
-            "holdout_mos_mae": 2.58,
+            "holdout_mos_mae": 3.18,
             "sample_size": 425
           },
           "min_2": {
@@ -4101,21 +4075,21 @@
               6,
               8
             ],
-            "intercept": -17.715431,
+            "intercept": -19.193135,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "obs_prev_min"
+              "norm_t"
             ],
             "weights": [
-              0.898343,
-              0.109455,
-              0.182444,
-              0.198749
+              0.81445,
+              0.133918,
+              0.197963,
+              0.307285
             ],
             "holdout_raw_mae": 9.94,
-            "holdout_mos_mae": 4.34,
+            "holdout_mos_mae": 4.39,
             "sample_size": 424
           },
           "max_1": {
@@ -4126,17 +4100,17 @@
               15,
               17
             ],
-            "intercept": 2.783499,
+            "intercept": 18.862951,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.728375,
-              0.264645
+              0.754038,
+              -4.88756
             ],
             "holdout_raw_mae": 4.19,
-            "holdout_mos_mae": 2.66,
+            "holdout_mos_mae": 3.22,
             "sample_size": 424
           },
           "min_2": {
@@ -4174,17 +4148,17 @@
               9,
               11
             ],
-            "intercept": 2.33868,
+            "intercept": 16.99206,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.661167,
-              0.335022
+              0.785236,
+              -4.310383
             ],
             "holdout_raw_mae": 4.33,
-            "holdout_mos_mae": 2.56,
+            "holdout_mos_mae": 2.99,
             "sample_size": 424
           },
           "min_1": {
@@ -4211,7 +4185,7 @@
               -0.288496
             ],
             "holdout_raw_mae": 9.87,
-            "holdout_mos_mae": 4.18,
+            "holdout_mos_mae": 4.2,
             "sample_size": 424
           },
           "max_2": {
@@ -4222,19 +4196,19 @@
               33,
               35
             ],
-            "intercept": 2.795897,
+            "intercept": 16.226,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_lcdc"
+              "cos_doy_1",
+              "hrrr_win_rh"
             ],
             "weights": [
-              0.740969,
-              0.250513,
-              0.066816
+              0.776028,
+              -4.304516,
+              0.063698
             ],
             "holdout_raw_mae": 3.61,
-            "holdout_mos_mae": 2.66,
+            "holdout_mos_mae": 2.88,
             "sample_size": 424
           }
         },
@@ -4247,17 +4221,17 @@
               3,
               5
             ],
-            "intercept": 2.899646,
+            "intercept": 16.01968,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.678699,
-              0.307896
+              0.798033,
+              -3.75034
             ],
             "holdout_raw_mae": 4.16,
-            "holdout_mos_mae": 2.49,
+            "holdout_mos_mae": 2.83,
             "sample_size": 423
           },
           "min_1": {
@@ -4293,19 +4267,19 @@
               27,
               29
             ],
-            "intercept": 2.390563,
+            "intercept": 17.797035,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_lcdc"
+              "cos_doy_1",
+              "hrrr_win_rh"
             ],
             "weights": [
-              0.722778,
-              0.272555,
-              0.072268
+              0.751589,
+              -4.752709,
+              0.06221
             ],
             "holdout_raw_mae": 3.69,
-            "holdout_mos_mae": 2.66,
+            "holdout_mos_mae": 3.02,
             "sample_size": 423
           }
         }
@@ -4320,14 +4294,14 @@
         "lon": -112.1929,
         "elev_ft": 6909,
         "clim_min_w": [
-          36.7232,
-          -15.2605,
-          -7.3654
+          36.7345,
+          -15.2452,
+          -7.382
         ],
         "clim_max_w": [
-          66.4185,
-          -18.1726,
-          -6.6165
+          66.4131,
+          -18.1803,
+          -6.6088
         ]
       },
       "cycles": {
@@ -4365,17 +4339,17 @@
               21,
               23
             ],
-            "intercept": 5.597603,
+            "intercept": 19.045784,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.671146,
-              0.278638
+              0.742116,
+              -4.381908
             ],
             "holdout_raw_mae": 3.46,
-            "holdout_mos_mae": 2.35,
+            "holdout_mos_mae": 3.04,
             "sample_size": 425
           },
           "min_2": {
@@ -4414,21 +4388,21 @@
               6,
               8
             ],
-            "intercept": -7.045895,
+            "intercept": -3.96368,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
               "hrrr_wspd10_kt",
-              "obs_prev_max"
+              "hrrr_win_dpd"
             ],
             "weights": [
-              0.592691,
-              0.248537,
-              0.315751,
-              0.154951
+              -0.277241,
+              1.250049,
+              0.306845,
+              0.989796
             ],
             "holdout_raw_mae": 6.28,
-            "holdout_mos_mae": 3.44,
+            "holdout_mos_mae": 3.46,
             "sample_size": 424
           },
           "max_1": {
@@ -4439,17 +4413,17 @@
               15,
               17
             ],
-            "intercept": 6.089054,
+            "intercept": 4.731717,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.684331,
-              0.256641
+              0.726673,
+              0.230388
             ],
             "holdout_raw_mae": 3.29,
-            "holdout_mos_mae": 2.32,
+            "holdout_mos_mae": 2.48,
             "sample_size": 424
           },
           "min_2": {
@@ -4487,17 +4461,17 @@
               9,
               11
             ],
-            "intercept": 3.384901,
+            "intercept": 16.706896,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.447854,
-              0.521142
+              0.77846,
+              -3.385169
             ],
             "holdout_raw_mae": 3.42,
-            "holdout_mos_mae": 2.08,
+            "holdout_mos_mae": 2.8,
             "sample_size": 424
           },
           "min_1": {
@@ -4508,21 +4482,21 @@
               24,
               26
             ],
-            "intercept": -15.653418,
+            "intercept": -12.423452,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_max",
-              "hrrr_wspd700_kt"
+              "hrrr_wspd700_kt",
+              "norm_t"
             ],
             "weights": [
-              0.80444,
-              0.113054,
-              0.164186,
-              0.089691
+              0.818678,
+              0.100798,
+              0.104702,
+              0.194786
             ],
             "holdout_raw_mae": 6.82,
-            "holdout_mos_mae": 3.66,
+            "holdout_mos_mae": 3.76,
             "sample_size": 424
           },
           "max_2": {
@@ -4533,17 +4507,19 @@
               33,
               35
             ],
-            "intercept": 5.355132,
+            "intercept": 13.434322,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_lcdc",
+              "cos_doy_1"
             ],
             "weights": [
-              0.630522,
-              0.319677
+              0.827066,
+              0.058842,
+              -2.79377
             ],
             "holdout_raw_mae": 4.67,
-            "holdout_mos_mae": 2.86,
+            "holdout_mos_mae": 3.19,
             "sample_size": 424
           }
         },
@@ -4556,17 +4532,17 @@
               3,
               5
             ],
-            "intercept": 3.208224,
+            "intercept": 17.247581,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.440172,
-              0.531568
+              0.770808,
+              -3.505702
             ],
             "holdout_raw_mae": 3.37,
-            "holdout_mos_mae": 2.03,
+            "holdout_mos_mae": 2.69,
             "sample_size": 423
           },
           "min_1": {
@@ -4577,21 +4553,21 @@
               18,
               20
             ],
-            "intercept": -15.99051,
+            "intercept": -12.658908,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_max",
-              "hrrr_wspd700_kt"
+              "hrrr_wspd700_kt",
+              "norm_t"
             ],
             "weights": [
-              0.815772,
-              0.115491,
-              0.161689,
-              0.088297
+              0.83315,
+              0.102983,
+              0.101859,
+              0.185042
             ],
             "holdout_raw_mae": 6.67,
-            "holdout_mos_mae": 3.51,
+            "holdout_mos_mae": 3.6,
             "sample_size": 423
           },
           "max_2": {
@@ -4602,17 +4578,17 @@
               27,
               29
             ],
-            "intercept": 4.557616,
+            "intercept": 4.398385,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.626988,
-              0.331476
+              0.721249,
+              0.239326
             ],
             "holdout_raw_mae": 4.66,
-            "holdout_mos_mae": 2.91,
+            "holdout_mos_mae": 3.16,
             "sample_size": 423
           }
         }
@@ -4627,14 +4603,14 @@
         "lon": -111.3333,
         "elev_ft": 4915,
         "clim_min_w": [
-          41.5863,
-          -16.708,
-          -7.7759
+          41.5873,
+          -16.7064,
+          -7.7772
         ],
         "clim_max_w": [
-          73.7648,
-          -17.9087,
-          -6.2775
+          73.767,
+          -17.9057,
+          -6.281
         ]
       },
       "cycles": {
@@ -4647,23 +4623,21 @@
               12,
               14
             ],
-            "intercept": -11.697399,
+            "intercept": -5.099566,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
               "cos_doy_1",
-              "hrrr_dlwrf",
-              "obs_prev_max"
+              "hrrr_dlwrf"
             ],
             "weights": [
-              0.298514,
-              0.209066,
-              -4.080534,
-              0.069396,
-              0.163676
+              0.443778,
+              0.216528,
+              -5.031564,
+              0.061846
             ],
             "holdout_raw_mae": 9.02,
-            "holdout_mos_mae": 2.39,
+            "holdout_mos_mae": 2.38,
             "sample_size": 425
           },
           "max_1": {
@@ -4674,17 +4648,17 @@
               21,
               23
             ],
-            "intercept": 3.79253,
+            "intercept": 3.126868,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.717398,
-              0.258164
+              0.781119,
+              0.20292
             ],
             "holdout_raw_mae": 1.97,
-            "holdout_mos_mae": 2.09,
+            "holdout_mos_mae": 2.12,
             "sample_size": 425
           },
           "min_2": {
@@ -4694,16 +4668,16 @@
               33,
               36
             ],
-            "intercept": -15.385325,
+            "intercept": -15.386195,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "norm_t"
             ],
             "weights": [
-              0.748547,
-              0.141155,
-              0.318058
+              0.748568,
+              0.141152,
+              0.318051
             ],
             "holdout_raw_mae": 9.04,
             "holdout_mos_mae": 3.0,
@@ -4719,7 +4693,7 @@
               6,
               8
             ],
-            "intercept": -10.504527,
+            "intercept": -10.501783,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
@@ -4728,11 +4702,11 @@
               "hrrr_dlwrf"
             ],
             "weights": [
-              0.508267,
-              0.214781,
-              -4.164873,
-              0.513477,
-              0.063523
+              0.508116,
+              0.214729,
+              -4.166822,
+              0.513367,
+              0.063545
             ],
             "holdout_raw_mae": 8.9,
             "holdout_mos_mae": 2.39,
@@ -4746,17 +4720,15 @@
               15,
               17
             ],
-            "intercept": 4.526351,
+            "intercept": 7.713827,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.741297,
-              0.22215
+              0.924681
             ],
             "holdout_raw_mae": 1.97,
-            "holdout_mos_mae": 1.99,
+            "holdout_mos_mae": 2.27,
             "sample_size": 424
           },
           "min_2": {
@@ -4767,16 +4739,16 @@
               30,
               32
             ],
-            "intercept": -14.829294,
+            "intercept": -14.830053,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "norm_t"
             ],
             "weights": [
-              0.767595,
-              0.147179,
-              0.283696
+              0.767614,
+              0.147176,
+              0.28369
             ],
             "holdout_raw_mae": 8.86,
             "holdout_mos_mae": 2.89,
@@ -4792,17 +4764,15 @@
               9,
               11
             ],
-            "intercept": 3.381565,
+            "intercept": 7.329439,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.559261,
-              0.413419
+              0.93052
             ],
             "holdout_raw_mae": 1.96,
-            "holdout_mos_mae": 1.86,
+            "holdout_mos_mae": 2.33,
             "sample_size": 424
           },
           "min_1": {
@@ -4813,19 +4783,19 @@
               24,
               26
             ],
-            "intercept": -14.169677,
+            "intercept": -14.170436,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "norm_t"
             ],
             "weights": [
-              0.756118,
-              0.140538,
-              0.287464
+              0.756136,
+              0.140535,
+              0.287458
             ],
             "holdout_raw_mae": 8.79,
-            "holdout_mos_mae": 2.94,
+            "holdout_mos_mae": 2.97,
             "sample_size": 424
           },
           "max_2": {
@@ -4836,19 +4806,17 @@
               33,
               35
             ],
-            "intercept": 4.553472,
+            "intercept": 6.091199,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
               "hrrr_lcdc"
             ],
             "weights": [
-              0.729789,
-              0.229152,
-              0.053256
+              0.940878,
+              0.09167
             ],
             "holdout_raw_mae": 3.03,
-            "holdout_mos_mae": 2.18,
+            "holdout_mos_mae": 2.71,
             "sample_size": 424
           }
         },
@@ -4861,17 +4829,17 @@
               3,
               5
             ],
-            "intercept": 3.313261,
+            "intercept": 3.938215,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.556297,
-              0.418838
+              0.810998,
+              0.163105
             ],
             "holdout_raw_mae": 1.95,
-            "holdout_mos_mae": 1.74,
+            "holdout_mos_mae": 2.0,
             "sample_size": 423
           },
           "min_1": {
@@ -4882,19 +4850,19 @@
               18,
               20
             ],
-            "intercept": -13.313358,
+            "intercept": -14.844419,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_min"
+              "norm_t"
             ],
             "weights": [
-              0.808993,
-              0.124643,
-              0.227315
+              0.776558,
+              0.148484,
+              0.274632
             ],
             "holdout_raw_mae": 8.77,
-            "holdout_mos_mae": 2.85,
+            "holdout_mos_mae": 2.83,
             "sample_size": 423
           },
           "max_2": {
@@ -4905,19 +4873,19 @@
               27,
               29
             ],
-            "intercept": 4.079054,
+            "intercept": 2.734315,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_lcdc"
+              "hrrr_lcdc",
+              "norm_t"
             ],
             "weights": [
-              0.736937,
-              0.228328,
-              0.055843
+              0.803301,
+              0.067618,
+              0.179624
             ],
             "holdout_raw_mae": 3.03,
-            "holdout_mos_mae": 2.07,
+            "holdout_mos_mae": 2.28,
             "sample_size": 423
           }
         }
@@ -4932,14 +4900,14 @@
         "lon": -110.5419,
         "elev_ft": 7286,
         "clim_min_w": [
-          40.3767,
-          -17.8148,
-          -7.4318
+          40.3847,
+          -17.8042,
+          -7.4438
         ],
         "clim_max_w": [
-          64.6754,
-          -22.83,
-          -7.1544
+          64.6803,
+          -22.8234,
+          -7.1615
         ]
       },
       "cycles": {
@@ -4952,19 +4920,17 @@
               12,
               14
             ],
-            "intercept": 0.217814,
+            "intercept": 0.722583,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
               "hrrr_v10_kt"
             ],
             "weights": [
-              0.77346,
-              0.219558,
-              -0.259409
+              0.978122,
+              -0.376586
             ],
             "holdout_raw_mae": 3.31,
-            "holdout_mos_mae": 2.85,
+            "holdout_mos_mae": 2.92,
             "sample_size": 425
           },
           "max_1": {
@@ -4975,19 +4941,19 @@
               21,
               23
             ],
-            "intercept": -2.862917,
+            "intercept": -5.096158,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
+              "norm_t",
               "hrrr_u10_kt"
             ],
             "weights": [
-              0.798186,
-              0.246406,
-              0.171867
+              0.775257,
+              0.293995,
+              0.177223
             ],
             "holdout_raw_mae": 3.53,
-            "holdout_mos_mae": 2.81,
+            "holdout_mos_mae": 3.2,
             "sample_size": 425
           },
           "min_2": {
@@ -4997,19 +4963,19 @@
               33,
               36
             ],
-            "intercept": -0.223326,
+            "intercept": -1.800751,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_tcdc"
+              "norm_t",
+              "hrrr_v10_kt"
             ],
             "weights": [
-              0.774112,
-              0.226649,
-              -0.028907
+              0.788027,
+              0.238695,
+              -0.334134
             ],
             "holdout_raw_mae": 3.25,
-            "holdout_mos_mae": 3.1,
+            "holdout_mos_mae": 3.08,
             "sample_size": 425
           }
         },
@@ -5022,21 +4988,19 @@
               6,
               8
             ],
-            "intercept": 10.442684,
+            "intercept": 10.769922,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_v10_kt",
-              "hrrr_tmp_500",
-              "obs_prev_min"
+              "hrrr_tmp_500"
             ],
             "weights": [
-              0.701984,
-              -0.322299,
-              0.372175,
-              0.178799
+              0.873806,
+              -0.431546,
+              0.373872
             ],
             "holdout_raw_mae": 3.19,
-            "holdout_mos_mae": 2.83,
+            "holdout_mos_mae": 2.8,
             "sample_size": 424
           },
           "max_1": {
@@ -5047,19 +5011,19 @@
               15,
               17
             ],
-            "intercept": -2.686581,
+            "intercept": -4.656062,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
+              "norm_t",
               "hrrr_u10_kt"
             ],
             "weights": [
-              0.831878,
-              0.212306,
-              0.162272
+              0.811207,
+              0.254148,
+              0.174936
             ],
             "holdout_raw_mae": 3.62,
-            "holdout_mos_mae": 2.87,
+            "holdout_mos_mae": 3.26,
             "sample_size": 424
           },
           "min_2": {
@@ -5070,16 +5034,16 @@
               30,
               32
             ],
-            "intercept": -85.227166,
+            "intercept": -84.801672,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
+              "norm_t",
               "hrrr_hgt_500"
             ],
             "weights": [
-              0.658183,
-              0.212486,
-              0.015551
+              0.646494,
+              0.253845,
+              0.015225
             ],
             "holdout_raw_mae": 3.1,
             "holdout_mos_mae": 2.97,
@@ -5095,17 +5059,19 @@
               9,
               11
             ],
-            "intercept": -1.814516,
+            "intercept": -4.609383,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "hrrr_u10_kt"
             ],
             "weights": [
-              0.659727,
-              0.383759
+              0.839348,
+              0.227778,
+              0.191485
             ],
             "holdout_raw_mae": 3.64,
-            "holdout_mos_mae": 2.65,
+            "holdout_mos_mae": 3.13,
             "sample_size": 424
           },
           "min_1": {
@@ -5116,19 +5082,19 @@
               24,
               26
             ],
-            "intercept": 1.159692,
+            "intercept": -0.861383,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_wspd10_kt"
+              "hrrr_v10_kt",
+              "norm_t"
             ],
             "weights": [
-              0.719642,
-              0.261934,
-              -0.283366
+              0.812802,
+              -0.305636,
+              0.193725
             ],
             "holdout_raw_mae": 3.2,
-            "holdout_mos_mae": 2.9,
+            "holdout_mos_mae": 3.18,
             "sample_size": 424
           },
           "max_2": {
@@ -5139,21 +5105,19 @@
               33,
               35
             ],
-            "intercept": -3.025225,
+            "intercept": -4.132207,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_u10_kt",
-              "norm_t"
+              "norm_t",
+              "hrrr_u10_kt"
             ],
             "weights": [
-              0.629662,
-              0.189172,
-              0.170241,
-              0.221293
+              0.681304,
+              0.369726,
+              0.195763
             ],
             "holdout_raw_mae": 4.94,
-            "holdout_mos_mae": 3.41,
+            "holdout_mos_mae": 3.83,
             "sample_size": 424
           }
         },
@@ -5166,17 +5130,19 @@
               3,
               5
             ],
-            "intercept": -1.596909,
+            "intercept": -4.262847,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_u10_kt",
+              "norm_t"
             ],
             "weights": [
-              0.654596,
-              0.386239
+              0.842977,
+              0.208493,
+              0.21891
             ],
             "holdout_raw_mae": 3.6,
-            "holdout_mos_mae": 2.61,
+            "holdout_mos_mae": 3.18,
             "sample_size": 423
           },
           "min_1": {
@@ -5187,19 +5153,19 @@
               18,
               20
             ],
-            "intercept": 1.098936,
+            "intercept": 2.04211,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_wspd10_kt"
+              "hrrr_tcdc",
+              "hrrr_v10_kt"
             ],
             "weights": [
-              0.724564,
-              0.259012,
-              -0.271389
+              0.959329,
+              -0.02971,
+              -0.250631
             ],
             "holdout_raw_mae": 3.02,
-            "holdout_mos_mae": 2.76,
+            "holdout_mos_mae": 2.95,
             "sample_size": 423
           },
           "max_2": {
@@ -5210,21 +5176,19 @@
               27,
               29
             ],
-            "intercept": -3.139889,
+            "intercept": -4.122532,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_u10_kt",
-              "norm_t"
+              "norm_t",
+              "hrrr_u10_kt"
             ],
             "weights": [
-              0.647366,
-              0.174744,
-              0.175238,
-              0.217723
+              0.698796,
+              0.350152,
+              0.204033
             ],
             "holdout_raw_mae": 4.95,
-            "holdout_mos_mae": 3.34,
+            "holdout_mos_mae": 3.7,
             "sample_size": 423
           }
         }
@@ -5239,14 +5203,14 @@
         "lon": -109.5389,
         "elev_ft": 5610,
         "clim_min_w": [
-          38.5169,
-          -19.9721,
-          -7.2679
+          38.5221,
+          -19.965,
+          -7.2756
         ],
         "clim_max_w": [
-          70.612,
-          -24.2314,
-          -5.8971
+          70.6162,
+          -24.2258,
+          -5.9033
         ]
       },
       "cycles": {
@@ -5259,21 +5223,19 @@
               12,
               14
             ],
-            "intercept": -12.797122,
+            "intercept": -6.295352,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_dlwrf",
+              "hrrr_win_rh",
               "cos_doy_1"
             ],
             "weights": [
-              0.502899,
-              0.201506,
-              0.076765,
-              -3.538384
+              0.876468,
+              0.119545,
+              -5.220243
             ],
             "holdout_raw_mae": 7.2,
-            "holdout_mos_mae": 3.33,
+            "holdout_mos_mae": 3.26,
             "sample_size": 425
           },
           "max_1": {
@@ -5284,19 +5246,17 @@
               21,
               23
             ],
-            "intercept": 8.318949,
+            "intercept": -4.811335,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "cos_doy_1"
+              "norm_t"
             ],
             "weights": [
-              0.644982,
-              0.248342,
-              -4.485958
+              0.709352,
+              0.367781
             ],
             "holdout_raw_mae": 3.57,
-            "holdout_mos_mae": 2.96,
+            "holdout_mos_mae": 3.3,
             "sample_size": 425
           },
           "min_2": {
@@ -5306,19 +5266,19 @@
               33,
               36
             ],
-            "intercept": -8.330749,
+            "intercept": -8.328669,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "cos_doy_1"
             ],
             "weights": [
-              0.93133,
-              0.110946,
-              -4.598249
+              0.93124,
+              0.11095,
+              -4.596723
             ],
             "holdout_raw_mae": 7.91,
-            "holdout_mos_mae": 3.65,
+            "holdout_mos_mae": 3.63,
             "sample_size": 425
           }
         },
@@ -5331,19 +5291,19 @@
               6,
               8
             ],
-            "intercept": -10.852562,
+            "intercept": -6.252221,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_win_rh"
+              "hrrr_win_rh",
+              "cos_doy_1"
             ],
             "weights": [
-              0.886836,
-              0.188843,
-              0.065509
+              0.89305,
+              0.114844,
+              -4.743773
             ],
             "holdout_raw_mae": 6.49,
-            "holdout_mos_mae": 3.51,
+            "holdout_mos_mae": 3.2,
             "sample_size": 424
           },
           "max_1": {
@@ -5354,17 +5314,17 @@
               15,
               17
             ],
-            "intercept": -1.91634,
+            "intercept": -4.042906,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.740685,
-              0.305439
+              0.743622,
+              0.324607
             ],
             "holdout_raw_mae": 3.4,
-            "holdout_mos_mae": 2.75,
+            "holdout_mos_mae": 3.08,
             "sample_size": 424
           },
           "min_2": {
@@ -5400,17 +5360,17 @@
               9,
               11
             ],
-            "intercept": -1.723521,
+            "intercept": -3.38763,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.648582,
-              0.392685
+              0.779281,
+              0.283995
             ],
             "holdout_raw_mae": 3.39,
-            "holdout_mos_mae": 2.19,
+            "holdout_mos_mae": 3.0,
             "sample_size": 424
           },
           "min_1": {
@@ -5421,19 +5381,19 @@
               24,
               26
             ],
-            "intercept": -16.951959,
+            "intercept": -7.893988,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.890915,
-              0.101862,
-              0.163081
+              0.936465,
+              0.104892,
+              -3.504033
             ],
             "holdout_raw_mae": 7.17,
-            "holdout_mos_mae": 3.64,
+            "holdout_mos_mae": 3.54,
             "sample_size": 424
           },
           "max_2": {
@@ -5444,19 +5404,19 @@
               33,
               35
             ],
-            "intercept": -3.553065,
+            "intercept": -7.816909,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_lcdc"
+              "norm_t",
+              "hrrr_wspd700_kt"
             ],
             "weights": [
-              0.774987,
-              0.288532,
-              0.070368
+              0.69165,
+              0.394158,
+              0.166968
             ],
             "holdout_raw_mae": 4.26,
-            "holdout_mos_mae": 3.14,
+            "holdout_mos_mae": 3.41,
             "sample_size": 424
           }
         },
@@ -5469,17 +5429,17 @@
               3,
               5
             ],
-            "intercept": -1.578517,
+            "intercept": -3.18489,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.646492,
-              0.393701
+              0.772368,
+              0.289082
             ],
             "holdout_raw_mae": 3.27,
-            "holdout_mos_mae": 2.08,
+            "holdout_mos_mae": 2.9,
             "sample_size": 423
           },
           "min_1": {
@@ -5490,19 +5450,19 @@
               18,
               20
             ],
-            "intercept": -16.895891,
+            "intercept": -7.804643,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.897417,
-              0.102138,
-              0.159897
+              0.938441,
+              0.104093,
+              -3.511186
             ],
             "holdout_raw_mae": 7.1,
-            "holdout_mos_mae": 3.6,
+            "holdout_mos_mae": 3.4,
             "sample_size": 423
           },
           "max_2": {
@@ -5513,19 +5473,19 @@
               27,
               29
             ],
-            "intercept": -3.361263,
+            "intercept": -7.909791,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_lcdc"
+              "norm_t",
+              "hrrr_wspd700_kt"
             ],
             "weights": [
-              0.756558,
-              0.30403,
-              0.066847
+              0.69167,
+              0.394664,
+              0.163909
             ],
             "holdout_raw_mae": 4.17,
-            "holdout_mos_mae": 2.92,
+            "holdout_mos_mae": 3.25,
             "sample_size": 423
           }
         }
@@ -5540,14 +5500,14 @@
         "lon": -109.8925,
         "elev_ft": 5446,
         "clim_min_w": [
-          39.9139,
-          -19.7551,
-          -7.7319
+          39.9124,
+          -19.7568,
+          -7.7295
         ],
         "clim_max_w": [
-          72.4508,
-          -21.7707,
-          -5.7632
+          72.4547,
+          -21.7655,
+          -5.7689
         ]
       },
       "cycles": {
@@ -5560,17 +5520,17 @@
               12,
               14
             ],
-            "intercept": -4.857086,
+            "intercept": -9.435941,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min"
+              "hrrr_win_rh"
             ],
             "weights": [
-              0.82882,
-              0.20256
+              1.038929,
+              0.066437
             ],
             "holdout_raw_mae": 4.22,
-            "holdout_mos_mae": 2.18,
+            "holdout_mos_mae": 2.03,
             "sample_size": 425
           },
           "max_1": {
@@ -5581,19 +5541,19 @@
               21,
               23
             ],
-            "intercept": -3.623862,
+            "intercept": -6.20194,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
+              "norm_t",
               "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.616623,
-              0.41695,
-              0.244537
+              0.5544,
+              0.505459,
+              0.233897
             ],
             "holdout_raw_mae": 4.51,
-            "holdout_mos_mae": 3.82,
+            "holdout_mos_mae": 4.03,
             "sample_size": 425
           },
           "min_2": {
@@ -5603,19 +5563,19 @@
               33,
               36
             ],
-            "intercept": -9.999172,
+            "intercept": -5.669492,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_min"
+              "cos_doy_1"
             ],
             "weights": [
-              0.930103,
-              0.054342,
-              0.145586
+              0.931736,
+              0.079314,
+              -3.418482
             ],
             "holdout_raw_mae": 4.79,
-            "holdout_mos_mae": 2.47,
+            "holdout_mos_mae": 2.36,
             "sample_size": 425
           }
         },
@@ -5628,17 +5588,17 @@
               6,
               8
             ],
-            "intercept": -4.361743,
+            "intercept": -4.278471,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min"
+              "hrrr_win_dp2m"
             ],
             "weights": [
-              0.828246,
-              0.198614
+              0.930577,
+              0.116994
             ],
             "holdout_raw_mae": 3.74,
-            "holdout_mos_mae": 2.12,
+            "holdout_mos_mae": 1.85,
             "sample_size": 424
           },
           "max_1": {
@@ -5649,19 +5609,19 @@
               15,
               17
             ],
-            "intercept": -3.437111,
+            "intercept": -5.990746,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
+              "norm_t",
               "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.64068,
-              0.394615,
-              0.233139
+              0.589381,
+              0.470292,
+              0.239527
             ],
             "holdout_raw_mae": 4.4,
-            "holdout_mos_mae": 3.84,
+            "holdout_mos_mae": 4.05,
             "sample_size": 424
           },
           "min_2": {
@@ -5695,17 +5655,19 @@
               9,
               11
             ],
-            "intercept": -0.009768,
+            "intercept": -5.13397,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.489353,
-              0.530852
+              0.606286,
+              0.448423,
+              0.215354
             ],
             "holdout_raw_mae": 4.26,
-            "holdout_mos_mae": 3.21,
+            "holdout_mos_mae": 3.96,
             "sample_size": 424
           },
           "min_1": {
@@ -5737,23 +5699,21 @@
               33,
               35
             ],
-            "intercept": -5.388921,
+            "intercept": -6.446281,
             "predictors": [
               "hrrr_ext_t",
               "norm_t",
               "hrrr_lcdc",
-              "hrrr_wspd10_kt",
-              "obs_prev_max"
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.637149,
-              0.233216,
-              0.099561,
-              0.245497,
-              0.181295
+              0.674727,
+              0.387091,
+              0.108234,
+              0.250281
             ],
             "holdout_raw_mae": 4.94,
-            "holdout_mos_mae": 3.95,
+            "holdout_mos_mae": 4.17,
             "sample_size": 424
           }
         },
@@ -5766,17 +5726,19 @@
               3,
               5
             ],
-            "intercept": 0.070324,
+            "intercept": -4.889661,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.491664,
-              0.527935
+              0.606774,
+              0.444943,
+              0.223112
             ],
             "holdout_raw_mae": 4.34,
-            "holdout_mos_mae": 3.1,
+            "holdout_mos_mae": 3.82,
             "sample_size": 423
           },
           "min_1": {
@@ -5808,23 +5770,21 @@
               27,
               29
             ],
-            "intercept": -5.180667,
+            "intercept": -6.119779,
             "predictors": [
               "hrrr_ext_t",
               "norm_t",
               "hrrr_lcdc",
-              "hrrr_wspd10_kt",
-              "obs_prev_max"
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.650951,
-              0.206478,
-              0.108768,
-              0.232334,
-              0.191827
+              0.683791,
+              0.374286,
+              0.116071,
+              0.232129
             ],
             "holdout_raw_mae": 4.73,
-            "holdout_mos_mae": 3.67,
+            "holdout_mos_mae": 4.0,
             "sample_size": 423
           }
         }
@@ -5839,14 +5799,14 @@
         "lon": -111.0233,
         "elev_ft": 5535,
         "clim_min_w": [
-          43.2569,
-          -18.0601,
-          -6.1653
+          43.2525,
+          -18.0658,
+          -6.1584
         ],
         "clim_max_w": [
-          69.0484,
-          -21.3043,
-          -5.6897
+          69.053,
+          -21.2981,
+          -5.6966
         ]
       },
       "cycles": {
@@ -5859,19 +5819,19 @@
               12,
               14
             ],
-            "intercept": -181.753479,
+            "intercept": -180.305552,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
+              "norm_t",
               "hrrr_thick_1000_500"
             ],
             "weights": [
-              0.336996,
-              0.349318,
-              0.034377
+              0.315795,
+              0.425979,
+              0.033604
             ],
             "holdout_raw_mae": 7.74,
-            "holdout_mos_mae": 6.8,
+            "holdout_mos_mae": 7.38,
             "sample_size": 425
           },
           "max_1": {
@@ -5882,17 +5842,17 @@
               21,
               23
             ],
-            "intercept": -0.030569,
+            "intercept": -2.696753,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.734198,
-              0.264156
+              0.686708,
+              0.342549
             ],
             "holdout_raw_mae": 3.88,
-            "holdout_mos_mae": 3.68,
+            "holdout_mos_mae": 3.76,
             "sample_size": 425
           },
           "min_2": {
@@ -5902,16 +5862,16 @@
               33,
               36
             ],
-            "intercept": 4.606836,
+            "intercept": 4.617818,
             "predictors": [
               "hrrr_ext_t",
               "norm_t",
               "hrrr_tmp_500"
             ],
             "weights": [
-              0.563918,
-              0.382928,
-              0.330686
+              0.563886,
+              0.382816,
+              0.330938
             ],
             "holdout_raw_mae": 7.35,
             "holdout_mos_mae": 6.93,
@@ -5927,21 +5887,19 @@
               6,
               8
             ],
-            "intercept": -196.75149,
+            "intercept": -142.443949,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_thick_1000_500",
+              "hrrr_hgt_500",
               "norm_t"
             ],
             "weights": [
-              0.19647,
-              0.275478,
-              0.036897,
-              0.234851
+              0.475831,
+              0.025497,
+              0.380862
             ],
             "holdout_raw_mae": 7.81,
-            "holdout_mos_mae": 6.92,
+            "holdout_mos_mae": 7.6,
             "sample_size": 424
           },
           "max_1": {
@@ -5952,17 +5910,17 @@
               15,
               17
             ],
-            "intercept": 0.436606,
+            "intercept": -1.993053,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.741444,
-              0.250982
+              0.701552,
+              0.318741
             ],
             "holdout_raw_mae": 3.99,
-            "holdout_mos_mae": 3.87,
+            "holdout_mos_mae": 3.88,
             "sample_size": 424
           },
           "min_2": {
@@ -5973,16 +5931,16 @@
               30,
               32
             ],
-            "intercept": 6.701052,
+            "intercept": 6.711625,
             "predictors": [
               "hrrr_ext_t",
               "norm_t",
               "hrrr_tmp_500"
             ],
             "weights": [
-              0.563419,
-              0.353822,
-              0.366517
+              0.56339,
+              0.353712,
+              0.366763
             ],
             "holdout_raw_mae": 7.05,
             "holdout_mos_mae": 6.92,
@@ -5998,17 +5956,17 @@
               9,
               11
             ],
-            "intercept": 1.486286,
+            "intercept": -1.049031,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.518744,
-              0.4613
+              0.70528,
+              0.304514
             ],
             "holdout_raw_mae": 4.0,
-            "holdout_mos_mae": 3.95,
+            "holdout_mos_mae": 3.89,
             "sample_size": 424
           },
           "min_1": {
@@ -6019,21 +5977,19 @@
               24,
               26
             ],
-            "intercept": 4.789922,
+            "intercept": -114.955173,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_tmp_700",
-              "norm_t"
+              "norm_t",
+              "hrrr_thick_1000_500"
             ],
             "weights": [
-              0.308569,
-              0.265663,
-              0.479997,
-              0.238731
+              0.468397,
+              0.372327,
+              0.021277
             ],
             "holdout_raw_mae": 7.16,
-            "holdout_mos_mae": 6.38,
+            "holdout_mos_mae": 6.83,
             "sample_size": 424
           },
           "max_2": {
@@ -6044,19 +6000,17 @@
               33,
               35
             ],
-            "intercept": 10.440928,
+            "intercept": 18.453111,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
               "cos_doy_1"
             ],
             "weights": [
-              0.603644,
-              0.235714,
-              -3.828793
+              0.71867,
+              -6.541968
             ],
             "holdout_raw_mae": 3.9,
-            "holdout_mos_mae": 3.84,
+            "holdout_mos_mae": 3.83,
             "sample_size": 424
           }
         },
@@ -6069,17 +6023,17 @@
               3,
               5
             ],
-            "intercept": 1.222619,
+            "intercept": -1.0721,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.529768,
-              0.454673
+              0.717481,
+              0.293502
             ],
             "holdout_raw_mae": 3.84,
-            "holdout_mos_mae": 3.92,
+            "holdout_mos_mae": 3.64,
             "sample_size": 423
           },
           "min_1": {
@@ -6090,21 +6044,19 @@
               18,
               20
             ],
-            "intercept": -108.35349,
+            "intercept": 6.059928,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_thick_1000_500",
-              "norm_t"
+              "norm_t",
+              "hrrr_tmp_500"
             ],
             "weights": [
-              0.382586,
-              0.252694,
-              0.020087,
-              0.217606
+              0.576603,
+              0.344548,
+              0.331971
             ],
             "holdout_raw_mae": 7.26,
-            "holdout_mos_mae": 6.5,
+            "holdout_mos_mae": 7.03,
             "sample_size": 423
           },
           "max_2": {
@@ -6115,19 +6067,17 @@
               27,
               29
             ],
-            "intercept": 10.265097,
+            "intercept": 18.303924,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
               "cos_doy_1"
             ],
             "weights": [
-              0.608571,
-              0.233615,
-              -3.834999
+              0.721172,
+              -6.552233
             ],
             "holdout_raw_mae": 3.89,
-            "holdout_mos_mae": 3.9,
+            "holdout_mos_mae": 3.81,
             "sample_size": 423
           }
         }
@@ -6142,14 +6092,14 @@
         "lon": -111.275,
         "elev_ft": 5920,
         "clim_min_w": [
-          40.7312,
-          -18.0256,
-          -7.278
+          40.7306,
+          -18.0261,
+          -7.2769
         ],
         "clim_max_w": [
-          68.2017,
-          -20.2462,
-          -6.0677
+          68.2037,
+          -20.2435,
+          -6.0706
         ]
       },
       "cycles": {
@@ -6162,21 +6112,21 @@
               12,
               14
             ],
-            "intercept": -5.764894,
+            "intercept": -11.496541,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
+              "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "hrrr_win_dp2m"
+              "norm_t"
             ],
             "weights": [
-              0.707473,
-              0.196924,
-              0.128854,
-              0.099527
+              0.77738,
+              0.073178,
+              0.13642,
+              0.227179
             ],
             "holdout_raw_mae": 3.71,
-            "holdout_mos_mae": 3.35,
+            "holdout_mos_mae": 3.84,
             "sample_size": 425
           },
           "max_1": {
@@ -6187,17 +6137,17 @@
               21,
               23
             ],
-            "intercept": 2.955293,
+            "intercept": 2.212568,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.677188,
-              0.281494
+              0.730207,
+              0.232203
             ],
             "holdout_raw_mae": 1.75,
-            "holdout_mos_mae": 2.13,
+            "holdout_mos_mae": 2.0,
             "sample_size": 425
           },
           "min_2": {
@@ -6234,21 +6184,21 @@
               6,
               8
             ],
-            "intercept": -4.899231,
+            "intercept": 0.730189,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_dp2m",
               "hrrr_wspd700_kt",
-              "obs_prev_min"
+              "cos_doy_1"
             ],
             "weights": [
-              0.736381,
-              0.095916,
-              0.0909,
-              0.164711
+              0.718418,
+              0.151762,
+              0.087186,
+              -2.923867
             ],
             "holdout_raw_mae": 3.28,
-            "holdout_mos_mae": 3.46,
+            "holdout_mos_mae": 3.95,
             "sample_size": 424
           },
           "max_1": {
@@ -6259,17 +6209,17 @@
               15,
               17
             ],
-            "intercept": 3.329019,
+            "intercept": 2.797756,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.684527,
-              0.268928
+              0.744813,
+              0.209858
             ],
             "holdout_raw_mae": 1.61,
-            "holdout_mos_mae": 2.14,
+            "holdout_mos_mae": 2.07,
             "sample_size": 424
           },
           "min_2": {
@@ -6280,21 +6230,21 @@
               30,
               32
             ],
-            "intercept": -9.190646,
+            "intercept": -10.516066,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
               "hrrr_wspd700_kt",
-              "obs_prev_min"
+              "norm_t"
             ],
             "weights": [
-              0.832301,
-              0.058428,
-              0.099665,
-              0.146829
+              0.781522,
+              0.068053,
+              0.105928,
+              0.212819
             ],
             "holdout_raw_mae": 4.67,
-            "holdout_mos_mae": 2.85,
+            "holdout_mos_mae": 3.28,
             "sample_size": 424
           }
         },
@@ -6307,17 +6257,15 @@
               9,
               11
             ],
-            "intercept": 3.013123,
+            "intercept": 6.313917,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.566909,
-              0.391892
+              0.908774
             ],
             "holdout_raw_mae": 1.78,
-            "holdout_mos_mae": 1.97,
+            "holdout_mos_mae": 1.95,
             "sample_size": 424
           },
           "min_1": {
@@ -6340,7 +6288,7 @@
               0.060564
             ],
             "holdout_raw_mae": 4.47,
-            "holdout_mos_mae": 3.08,
+            "holdout_mos_mae": 3.1,
             "sample_size": 424
           },
           "max_2": {
@@ -6351,19 +6299,19 @@
               33,
               35
             ],
-            "intercept": -0.034068,
+            "intercept": -0.559036,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_wspd10_kt"
+              "hrrr_wspd10_kt",
+              "norm_t"
             ],
             "weights": [
-              0.689273,
-              0.280025,
-              0.180815
+              0.762334,
+              0.197147,
+              0.206198
             ],
             "holdout_raw_mae": 1.94,
-            "holdout_mos_mae": 2.39,
+            "holdout_mos_mae": 2.27,
             "sample_size": 424
           }
         },
@@ -6376,17 +6324,15 @@
               3,
               5
             ],
-            "intercept": 3.177519,
+            "intercept": 6.523288,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.577772,
-              0.379093
+              0.906454
             ],
             "holdout_raw_mae": 1.63,
-            "holdout_mos_mae": 1.87,
+            "holdout_mos_mae": 1.79,
             "sample_size": 423
           },
           "min_1": {
@@ -6397,19 +6343,19 @@
               18,
               20
             ],
-            "intercept": -6.698188,
+            "intercept": -9.184752,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_wspd700_kt",
-              "obs_prev_min"
+              "hrrr_win_rh"
             ],
             "weights": [
-              0.804364,
-              0.116674,
-              0.174945
+              0.957767,
+              0.103739,
+              0.059633
             ],
             "holdout_raw_mae": 4.46,
-            "holdout_mos_mae": 3.21,
+            "holdout_mos_mae": 3.11,
             "sample_size": 423
           },
           "max_2": {
@@ -6420,19 +6366,19 @@
               27,
               29
             ],
-            "intercept": 0.150478,
+            "intercept": -0.219032,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_wspd10_kt"
+              "hrrr_wspd10_kt",
+              "norm_t"
             ],
             "weights": [
-              0.707308,
-              0.25641,
-              0.187381
+              0.781889,
+              0.208928,
+              0.178458
             ],
             "holdout_raw_mae": 1.72,
-            "holdout_mos_mae": 2.31,
+            "holdout_mos_mae": 2.14,
             "sample_size": 423
           }
         }
@@ -6447,14 +6393,14 @@
         "lon": -112.0264,
         "elev_ft": 3383,
         "clim_min_w": [
-          47.1133,
-          -18.2961,
-          -7.5178
+          47.1216,
+          -18.2848,
+          -7.53
         ],
         "clim_max_w": [
-          81.9763,
-          -20.4272,
-          -6.2053
+          81.977,
+          -20.4266,
+          -6.2066
         ]
       },
       "cycles": {
@@ -6467,21 +6413,19 @@
               12,
               14
             ],
-            "intercept": -21.403034,
+            "intercept": -3.904716,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_tmp_700",
-              "hrrr_dlwrf"
+              "hrrr_win_rh",
+              "cos_doy_1"
             ],
             "weights": [
-              0.82074,
-              0.259438,
-              -0.428084,
-              0.044597
+              0.847408,
+              0.110884,
+              -4.238436
             ],
             "holdout_raw_mae": 8.19,
-            "holdout_mos_mae": 2.55,
+            "holdout_mos_mae": 2.37,
             "sample_size": 425
           },
           "max_1": {
@@ -6492,17 +6436,17 @@
               21,
               23
             ],
-            "intercept": 0.397916,
+            "intercept": 14.653051,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "cos_doy_1"
             ],
             "weights": [
-              0.741692,
-              0.288386
+              0.856984,
+              -3.959414
             ],
             "holdout_raw_mae": 3.13,
-            "holdout_mos_mae": 2.55,
+            "holdout_mos_mae": 2.61,
             "sample_size": 425
           },
           "min_2": {
@@ -6537,19 +6481,19 @@
               6,
               8
             ],
-            "intercept": -11.260762,
+            "intercept": -6.299035,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_min"
+              "cos_doy_1"
             ],
             "weights": [
-              0.855104,
-              0.074004,
-              0.184607
+              0.896099,
+              0.106442,
+              -3.21823
             ],
             "holdout_raw_mae": 8.19,
-            "holdout_mos_mae": 2.41,
+            "holdout_mos_mae": 2.25,
             "sample_size": 424
           },
           "max_1": {
@@ -6560,17 +6504,17 @@
               15,
               17
             ],
-            "intercept": 0.856575,
+            "intercept": 0.300294,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t"
             ],
             "weights": [
-              0.759719,
-              0.26416
+              0.854228,
+              0.177798
             ],
             "holdout_raw_mae": 2.89,
-            "holdout_mos_mae": 2.46,
+            "holdout_mos_mae": 2.39,
             "sample_size": 424
           },
           "min_2": {
@@ -6606,17 +6550,15 @@
               9,
               11
             ],
-            "intercept": -0.065183,
+            "intercept": 2.860525,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.628176,
-              0.401995
+              1.010568
             ],
             "holdout_raw_mae": 3.0,
-            "holdout_mos_mae": 2.22,
+            "holdout_mos_mae": 2.49,
             "sample_size": 424
           },
           "min_1": {
@@ -6627,21 +6569,19 @@
               24,
               26
             ],
-            "intercept": -9.484379,
+            "intercept": -2.459593,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_max",
               "cos_doy_1"
             ],
             "weights": [
-              0.687243,
-              0.117018,
-              0.173054,
-              -3.033138
+              0.81968,
+              0.11164,
+              -4.255937
             ],
             "holdout_raw_mae": 8.01,
-            "holdout_mos_mae": 3.04,
+            "holdout_mos_mae": 3.01,
             "sample_size": 424
           },
           "max_2": {
@@ -6652,17 +6592,19 @@
               33,
               35
             ],
-            "intercept": 1.851838,
+            "intercept": -1.303944,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "hrrr_lcdc"
             ],
             "weights": [
-              0.664523,
-              0.344106
+              0.835632,
+              0.210788,
+              0.057413
             ],
             "holdout_raw_mae": 4.66,
-            "holdout_mos_mae": 2.66,
+            "holdout_mos_mae": 2.6,
             "sample_size": 424
           }
         },
@@ -6675,17 +6617,15 @@
               3,
               5
             ],
-            "intercept": 0.050752,
+            "intercept": 3.266249,
             "predictors": [
-              "hrrr_ext_t",
-              "obs_prev_max"
+              "hrrr_ext_t"
             ],
             "weights": [
-              0.619841,
-              0.409226
+              1.00658
             ],
             "holdout_raw_mae": 3.11,
-            "holdout_mos_mae": 2.23,
+            "holdout_mos_mae": 2.49,
             "sample_size": 423
           },
           "min_1": {
@@ -6696,21 +6636,19 @@
               18,
               20
             ],
-            "intercept": -10.006025,
+            "intercept": -2.497564,
             "predictors": [
               "hrrr_ext_t",
               "hrrr_win_rh",
-              "obs_prev_max",
               "cos_doy_1"
             ],
             "weights": [
-              0.684032,
-              0.123975,
-              0.179309,
-              -2.969236
+              0.81735,
+              0.117955,
+              -4.289077
             ],
             "holdout_raw_mae": 7.85,
-            "holdout_mos_mae": 3.01,
+            "holdout_mos_mae": 3.05,
             "sample_size": 423
           },
           "max_2": {
@@ -6721,17 +6659,19 @@
               27,
               29
             ],
-            "intercept": 1.303194,
+            "intercept": -1.916527,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "hrrr_lcdc"
             ],
             "weights": [
-              0.661094,
-              0.353844
+              0.820939,
+              0.231906,
+              0.054545
             ],
             "holdout_raw_mae": 4.74,
-            "holdout_mos_mae": 2.94,
+            "holdout_mos_mae": 2.86,
             "sample_size": 423
           }
         }
@@ -6746,14 +6686,14 @@
         "lon": -111.835,
         "elev_ft": 3180,
         "clim_min_w": [
-          43.7266,
-          -18.8705,
-          -7.3212
+          43.737,
+          -18.8563,
+          -7.3364
         ],
         "clim_max_w": [
-          81.7589,
-          -19.7857,
-          -5.9502
+          81.7595,
+          -19.7849,
+          -5.9512
         ]
       },
       "cycles": {
@@ -6766,21 +6706,21 @@
               12,
               14
             ],
-            "intercept": -22.934111,
+            "intercept": -8.195804,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_tmp_700",
-              "hrrr_win_rh"
+              "hrrr_win_rh",
+              "cos_doy_1",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              1.00661,
-              0.255297,
-              -0.508682,
-              0.073308
+              0.816719,
+              0.150915,
+              -5.274856,
+              0.398612
             ],
             "holdout_raw_mae": 11.12,
-            "holdout_mos_mae": 2.48,
+            "holdout_mos_mae": 2.61,
             "sample_size": 425
           },
           "max_1": {
@@ -6791,19 +6731,21 @@
               21,
               23
             ],
-            "intercept": 1.45842,
+            "intercept": -1.117549,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "norm_t"
+              "norm_t",
+              "cos_doy_2",
+              "hrrr_dlwrf"
             ],
             "weights": [
-              0.552364,
-              0.24993,
-              0.195091
+              0.616503,
+              0.282418,
+              -1.668873,
+              0.032928
             ],
             "holdout_raw_mae": 4.53,
-            "holdout_mos_mae": 3.64,
+            "holdout_mos_mae": 3.98,
             "sample_size": 425
           },
           "min_2": {
@@ -6813,21 +6755,23 @@
               33,
               36
             ],
-            "intercept": -6.697181,
+            "intercept": -16.259375,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
               "hrrr_win_rh",
-              "cos_doy_1"
+              "norm_t",
+              "cos_doy_2",
+              "sin_doy_2"
             ],
             "weights": [
-              0.602337,
-              0.265579,
-              0.129845,
-              -4.520613
+              0.559587,
+              0.126305,
+              0.539906,
+              -1.734358,
+              1.782049
             ],
             "holdout_raw_mae": 12.2,
-            "holdout_mos_mae": 3.23,
+            "holdout_mos_mae": 3.38,
             "sample_size": 425
           }
         },
@@ -6840,21 +6784,19 @@
               6,
               8
             ],
-            "intercept": -20.117952,
+            "intercept": -7.837716,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_tmp_700",
-              "hrrr_win_rh"
+              "hrrr_win_rh",
+              "cos_doy_1"
             ],
             "weights": [
-              0.952174,
-              0.25886,
-              -0.415228,
-              0.062637
+              0.8382,
+              0.140556,
+              -4.779044
             ],
             "holdout_raw_mae": 11.14,
-            "holdout_mos_mae": 2.31,
+            "holdout_mos_mae": 2.44,
             "sample_size": 424
           },
           "max_1": {
@@ -6865,17 +6807,19 @@
               15,
               17
             ],
-            "intercept": 4.39972,
+            "intercept": 2.009848,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "cos_doy_2"
             ],
             "weights": [
-              0.656857,
-              0.308607
+              0.664823,
+              0.325435,
+              -1.610268
             ],
             "holdout_raw_mae": 4.32,
-            "holdout_mos_mae": 3.65,
+            "holdout_mos_mae": 4.08,
             "sample_size": 424
           },
           "min_2": {
@@ -6886,21 +6830,21 @@
               30,
               32
             ],
-            "intercept": 4.449803,
+            "intercept": 7.713041,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
               "hrrr_win_dp2m",
-              "cos_doy_1"
+              "cos_doy_1",
+              "cos_doy_2"
             ],
             "weights": [
-              0.391196,
-              0.235994,
-              0.234119,
-              -5.00474
+              0.4834,
+              0.294771,
+              -7.036776,
+              -1.650162
             ],
             "holdout_raw_mae": 11.58,
-            "holdout_mos_mae": 3.19,
+            "holdout_mos_mae": 3.24,
             "sample_size": 424
           }
         },
@@ -6913,17 +6857,19 @@
               9,
               11
             ],
-            "intercept": 3.223004,
+            "intercept": 2.384493,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "cos_doy_2"
             ],
             "weights": [
-              0.506371,
-              0.469727
+              0.68721,
+              0.299871,
+              -1.526832
             ],
             "holdout_raw_mae": 4.51,
-            "holdout_mos_mae": 3.36,
+            "holdout_mos_mae": 4.1,
             "sample_size": 424
           },
           "min_1": {
@@ -6934,23 +6880,23 @@
               24,
               26
             ],
-            "intercept": 2.028897,
+            "intercept": -15.856692,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
-              "hrrr_win_dp2m",
-              "cos_doy_1",
-              "cos_doy_2"
+              "hrrr_win_rh",
+              "norm_t",
+              "cos_doy_2",
+              "sin_doy_2"
             ],
             "weights": [
-              0.422879,
-              0.260922,
-              0.217366,
-              -4.18641,
-              -1.506037
+              0.597181,
+              0.132249,
+              0.486584,
+              -1.747667,
+              1.746343
             ],
             "holdout_raw_mae": 11.53,
-            "holdout_mos_mae": 3.17,
+            "holdout_mos_mae": 3.29,
             "sample_size": 424
           },
           "max_2": {
@@ -6961,21 +6907,19 @@
               33,
               35
             ],
-            "intercept": -0.991214,
+            "intercept": -0.255544,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_wspd10_kt",
-              "hrrr_lcdc"
+              "hrrr_lcdc",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.773327,
-              0.223169,
-              0.315911,
-              0.076233
+              0.983172,
+              0.113892,
+              0.379128
             ],
             "holdout_raw_mae": 5.34,
-            "holdout_mos_mae": 4.04,
+            "holdout_mos_mae": 4.19,
             "sample_size": 424
           }
         },
@@ -6988,17 +6932,21 @@
               3,
               5
             ],
-            "intercept": 3.166512,
+            "intercept": 0.891484,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max"
+              "norm_t",
+              "hrrr_mcdc",
+              "cos_doy_2"
             ],
             "weights": [
-              0.491847,
-              0.485748
+              0.710793,
+              0.286458,
+              0.037133,
+              -1.482363
             ],
             "holdout_raw_mae": 4.53,
-            "holdout_mos_mae": 3.34,
+            "holdout_mos_mae": 4.29,
             "sample_size": 423
           },
           "min_1": {
@@ -7009,21 +6957,21 @@
               18,
               20
             ],
-            "intercept": -8.294497,
+            "intercept": -17.263216,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_min",
               "hrrr_win_rh",
-              "cos_doy_1"
+              "norm_t",
+              "cos_doy_2"
             ],
             "weights": [
-              0.640331,
-              0.263133,
-              0.130587,
-              -3.413526
+              0.675106,
+              0.158087,
+              0.402114,
+              -1.63083
             ],
             "holdout_raw_mae": 11.19,
-            "holdout_mos_mae": 3.14,
+            "holdout_mos_mae": 3.31,
             "sample_size": 423
           },
           "max_2": {
@@ -7034,18 +6982,16 @@
               27,
               29
             ],
-            "intercept": -0.417459,
+            "intercept": 0.808365,
             "predictors": [
               "hrrr_ext_t",
-              "obs_prev_max",
-              "hrrr_wspd10_kt",
-              "hrrr_lcdc"
+              "hrrr_lcdc",
+              "hrrr_wspd10_kt"
             ],
             "weights": [
-              0.740811,
-              0.252734,
-              0.262378,
-              0.071796
+              0.974397,
+              0.110202,
+              0.328549
             ],
             "holdout_raw_mae": 5.28,
             "holdout_mos_mae": 4.09,
@@ -7055,6 +7001,6 @@
       }
     }
   },
-  "generated_utc": "2026-11-14T00:10:07Z",
-  "training_window": "2020-12-03 to 2026-11-09"
+  "generated_utc": "2026-11-18T20:55:37Z",
+  "training_window": "2020-12-03 to 2026-11-14"
 }
