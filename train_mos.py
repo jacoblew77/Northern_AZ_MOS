@@ -1,10 +1,10 @@
 """
 train_mos.py — Plug-and-Play Multi-Station HRRRv4 MOS Trainer (Pure Model + Climatology)
-- Excludes obs_prev_min / obs_prev_max so equations never rely on 1-2 day lagged COOP/ASOS reports.
-- Includes --discover-coop to automatically query IEM's AZCLIMATE network metadata, verify
-  every active WFO Flagstaff CWA COOP station (including Bagdad, Bellemont, Jerome, Seligman,
-  Grand Canyon, etc.) across the 2020-2026 training window and current month, and add them
-  to stations.json before training.
+- Excludes obs_prev_min / obs_prev_max so equations never rely on 1-2 day lagged reports.
+- Supports --discover-networks to automatically query IEM metadata for active WFO Flagstaff
+  CWA stations across COOP (AZCLIMATE), NOAA USCRN (USCRN), and RAWS (AZ_DCP), verify
+  2020-2026 training coverage and recent activity, and enforce a strict 1.0-mile minimum
+  station spacing prioritizing: Airports (AZ_ASOS) > COOP (AZCLIMATE) > USCRN > RAWS (AZ_DCP).
 - Supports incremental training for newly added stations in stations.json, or --retrain-all.
 """
 import argparse
@@ -40,6 +40,13 @@ MAX_CONCURRENT_RUNS = 180
 OUTPUT_EQ_FILE = "mos_equations.json"
 STATIONS_FILE = "stations.json"
 CACHE_DIR = "zarr_pixel_cache"
+
+NETWORK_PRIORITY = {
+    "AZ_ASOS": 1,    # Airports (ASOS/AWOS)
+    "AZCLIMATE": 2,  # NWS COOP
+    "USCRN": 3,      # NOAA US Climate Reference Network
+    "AZ_DCP": 4,     # Interagency RAWS (via IEM AZ_DCP)
+}
 
 CYCLE_PERIODS = {
     "00Z": [
@@ -88,6 +95,16 @@ ZARR_VAR_CANDIDATES = {
 }
 
 
+def haversine_miles(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Great-circle distance in statute miles between two lat/lon coordinates."""
+    r_miles = 3958.7613
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lon2 - lon1)
+    a = math.sin(dphi / 2.0) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2.0) ** 2
+    return 2.0 * r_miles * math.asin(math.sqrt(a))
+
+
 def get_verify_date_mst(init_dt: datetime.datetime, fhrs: list) -> datetime.date:
     """Computes the exact Arizona (MST = UTC-7) calendar date on which the window verifies."""
     mid_fh = fhrs[len(fhrs) // 2]
@@ -102,10 +119,13 @@ def create_sync_session() -> requests.Session:
     return s
 
 
-def format_coop_name(raw_name: str) -> str:
-    """Formats uppercase IEM COOP names cleanly while preserving meteorological/park acronyms."""
+def format_station_name(raw_name: str, network: str) -> str:
+    """Formats uppercase IEM station names cleanly while preserving acronyms and directionals."""
     words = raw_name.strip().title().split()
-    acronyms = {"Wfo", "Np", "Nm", "Rs", "Ap", "Us", "Az", "Nne", "Nnw", "Sse", "Ssw", "Ene", "Ese", "Wnw", "Wsw", "Ne", "Nw", "Se", "Sw"}
+    acronyms = {
+        "Wfo", "Np", "Nm", "Rs", "Ap", "Us", "Az", "Uscrn", "Raws",
+        "Nne", "Nnw", "Sse", "Ssw", "Ene", "Ese", "Wnw", "Wsw", "Ne", "Nw", "Se", "Sw",
+    }
     cleaned = []
     for w in words:
         if w in acronyms:
@@ -115,82 +135,138 @@ def format_coop_name(raw_name: str) -> str:
         else:
             cleaned.append(w)
     name = " ".join(cleaned)
-    if not any(tag in name for tag in ("COOP", "NP", "NM", "WFO", "Ranch", "Monument", "Mon")):
+    if network == "AZCLIMATE" and not any(tag in name for tag in ("COOP", "NP", "NM", "WFO", "Ranch", "Monument", "Mon")):
         name = f"{name} COOP"
+    elif network == "USCRN" and "USCRN" not in name:
+        name = f"{name} USCRN"
+    elif network == "AZ_DCP" and "RAWS" not in name:
+        name = f"{name} RAWS"
     return name
 
 
-def discover_active_northern_az_coop(existing_stations: dict) -> dict:
+def deduplicate_stations_by_radius(stations: dict, min_miles: float = 1.0) -> dict:
     """
-    Queries IEM's official AZCLIMATE GeoJSON metadata feed, filters for all stations in
-    WFO Flagstaff's CWA (wfo == 'FGZ' or Northern AZ counties), and verifies each candidate
-    has >= 1,400 valid daily High/Low rows since 2020-12-03 AND active observations within
-    the last 30 days.
+    Enforces a strict minimum distance (`min_miles`) between stations on the map,
+    keeping only 1 station within any 1-mile radius according to priority:
+      1. Airports (AZ_ASOS)
+      2. NWS COOP (AZCLIMATE)
+      3. NOAA USCRN (USCRN)
+      4. Interagency RAWS (AZ_DCP)
     """
-    print("Querying IEM AZCLIMATE metadata to discover all active Northern AZ COOP sites...")
-    session = create_sync_session()
-    geo_url = "https://mesonet.agron.iastate.edu/geojson/network/AZCLIMATE.geojson"
-    resp = session.get(geo_url, timeout=30)
-    resp.raise_for_status()
-    geo = resp.json()
+    ordered = sorted(
+        stations.items(),
+        key=lambda kv: (NETWORK_PRIORITY.get(kv[1].get("network", ""), 99), kv[0]),
+    )
+    kept = {}
+    for stn_id, meta in ordered:
+        lat, lon = float(meta["lat"]), float(meta["lon"])
+        conflict = None
+        for k_id, k_meta in kept.items():
+            dist = haversine_miles(lat, lon, float(k_meta["lat"]), float(k_meta["lon"]))
+            if dist <= min_miles:
+                conflict = (k_id, k_meta["name"], dist)
+                break
+        if conflict is not None:
+            print(
+                f"  [~] Deduplicated {stn_id} ({meta['name']} [{meta['network']}]) — "
+                f"{conflict[2]:.2f} mi from higher-priority {conflict[0]} ({conflict[1]})"
+            )
+            continue
+        kept[stn_id] = meta
+    return kept
 
+
+def discover_active_northern_az_networks(existing_stations: dict) -> dict:
+    """
+    Queries IEM GeoJSON metadata for COOP (AZCLIMATE), NOAA USCRN (USCRN), and RAWS (AZ_DCP),
+    verifies every active WFO Flagstaff CWA station has >= 1,400 valid daily High/Low rows
+    since 2020-12-03 AND active observations within the last 30 days, and deduplicates
+    stations within a 1.0-mile radius by network priority.
+    """
+    session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
     recent_cutoff = pd.Timestamp(datetime.date.today() - datetime.timedelta(days=30))
+    today_str = datetime.date.today().strftime("%Y-%m-%d")
+
     updated = dict(existing_stations)
-    added_count = 0
+    network_feeds = [
+        ("AZCLIMATE", "https://mesonet.agron.iastate.edu/geojson/network/AZCLIMATE.geojson"),
+        ("USCRN",     "https://mesonet.agron.iastate.edu/geojson/network/USCRN.geojson"),
+        ("AZ_DCP",    "https://mesonet.agron.iastate.edu/geojson/network/AZ_DCP.geojson"),
+    ]
 
-    for feat in geo.get("features", []):
-        stn_id = str(feat.get("id", "")).strip().upper()
-        if not stn_id.startswith("AZ") or stn_id in updated:
-            continue
+    for net_code, geo_url in network_feeds:
+        print(f"Querying IEM {net_code} metadata to discover active Northern AZ sites...")
+        resp = session.get(geo_url, timeout=30)
+        resp.raise_for_status()
+        geo = resp.json()
+        added_net = 0
 
-        props = feat.get("properties", {})
-        coords = feat.get("geometry", {}).get("coordinates", [None, None])
-        lon, lat = coords[0], coords[1]
-        if lat is None or lon is None:
-            continue
-
-        wfo = str(props.get("wfo", "")).strip().upper()
-        county = str(props.get("county", "")).strip().title()
-        archive_end = props.get("archive_end")
-
-        if archive_end and str(archive_end) < "2026-01-01":
-            continue
-
-        in_fgz = (wfo == "FGZ") or (county in fgz_counties and float(lat) >= 33.75)
-        if not in_fgz:
-            continue
-
-        raw_name = str(props.get("sname", stn_id))
-        elev_m = props.get("elevation")
-        elev_ft = int(round(float(elev_m) * 3.28084)) if elev_m is not None else 5000
-
-        meta_cand = {
-            "name": format_coop_name(raw_name),
-            "network": "AZCLIMATE",
-            "iem_id": stn_id,
-            "lat": round(float(lat), 4),
-            "lon": round(float(lon), 4),
-            "elev_ft": elev_ft,
-        }
-
-        try:
-            obs_df = fetch_station_daily_obs(stn_id, meta_cand, START_DATE, datetime.date.today().strftime("%Y-%m-%d"))
-            if len(obs_df) < 1400:
-                print(f"  [-] Skipping {stn_id} ({meta_cand['name']}): insufficient 2020-2026 days ({len(obs_df)}).")
-                continue
-            if obs_df.index.max() < recent_cutoff:
-                print(f"  [-] Skipping {stn_id} ({meta_cand['name']}): inactive (last obs {obs_df.index.max().date()}).")
+        for feat in geo.get("features", []):
+            stn_id = str(feat.get("id", "")).strip().upper()
+            if not stn_id or stn_id in updated:
                 continue
 
-            updated[stn_id] = meta_cand
-            added_count += 1
-            print(f"  [+] Verified active COOP site: {stn_id} — {meta_cand['name']} ({elev_ft} ft, {len(obs_df)} days, latest {obs_df.index.max().date()})")
-        except Exception as exc:
-            print(f"  [-] Skipping {stn_id} ({raw_name}): error checking IEM ({exc})")
+            props = feat.get("properties", {})
+            state = str(props.get("state", "AZ")).strip().upper()
+            if state and state != "AZ":
+                continue
 
-    print(f"COOP discovery complete: added {added_count} new active Northern AZ COOP station(s).")
-    return updated
+            coords = feat.get("geometry", {}).get("coordinates", [None, None])
+            lon, lat = coords[0], coords[1]
+            if lat is None or lon is None:
+                continue
+
+            wfo = str(props.get("wfo", "")).strip().upper()
+            county = str(props.get("county", "")).strip().title()
+            archive_end = props.get("archive_end")
+            if archive_end and str(archive_end) < "2026-01-01":
+                continue
+
+            in_fgz = (wfo == "FGZ") or (county in fgz_counties and float(lat) >= 33.75)
+            if not in_fgz:
+                continue
+
+            raw_name = str(props.get("sname", stn_id))
+            if net_code == "AZ_DCP":
+                upper_n = raw_name.upper()
+                if any(skip_kw in upper_n for skip_kw in ("RIVER", "CREEK", "WASH", "CANAL", "DAM ", "LAKE ", "GAGE", "GAUGE", "SNOTEL")):
+                    continue
+
+            elev_m = props.get("elevation")
+            elev_ft = int(round(float(elev_m) * 3.28084)) if elev_m is not None else 5000
+
+            meta_cand = {
+                "name": format_station_name(raw_name, net_code),
+                "network": net_code,
+                "iem_id": stn_id,
+                "lat": round(float(lat), 4),
+                "lon": round(float(lon), 4),
+                "elev_ft": elev_ft,
+            }
+
+            try:
+                obs_df = fetch_station_daily_obs(stn_id, meta_cand, START_DATE, today_str)
+                if len(obs_df) < 1400:
+                    continue
+                if obs_df.index.max() < recent_cutoff:
+                    continue
+
+                updated[stn_id] = meta_cand
+                added_net += 1
+                print(
+                    f"  [+] Verified {net_code}: {stn_id} — {meta_cand['name']} "
+                    f"({elev_ft} ft, {len(obs_df)} days, latest {obs_df.index.max().date()})"
+                )
+            except Exception:
+                continue
+
+        print(f"  -> {net_code}: found {added_net} new active Northern AZ station(s).")
+
+    print("\nApplying 1.0-mile radius deduplication (Priority: Airports > COOP > USCRN > RAWS)...")
+    deduped = deduplicate_stations_by_radius(updated, min_miles=1.0)
+    print(f"Final deduplicated Northern AZ network count: {len(deduped)} stations.")
+    return deduped
 
 
 def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
@@ -240,9 +316,12 @@ def fetch_station_daily_obs(stn_id: str, meta: dict, start_date: str, end_date: 
     df["obs_min"] = pd.to_numeric(df[min_col], errors="coerce")
     df["obs_max"] = pd.to_numeric(df[max_col], errors="coerce")
 
+    df = df.dropna(subset=["obs_min", "obs_max"])
+    # Physical sanity filter to reject raw telemetry spikes on remote RAWS/DCP stations
+    df = df[(df["obs_min"] >= -55.0) & (df["obs_max"] <= 135.0) & (df["obs_max"] >= df["obs_min"])]
+
     return (
         df[["date", "obs_min", "obs_max"]]
-        .dropna(subset=["obs_min", "obs_max"])
         .drop_duplicates(subset=["date"])
         .sort_values("date")
         .set_index("date")
@@ -524,14 +603,14 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations instead of only newly added ones.")
-    parser.add_argument("--discover-coop", action="store_true", help="Auto-discover all active Northern AZ COOP sites from IEM and add to stations.json.")
+    parser.add_argument("--discover-networks", action="store_true", help="Auto-discover active Northern AZ COOP, USCRN, and RAWS sites with 1-mi deduplication.")
     args = parser.parse_args()
 
     with open(STATIONS_FILE, "r") as f:
         all_stations = json.load(f)
 
-    if args.discover_coop:
-        all_stations = discover_active_northern_az_coop(all_stations)
+    if args.discover_networks:
+        all_stations = discover_active_northern_az_networks(all_stations)
         with open(STATIONS_FILE, "w") as f:
             json.dump(all_stations, f, indent=2)
 
@@ -545,6 +624,8 @@ def main():
                 del equations_bundle["stations"][old_id]
         if not target_stations:
             print(f"All {len(all_stations)} stations in {STATIONS_FILE} are already trained in {OUTPUT_EQ_FILE}!")
+            with open(OUTPUT_EQ_FILE, "w") as f:
+                json.dump(equations_bundle, f, indent=2)
             return
         print(f"Incremental mode: training {len(target_stations)} newly added station(s): {list(target_stations.keys())}")
     else:
@@ -555,7 +636,7 @@ def main():
     obs_by_stn = {}
     valid_targets = {}
     for stn_id, meta in target_stations.items():
-        print(f"Fetching COOP/ASOS observations for {stn_id} ({meta['name']})...")
+        print(f"Fetching daily observations for {stn_id} ({meta['name']} [{meta['network']}])...")
         try:
             obs_df = fetch_station_daily_obs(stn_id, meta, START_DATE, END_DATE)
             if len(obs_df) < 200:
