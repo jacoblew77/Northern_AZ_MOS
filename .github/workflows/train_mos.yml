@@ -3,13 +3,13 @@ name: Train Northern AZ HRRR MOS Equations
 on:
   workflow_dispatch:
     inputs:
-      discover_coop:
-        description: 'Auto-discover & add all active Northern AZ COOP sites from IEM'
+      discover_networks:
+        description: 'Auto-discover active Northern AZ COOP, USCRN, and RAWS sites (1-mi deduplicated)'
         required: true
         default: true
         type: boolean
       retrain_all:
-        description: 'Retrain ALL stations from scratch (leave unchecked to train only newly discovered sites)'
+        description: 'Retrain ALL stations from scratch (leave unchecked to train only newly added sites)'
         required: true
         default: false
         type: boolean
@@ -43,8 +43,8 @@ jobs:
       - name: Run HRRR MOS regression training
         run: |
           ARGS=""
-          if [ "${{ github.event.inputs.discover_coop }}" = "true" ]; then
-            ARGS="$ARGS --discover-coop"
+          if [ "${{ github.event.inputs.discover_networks }}" = "true" ]; then
+            ARGS="$ARGS --discover-networks"
           fi
           if [ "${{ github.event.inputs.retrain_all }}" = "true" ]; then
             ARGS="$ARGS --retrain-all"
@@ -56,5 +56,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stations.json mos_equations.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Discover & train active Northern AZ COOP stations [skip ci]"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Discover & train COOP, USCRN, and RAWS stations [skip ci]"
           git push
