@@ -1,7 +1,10 @@
 """
-update_forecast.py — Operational 6-Hourly HRRR MOS Runner for GitHub Actions
-Uses exact MST verification dates and strict MST completed-day observation cutoffs
-matching train_mos.py with zero look-ahead leakage.
+update_forecast.py — Operational 6-Hourly HRRR MOS Runner + 7-Day Verification
+1. Fetches the latest complete 48-hr synoptic HRRR run (00Z, 06Z, 12Z, 18Z) from AWS S3.
+2. Pulls a 16-day daily observation history from IEM for persistence AND verification.
+3. Maintains docs/verification_history.json (auto-backfilling the past 7 days via
+   historical 06Z HRRR runs on AWS S3 if missing) and exports past_7d_verification
+   metrics + series into docs/latest_forecasts.json.
 """
 import datetime
 import io
@@ -25,6 +28,7 @@ logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 
 EQ_FILE = "mos_equations.json"
 OUT_JSON = "docs/latest_forecasts.json"
+HIST_JSON = "docs/verification_history.json"
 
 HRRR_IDX_PATTERNS = {
     "tmp_2m":   ":TMP:2 m above ground:",
@@ -74,29 +78,29 @@ def eval_harmonic_norm(w: list, doy: int) -> float:
     return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
 
 
-def fetch_latest_obs_persistence(stn_id: str, meta: dict, cutoff_date: datetime.date) -> tuple:
-    """Fetches the latest completed MST daily High/Low on or before cutoff_date."""
+def fetch_station_obs_window(stn_id: str, meta: dict, start_dt: datetime.date, end_dt: datetime.date) -> tuple:
+    """Fetches daily High/Low observations from IEM across [start_dt, end_dt] as a dict keyed by ISO date."""
     session = create_sync_session()
-    s_dt = cutoff_date - datetime.timedelta(days=10)
-    e_dt = cutoff_date
     if meta["network"] == "AZCLIMATE":
         url = (
             f"https://mesonet.agron.iastate.edu/cgi-bin/request/coop.py?"
             f"network=AZCLIMATE&station={meta['iem_id']}&"
-            f"year1={s_dt.year}&month1={s_dt.month}&day1={s_dt.day}&"
-            f"year2={e_dt.year}&month2={e_dt.month}&day2={e_dt.day}&"
+            f"year1={start_dt.year}&month1={start_dt.month}&day1={start_dt.day}&"
+            f"year2={end_dt.year}&month2={end_dt.month}&day2={end_dt.day}&"
             f"vars=high,low&what=download&delim=comma&with_header=true"
         )
     else:
         url = (
             f"https://mesonet.agron.iastate.edu/cgi-bin/request/daily.py?"
             f"network={meta['network']}&stations={meta['iem_id']}&"
-            f"year1={s_dt.year}&month1={s_dt.month}&day1={s_dt.day}&"
-            f"year2={e_dt.year}&month2={e_dt.month}&day2={e_dt.day}&"
+            f"year1={start_dt.year}&month1={start_dt.month}&day1={start_dt.day}&"
+            f"year2={end_dt.year}&month2={end_dt.month}&day2={end_dt.day}&"
             f"var=max_temp_f&var=min_temp_f&format=csv"
         )
+
+    obs_map = {}
     try:
-        resp = session.get(url, timeout=15)
+        resp = session.get(url, timeout=20)
         if resp.status_code == 200 and len(resp.text.strip()) > 40:
             df = pd.read_csv(io.StringIO(resp.text), comment="#", na_values=["M", "T", " ", "", "None"])
             df.columns = [c.strip().lower() for c in df.columns]
@@ -106,16 +110,35 @@ def fetch_latest_obs_persistence(stn_id: str, meta: dict, cutoff_date: datetime.
             df["dt"] = pd.to_datetime(df[date_col]).dt.date
             df["obs_min"] = pd.to_numeric(df[min_col], errors="coerce")
             df["obs_max"] = pd.to_numeric(df[max_col], errors="coerce")
-            df = df[df["dt"] <= cutoff_date].dropna(subset=["obs_min", "obs_max"]).sort_values("dt")
-            if not df.empty:
-                last_row = df.iloc[-1]
-                return stn_id, float(last_row["obs_min"]), float(last_row["obs_max"]), last_row["dt"].strftime("%a, %b %d")
+            df = df.sort_values("dt")
+            for _, row in df.iterrows():
+                if pd.isna(row["dt"]):
+                    continue
+                d_iso = row["dt"].isoformat()
+                obs_map[d_iso] = {
+                    "min": None if pd.isna(row["obs_min"]) else round(float(row["obs_min"]), 1),
+                    "max": None if pd.isna(row["obs_max"]) else round(float(row["obs_max"]), 1),
+                }
     except Exception:
         pass
+    return stn_id, obs_map
+
+
+def get_persistence_on_or_before(obs_map: dict, cutoff_date: datetime.date, meta: dict) -> tuple:
+    """Finds the latest complete (both min and max present) daily observation <= cutoff_date."""
+    valid_dates = sorted(
+        d_iso for d_iso, vals in obs_map.items()
+        if d_iso <= cutoff_date.isoformat() and vals.get("min") is not None and vals.get("max") is not None
+    )
+    if valid_dates:
+        best_iso = valid_dates[-1]
+        best_dt = datetime.date.fromisoformat(best_iso)
+        return float(obs_map[best_iso]["min"]), float(obs_map[best_iso]["max"]), best_dt.strftime("%a, %b %d")
+
     doy = cutoff_date.timetuple().tm_yday
-    fallback_min = eval_harmonic_norm(meta.get("clim_min_w", [35.0, -18.0, -5.0]), doy)
-    fallback_max = eval_harmonic_norm(meta.get("clim_max_w", [65.0, -20.0, -5.0]), doy)
-    return stn_id, fallback_min, fallback_max, cutoff_date.strftime("%a, %b %d (Clim)")
+    fb_min = eval_harmonic_norm(meta.get("clim_min_w", [35.0, -18.0, -5.0]), doy)
+    fb_max = eval_harmonic_norm(meta.get("clim_max_w", [65.0, -20.0, -5.0]), doy)
+    return fb_min, fb_max, cutoff_date.strftime("%a, %b %d (Clim)")
 
 
 def fetch_fhr_all_stations(init_dt: datetime.datetime, fhr: int, stations: dict) -> dict:
@@ -280,6 +303,119 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
     }
 
 
+def backfill_past_7_days(stations: dict, obs_maps: dict, hist_records: dict, today_mst: datetime.date):
+    """
+    Checks the past 7 completed MST days (today_mst - 7 .. today_mst - 1).
+    If any day lacks archived MOS forecasts, fetches that day's 06Z HRRR run
+    (which contains both Morning Min min_1 and Afternoon Max max_1) from AWS S3.
+    """
+    past_dates = [today_mst - datetime.timedelta(days=offset) for offset in range(7, 0, -1)]
+    missing_dates = []
+    for dt in past_dates:
+        d_iso = dt.isoformat()
+        if any(
+            d_iso not in hist_records.get(sid, {})
+            or "min" not in hist_records[sid][d_iso]
+            or "max" not in hist_records[sid][d_iso]
+            for sid in stations
+        ):
+            missing_dates.append(dt)
+
+    if not missing_dates:
+        return
+
+    print(f"Backfilling 7-day verification history for {len(missing_dates)} day(s): {[d.isoformat() for d in missing_dates]}")
+    sample_stn = next(iter(stations.values()))
+    eq_min_06z = sample_stn["cycles"]["06Z"]["min_1"]
+    eq_max_06z = sample_stn["cycles"]["06Z"]["max_1"]
+    req_fhrs = sorted(set(
+        eq_min_06z["fhrs"] + [max(1, eq_min_06z["fhrs"][0] - 6)] +
+        eq_max_06z["fhrs"] + [max(1, eq_max_06z["fhrs"][0] - 6)]
+    ))
+
+    tasks = [(dt, fh) for dt in missing_dates for fh in req_fhrs]
+    with ThreadPoolExecutor(max_workers=16) as pool:
+        results = list(pool.map(
+            lambda pair: (pair[0], pair[1], fetch_fhr_all_stations(datetime.datetime(pair[0].year, pair[0].month, pair[0].day, 6), pair[1], stations)),
+            tasks,
+        ))
+
+    by_date_fhr = {}
+    for dt, fh, stn_dict in results:
+        by_date_fhr.setdefault(dt, {})[fh] = stn_dict
+
+    for dt in missing_dates:
+        init_06z = datetime.datetime(dt.year, dt.month, dt.day, 6)
+        cutoff_dt = get_obs_cutoff_date_mst(init_06z)
+        d_iso = dt.isoformat()
+
+        for stn_id, s_info in stations.items():
+            meta = s_info["meta"]
+            prev_min, prev_max, _ = get_persistence_on_or_before(obs_maps[stn_id], cutoff_dt, meta)
+
+            var_arrays = {}
+            for vkey in HRRR_IDX_PATTERNS:
+                arr = np.full(36, np.nan, dtype=np.float32)
+                for fh in req_fhrs:
+                    val = by_date_fhr.get(dt, {}).get(fh, {}).get(stn_id, {}).get(vkey)
+                    if val is not None:
+                        arr[fh - 1] = val
+                var_arrays[vkey] = arr
+
+            stn_day_rec = hist_records.setdefault(stn_id, {}).setdefault(d_iso, {})
+            for p_key in ("min_1", "max_1"):
+                eq = s_info["cycles"]["06Z"][p_key]
+                kind = eq["kind"]
+                if kind in stn_day_rec:
+                    continue
+                feats = extract_period_features(var_arrays, eq, init_06z, meta, prev_min, prev_max)
+                if not feats:
+                    continue
+                mos_val = float(eq["intercept"] + sum(w * feats[v] for v, w in zip(eq["predictors"], eq["weights"])))
+                raw_val = float(feats["hrrr_ext_t"])
+                stn_day_rec[kind] = {
+                    "mos_f": round(mos_val, 1),
+                    "raw_f": round(raw_val, 1),
+                    "cycle": "06Z",
+                    "init_utc": init_06z.strftime("%Y-%m-%d %H:%MZ"),
+                }
+
+
+def build_station_7d_verification(stn_id: str, obs_map: dict, hist_records: dict, today_mst: datetime.date) -> dict:
+    """Pairs the past 7 completed MST days of stored forecasts against IEM observations."""
+    past_dates = [today_mst - datetime.timedelta(days=offset) for offset in range(7, 0, -1)]
+    stn_hist = hist_records.get(stn_id, {})
+
+    out = {"min": [], "max": [], "min_mos_mae": None, "min_raw_mae": None, "max_mos_mae": None, "max_raw_mae": None}
+    for kind in ("min", "max"):
+        mos_errs = []
+        raw_errs = []
+        for dt in past_dates:
+            d_iso = dt.isoformat()
+            fcst = stn_hist.get(d_iso, {}).get(kind)
+            obs_val = obs_map.get(d_iso, {}).get(kind)
+            mos_f = fcst["mos_f"] if fcst else None
+            raw_f = fcst["raw_f"] if fcst else None
+            if mos_f is not None and obs_val is not None:
+                mos_errs.append(abs(mos_f - obs_val))
+            if raw_f is not None and obs_val is not None:
+                raw_errs.append(abs(raw_f - obs_val))
+            out[kind].append({
+                "date": d_iso,
+                "label": dt.strftime("%a %m/%d"),
+                "obs_f": obs_val,
+                "mos_f": mos_f,
+                "raw_f": raw_f,
+                "cycle": fcst["cycle"] if fcst else None,
+            })
+        if mos_errs:
+            out[f"{kind}_mos_mae"] = round(float(np.mean(mos_errs)), 2)
+        if raw_errs:
+            out[f"{kind}_raw_mae"] = round(float(np.mean(raw_errs)), 2)
+
+    return out
+
+
 def main():
     with open(EQ_FILE, "r") as f:
         eq_bundle = json.load(f)
@@ -287,6 +423,8 @@ def main():
     stations = eq_bundle["stations"]
     now_utc = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
     az_tz = zoneinfo.ZoneInfo("America/Phoenix")
+    now_az = datetime.datetime.now(az_tz)
+    today_mst = now_az.date()
 
     latest_syn = now_utc.replace(minute=0, second=0, microsecond=0)
     latest_syn -= datetime.timedelta(hours=(latest_syn.hour % 6))
@@ -313,13 +451,25 @@ def main():
     with ThreadPoolExecutor(max_workers=16) as pool:
         fhr_results = dict(zip(fhrs_to_fetch, pool.map(lambda fh: fetch_fhr_all_stations(chosen_init, fh, stations), fhrs_to_fetch)))
 
+    # Fetch 16 days of daily High/Low obs from IEM for both persistence and 7-day verification
+    obs_start = today_mst - datetime.timedelta(days=16)
     with ThreadPoolExecutor(max_workers=12) as pool:
-        obs_futures = [pool.submit(fetch_latest_obs_persistence, sid, sinfo["meta"], obs_cutoff_dt) for sid, sinfo in stations.items()]
-        obs_pers = {sid: (pmn, pmx, p_lbl) for sid, pmn, pmx, p_lbl in (f.result() for f in obs_futures)}
+        obs_futures = [pool.submit(fetch_station_obs_window, sid, sinfo["meta"], obs_start, today_mst) for sid, sinfo in stations.items()]
+        obs_maps = {sid: omap for sid, omap in (f.result() for f in obs_futures)}
+
+    # Load existing verification history & backfill any missing days in the past 7 days
+    if os.path.exists(HIST_JSON):
+        with open(HIST_JSON, "r") as f:
+            hist_bundle = json.load(f)
+        hist_records = hist_bundle.get("records", {})
+    else:
+        hist_records = {}
+
+    backfill_past_7_days(stations, obs_maps, hist_records, today_mst)
 
     output_payload = {
         "updated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-        "updated_mst": datetime.datetime.now(az_tz).strftime("%Y-%m-%d %I:%M %p MST"),
+        "updated_mst": now_az.strftime("%Y-%m-%d %I:%M %p MST"),
         "hrrr_init_utc": chosen_init.strftime("%Y-%m-%d %H:%MZ"),
         "synoptic_cycle": chosen_cyc,
         "stations": {},
@@ -327,7 +477,8 @@ def main():
 
     for stn_id, s_info in stations.items():
         meta = s_info["meta"]
-        prev_min, prev_max, obs_date_lbl = obs_pers[stn_id]
+        obs_map = obs_maps[stn_id]
+        prev_min, prev_max, obs_date_lbl = get_persistence_on_or_before(obs_map, obs_cutoff_dt, meta)
 
         var_arrays = {}
         for vkey in HRRR_IDX_PATTERNS:
@@ -352,6 +503,8 @@ def main():
 
         periods_out = []
         cycle_eqs = s_info["cycles"][chosen_cyc]
+        stn_hist = hist_records.setdefault(stn_id, {})
+
         for p_key, eq in cycle_eqs.items():
             feats = extract_period_features(var_arrays, eq, chosen_init, meta, prev_min, prev_max)
             if not feats:
@@ -359,6 +512,18 @@ def main():
             mos_val = float(eq["intercept"] + sum(w * feats[v] for v, w in zip(eq["predictors"], eq["weights"])))
             raw_val = float(feats["hrrr_ext_t"])
             verify_dt = get_verify_date_mst(chosen_init, eq["fhrs"])
+            v_iso = verify_dt.isoformat()
+            kind = eq["kind"]
+
+            # Archive Day-1 / Today primary forecasts into verification history (or Day-2 as fallback)
+            day_slot = stn_hist.setdefault(v_iso, {})
+            if p_key in ("min_1", "max_1") or kind not in day_slot:
+                day_slot[kind] = {
+                    "mos_f": round(mos_val, 1),
+                    "raw_f": round(raw_val, 1),
+                    "cycle": chosen_cyc,
+                    "init_utc": chosen_init.strftime("%Y-%m-%d %H:%MZ"),
+                }
 
             breakdown = [{"term": "Intercept", "value": 1.0, "weight": round(eq["intercept"], 4), "contrib": round(eq["intercept"], 2)}]
             for v, w in zip(eq["predictors"], eq["weights"]):
@@ -371,7 +536,7 @@ def main():
 
             periods_out.append({
                 "key": p_key,
-                "kind": eq["kind"],
+                "kind": kind,
                 "label": eq["label"],
                 "verify_date": verify_dt.strftime("%a, %b %d"),
                 "raw_hrrr_f": round(raw_val, 1),
@@ -381,6 +546,13 @@ def main():
                 "holdout_raw_mae": eq["holdout_raw_mae"],
                 "breakdown": breakdown,
             })
+
+        # Prune verification history older than 21 days
+        prune_cutoff = (today_mst - datetime.timedelta(days=21)).isoformat()
+        for old_iso in [d for d in stn_hist if d < prune_cutoff]:
+            del stn_hist[old_iso]
+
+        verif_7d = build_station_7d_verification(stn_id, obs_map, hist_records, today_mst)
 
         output_payload["stations"][stn_id] = {
             "id": stn_id,
@@ -394,12 +566,15 @@ def main():
             "prev_obs_max": round(prev_max, 1),
             "periods": periods_out,
             "hourly_curve": hourly_curve,
+            "past_7d_verification": verif_7d,
         }
 
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
+    with open(HIST_JSON, "w") as f:
+        json.dump({"updated_utc": output_payload["updated_utc"], "records": hist_records}, f, indent=2)
     with open(OUT_JSON, "w") as f:
         json.dump(output_payload, f, indent=2)
-    print(f"Wrote updated forecasts for {len(stations)} stations to {OUT_JSON}.")
+    print(f"Wrote updated forecasts and 7-day verification for {len(stations)} stations.")
 
 
 if __name__ == "__main__":
