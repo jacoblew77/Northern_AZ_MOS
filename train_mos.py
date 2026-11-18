@@ -1,10 +1,8 @@
 """
-train_mos.py — Plug-and-Play Multi-Station HRRRv4 MOS Trainer
-To add new stations later:
-  1. Add an entry to stations.json with just: name, network, iem_id, lat, lon, elev_ft
-  2. Run: python train_mos.py
-     (Automatically trains ONLY newly added stations and merges them into mos_equations.json!
-      Pass --retrain-all to retrain every station from scratch.)
+train_mos.py — Plug-and-Play Multi-Station HRRRv4 MOS Trainer (Pure Model + Climatology)
+- Excludes obs_prev_min / obs_prev_max so equations never rely on 1–2 day lagged COOP/ASOS reports.
+- Designed to run rapidly inside GitHub Actions (.github/workflows/train_mos.yml) or locally.
+- Supports incremental training for newly added stations in stations.json, or --retrain-all.
 """
 import argparse
 import asyncio
@@ -33,31 +31,31 @@ logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 
 START_DATE = "2020-12-03"
 END_DATE = (datetime.date.today() - datetime.timedelta(days=4)).strftime("%Y-%m-%d")
-SAMPLE_STEP_DAYS = 3             # ~720 independent synoptic days/cycle across 6 winters & summers
-MAX_CONCURRENT_RUNS = 160        # High-throughput Windows/Linux async socket pool
+SAMPLE_STEP_DAYS = 3
+MAX_CONCURRENT_RUNS = 180
 OUTPUT_EQ_FILE = "mos_equations.json"
 CACHE_DIR = "zarr_pixel_cache"
 
 CYCLE_PERIODS = {
     "00Z": [
-        {"key": "min_1", "kind": "min", "label": "Overnight Min (Day 1)",  "day_offset": 1, "fhrs": [9, 12, 14]},
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)",  "day_offset": 1, "fhrs": [20, 21, 23]},
-        {"key": "min_2", "kind": "min", "label": "Overnight Min (Day 2)",  "day_offset": 2, "fhrs": [33, 36]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [9, 12, 14]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [20, 21, 23]},
+        {"key": "min_2", "kind": "min", "label": "Morning Min (Day 2)",   "fhrs": [33, 36]},
     ],
     "06Z": [
-        {"key": "min_1", "kind": "min", "label": "Morning Min (Today)",    "day_offset": 0, "fhrs": [3, 6, 8]},
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)",  "day_offset": 0, "fhrs": [14, 15, 17]},
-        {"key": "min_2", "kind": "min", "label": "Overnight Min (Day 1)",  "day_offset": 1, "fhrs": [27, 30, 32]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [3, 6, 8]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [14, 15, 17]},
+        {"key": "min_2", "kind": "min", "label": "Morning Min (Day 2)",   "fhrs": [27, 30, 32]},
     ],
     "12Z": [
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)",  "day_offset": 0, "fhrs": [8, 9, 11]},
-        {"key": "min_1", "kind": "min", "label": "Overnight Min (Day 1)",  "day_offset": 1, "fhrs": [21, 24, 26]},
-        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)",  "day_offset": 1, "fhrs": [32, 33, 35]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)", "fhrs": [8, 9, 11]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [21, 24, 26]},
+        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [32, 33, 35]},
     ],
     "18Z": [
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)",  "day_offset": 0, "fhrs": [2, 3, 5]},
-        {"key": "min_1", "kind": "min", "label": "Overnight Min (Day 1)",  "day_offset": 1, "fhrs": [15, 18, 20]},
-        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)",  "day_offset": 1, "fhrs": [26, 27, 29]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)", "fhrs": [2, 3, 5]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [15, 18, 20]},
+        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [26, 27, 29]},
     ],
 }
 
@@ -85,6 +83,13 @@ ZARR_VAR_CANDIDATES = {
 }
 
 
+def get_verify_date_mst(init_dt: datetime.datetime, fhrs: list) -> datetime.date:
+    """Computes the exact Arizona (MST = UTC-7) calendar date on which the window verifies."""
+    mid_fh = fhrs[len(fhrs) // 2]
+    valid_mst = init_dt + datetime.timedelta(hours=mid_fh) - datetime.timedelta(hours=7)
+    return valid_mst.date()
+
+
 def create_sync_session() -> requests.Session:
     s = requests.Session()
     retries = Retry(total=4, backoff_factor=0.6, status_forcelist=[429, 500, 502, 503, 504], raise_on_status=False)
@@ -93,10 +98,6 @@ def create_sync_session() -> requests.Session:
 
 
 def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
-    """
-    Automatically fits seasonal normal Max/Min curves [c0, cos1, sin1] from the
-    station's own IEM daily record so users never need manual climate constants.
-    """
     doys = obs_df.index.dayofyear.values
     X = np.column_stack([
         np.ones(len(doys)),
@@ -109,7 +110,6 @@ def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
 
 
 def fetch_station_daily_obs(stn_id: str, meta: dict, start_date: str, end_date: str) -> pd.DataFrame:
-    """Fetches daily High/Low observations from IEM Climodat (COOP) or IEM ASOS Daily Summary."""
     s_dt = datetime.datetime.strptime(start_date, "%Y-%m-%d") - datetime.timedelta(days=5)
     e_dt = datetime.datetime.strptime(end_date, "%Y-%m-%d")
     session = create_sync_session()
@@ -144,20 +144,16 @@ def fetch_station_daily_obs(stn_id: str, meta: dict, start_date: str, end_date: 
     df["obs_min"] = pd.to_numeric(df[min_col], errors="coerce")
     df["obs_max"] = pd.to_numeric(df[max_col], errors="coerce")
 
-    obs_df = (
+    return (
         df[["date", "obs_min", "obs_max"]]
         .dropna(subset=["obs_min", "obs_max"])
         .drop_duplicates(subset=["date"])
         .sort_values("date")
         .set_index("date")
     )
-    obs_df["prev_min"] = obs_df["obs_min"].shift(1)
-    obs_df["prev_max"] = obs_df["obs_max"].shift(1)
-    return obs_df.dropna()
 
 
 def resolve_zarr_pixels(stations: dict):
-    """Maps every station in stations.json to its exact HRRR-Zarr tile and (ly, lx) pixel."""
     mapper = fsspec.get_mapper("https://hrrrzarr.s3.amazonaws.com/grid/HRRR_chunk_index.zarr")
     g_root = zarr.open_group(mapper, mode="r")
     lats = np.array(g_root["latitude"][:])
@@ -204,8 +200,8 @@ def eval_harmonic_norm(w: list, doy: int) -> float:
     return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
 
 
-def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.datetime, meta: dict, prev_min: float, prev_max: float) -> dict:
-    """Builds the identical predictor dictionary for both Zarr training and live GRIB2 inference."""
+def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.datetime, meta: dict) -> dict:
+    """Builds the predictor dictionary from HRRR atmospheric/surface fields and seasonal climatology."""
     if "tmp_2m" not in var_arrays:
         return {}
     n_fhrs = len(var_arrays["tmp_2m"])
@@ -253,7 +249,7 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
     apcp_beg = val_at("apcp", max(1, fhrs[0] - 6), default=0.0)
     qpf_in = max(0.0, (apcp_end - apcp_beg) / 25.4)
 
-    verify_date = init_dt.date() + datetime.timedelta(days=period["day_offset"])
+    verify_date = get_verify_date_mst(init_dt, fhrs)
     doy = pd.Timestamp(verify_date).dayofyear
 
     w_clim = meta["clim_min_w"] if period["kind"] == "min" else meta["clim_max_w"]
@@ -283,8 +279,6 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
         "hrrr_snow_in": win_mean("snod", lambda m: m * 39.3701, default=0.0),
         "hrrr_dlwrf": win_mean("dlwrf", default=220.0),
         "hrrr_dswrf": win_mean("dswrf", default=0.0),
-        "obs_prev_min": float(prev_min),
-        "obs_prev_max": float(prev_max),
         "sin_doy_1": math.sin(2.0 * math.pi * doy / 365.25),
         "cos_doy_1": math.cos(2.0 * math.pi * doy / 365.25),
         "sin_doy_2": math.sin(4.0 * math.pi * doy / 365.25),
@@ -378,7 +372,7 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
     for r in unique_runs:
         queue.put_nowait(r)
 
-    connector = aiohttp.TCPConnector(limit=320, ttl_dns_cache=600)
+    connector = aiohttp.TCPConnector(limit=350, ttl_dns_cache=600)
     timeout = aiohttp.ClientTimeout(total=15, sock_connect=5, sock_read=8)
     compressor = numcodecs.Blosc()
     pbar = tqdm(total=len(unique_runs), desc="Multi-Station HRRR-Zarr Ingestion", unit="run", smoothing=0.05)
@@ -449,7 +443,7 @@ def main():
                 del equations_bundle["stations"][old_id]
         if not target_stations:
             print(f"All {len(all_stations)} stations in stations.json are already trained in {OUTPUT_EQ_FILE}!")
-            print("Run 'python train_mos.py --retrain-all' if you want to refresh all weights.")
+            print("Run 'python train_mos.py --retrain-all' to retrain all weights.")
             return
         print(f"Incremental mode: training {len(target_stations)} newly added station(s): {list(target_stations.keys())}")
     else:
@@ -485,83 +479,4 @@ def main():
     unique_runs = [
         datetime.datetime(d.year, d.month, d.day, hr)
         for d in init_dates
-        for hr in (0, 6, 12, 18)
-    ]
-
-    data_store = asyncio.run(download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, resolved_specs))
-
-    candidate_cols = [
-        "hrrr_ext_t", "hrrr_win_dp2m", "hrrr_win_dpd", "hrrr_win_rh",
-        "hrrr_tmp_500", "hrrr_tmp_700", "hrrr_hgt_500", "hrrr_thick_1000_500", "hrrr_lapse_500_700",
-        "hrrr_lcdc", "hrrr_mcdc", "hrrr_hcdc", "hrrr_tcdc", "hrrr_dlwrf", "hrrr_dswrf",
-        "hrrr_pwat", "hrrr_qpf_in", "hrrr_snow_in",
-        "hrrr_u10_kt", "hrrr_v10_kt", "hrrr_wspd10_kt", "hrrr_wspd700_kt",
-        "obs_prev_min", "obs_prev_max",
-        "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2", "norm_t",
-    ]
-
-    equations_bundle["generated_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    equations_bundle["training_window"] = f"{START_DATE} to {END_DATE}"
-
-    for stn_id, meta in valid_targets.items():
-        obs_df = obs_by_stn[stn_id]
-        stn_runs = data_store[stn_id]
-        equations_bundle["stations"][stn_id] = {"meta": meta, "cycles": {}}
-
-        for cyc, periods in CYCLE_PERIODS.items():
-            cyc_hr = int(cyc.replace("Z", ""))
-            equations_bundle["stations"][stn_id]["cycles"][cyc] = {}
-
-            for period in periods:
-                rows = []
-                for init_dt, var_arrays in stn_runs.items():
-                    if init_dt.hour != cyc_hr:
-                        continue
-                    v_date = pd.Timestamp(init_dt.date() + datetime.timedelta(days=period["day_offset"]))
-                    if v_date not in obs_df.index:
-                        continue
-                    prior = obs_df[obs_df.index <= pd.Timestamp(init_dt.date())]
-                    if prior.empty:
-                        continue
-
-                    feats = extract_period_features(
-                        var_arrays, period, init_dt, meta,
-                        prev_min=prior["obs_min"].iloc[-1],
-                        prev_max=prior["obs_max"].iloc[-1],
-                    )
-                    if not feats:
-                        continue
-                    feats["target"] = float(obs_df.loc[v_date, "obs_min" if period["kind"] == "min" else "obs_max"])
-                    feats["verify_date"] = v_date
-                    rows.append(feats)
-
-                df_p = pd.DataFrame(rows).sort_values("verify_date")
-                split_idx = int(len(df_p) * 0.75)
-                tr_df, te_df = df_p.iloc[:split_idx], df_p.iloc[split_idx:]
-
-                sel_vars, wts = forward_screening_regression(tr_df, "target", candidate_cols)
-                te_pred = np.column_stack([np.ones(len(te_df)), te_df[sel_vars].values]) @ wts
-                mos_mae = float(np.mean(np.abs(te_pred - te_df["target"].values)))
-                raw_mae = float(np.mean(np.abs(te_df["hrrr_ext_t"].values - te_df["target"].values)))
-
-                equations_bundle["stations"][stn_id]["cycles"][cyc][period["key"]] = {
-                    "kind": period["kind"],
-                    "label": period["label"],
-                    "day_offset": period["day_offset"],
-                    "fhrs": period["fhrs"],
-                    "intercept": round(float(wts[0]), 6),
-                    "predictors": sel_vars,
-                    "weights": [round(float(w), 6) for w in wts[1:]],
-                    "holdout_raw_mae": round(raw_mae, 2),
-                    "holdout_mos_mae": round(mos_mae, 2),
-                    "sample_size": len(df_p),
-                }
-                print(f"[{stn_id} | {cyc} | {period['key']}] Raw MAE: {raw_mae:.2f}°F -> MOS MAE: {mos_mae:.2f}°F (n={len(df_p)})")
-
-    with open(OUTPUT_EQ_FILE, "w") as f:
-        json.dump(equations_bundle, f, indent=2)
-    print(f"\nSaved {len(equations_bundle['stations'])} trained stations to {OUTPUT_EQ_FILE}!")
-
-
-if __name__ == "__main__":
-    main()
+        for hr in (0, 6, 1
