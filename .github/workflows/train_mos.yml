@@ -1,0 +1,52 @@
+name: Train Northern AZ HRRR MOS Equations
+
+on:
+  workflow_dispatch:
+    inputs:
+      retrain_all:
+        description: 'Retrain ALL stations from scratch (uncheck to train only newly added stations)'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  train-mos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache HRRR-Zarr pixel series
+        uses: actions/cache@v4
+        with:
+          path: zarr_pixel_cache
+          key: hrrr-zarr-cache-${{ hashFiles('stations.json') }}-v1
+          restore-keys: |
+            hrrr-zarr-cache-
+
+      - name: Install training packages
+        run: pip install -q aiohttp fsspec numcodecs numpy pandas requests tqdm "zarr<3"
+
+      - name: Run HRRR MOS regression training
+        run: |
+          if [ "${{ github.event.inputs.retrain_all }}" = "true" ]; then
+            python train_mos.py --retrain-all
+          else
+            python train_mos.py
+          fi
+
+      - name: Commit updated mos_equations.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mos_equations.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Retrain HRRR MOS equations (no persistence predictors) [skip ci]"
+          git push
