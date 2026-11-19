@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       discover_networks:
-        description: 'Auto-discover active Northern AZ COOP, USCRN, and RAWS sites (1-mi deduplicated)'
+        description: 'Auto-discover all active public Northern AZ stations (Synoptic + IEM COOP)'
         required: true
         default: true
         type: boolean
       retrain_all:
-        description: 'Retrain ALL stations from scratch (leave unchecked to train only newly added sites)'
+        description: 'Retrain ALL stations from scratch (check this when switching to Synoptic)'
         required: true
-        default: false
+        default: true
         type: boolean
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: zarr_pixel_cache
-          key: hrrr-zarr-cache-${{ hashFiles('stations.json') }}-v1
+          key: hrrr-zarr-cache-${{ hashFiles('stations.json') }}-v2
           restore-keys: |
             hrrr-zarr-cache-
 
@@ -41,6 +41,8 @@ jobs:
         run: pip install -q aiohttp fsspec numcodecs "numpy<2" pandas requests tqdm "zarr<3"
 
       - name: Run HRRR MOS regression training
+        env:
+          SYNOPTIC_TOKEN: ${{ secrets.SYNOPTIC_TOKEN }}
         run: |
           ARGS=""
           if [ "${{ github.event.inputs.discover_networks }}" = "true" ]; then
@@ -56,5 +58,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stations.json mos_equations.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Discover & train COOP, USCRN, and RAWS stations [skip ci]"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Train public Northern AZ stations via Synoptic API [skip ci]"
           git push
