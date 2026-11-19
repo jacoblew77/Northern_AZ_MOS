@@ -3,8 +3,9 @@ train_mos.py — Multi-Station HRRRv4 MOS Trainer (Synoptic Data Time-Series API
 - Queries Synoptic Data API (/v2/networks, /v2/stations/metadata, /v2/stations/timeseries)
   for all public non-COOP networks (Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP)
   and IEM Climodat (AZCLIMATE) for manual NWS COOP sites.
-- Discovers all active public stations in WFO Flagstaff's CWA with records starting on or
-  before 2024-06-01 and >= 500 valid days (including Camp Verde CW4534 and newer Mesonet sites).
+- Supports configurable admission cutoffs (--min-por-start, --min-valid-days) and
+  --prune-stations so shorter-record stations can be cleanly removed or reinstated
+  anytime from GitHub Actions without manual JSON edits or extra API calls.
 - Caches parsed daily High/Low observation series in obs_cache/ alongside zarr_pixel_cache/
   so subsequent retraining runs and feature branches reuse cached observations with zero API calls.
 - Aligns all Synoptic observations to standardized NWS MOS diurnal windows in UTC:
@@ -51,6 +52,11 @@ STATIONS_FILE = "stations.json"
 CACHE_DIR = "zarr_pixel_cache"
 OBS_CACHE_DIR = "obs_cache"
 SYNOPTIC_BASE = "https://api.synopticdata.com/v2"
+
+DEFAULT_MIN_POR_START = "2021-03-01"
+DEFAULT_MIN_VALID_DAYS = 1400
+# Optional station IDs to always keep even if below min_valid_days (e.g. {"C4534"})
+PINNED_STATIONS = set()
 
 NETWORK_PRIORITY = {
     "AZ_ASOS":   1,
@@ -341,12 +347,18 @@ def fetch_iem_coop_daily_obs(stn_id: str, meta: dict, start_date: str, end_date:
     )
 
 
-def discover_all_public_northern_az_stations(existing_stations: dict, token: str, refresh_obs: bool = False) -> tuple:
+def discover_all_public_northern_az_stations(
+    existing_stations: dict,
+    token: str,
+    min_por_start: str = DEFAULT_MIN_POR_START,
+    min_valid_days: int = DEFAULT_MIN_VALID_DAYS,
+    refresh_obs: bool = False,
+) -> tuple:
     """
     Discovers all active public stations across WFO Flagstaff CWA without spatial removal:
       1. Synoptic public networks (restricted=false): Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP.
       2. IEM Climodat NWS COOP (AZCLIMATE, 4-digit physical stations AZ#### only).
-    Includes stations starting on or before 2024-06-01 with >= 500 valid days and recent reports.
+    Admits stations starting on or before `min_por_start` with >= `min_valid_days` valid days.
     """
     session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
@@ -390,7 +402,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
 
     print(f"Matched {len(mnet_to_tier)} public Synoptic network IDs across 7 tiers.")
 
-    print("Querying Synoptic metadata for all active public Northern AZ stations (cwa=FGZ)...")
+    print(f"Querying Synoptic metadata for active public Northern AZ stations (start <= {min_por_start})...")
     meta_payload = synoptic_get_sequential(
         session,
         "stations/metadata",
@@ -427,8 +439,9 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
         period = stn.get("PERIOD_OF_RECORD", {})
         por_start = str(period.get("start", ""))
         por_end = str(period.get("end", ""))
-        if not por_start or por_start[:10] > "2024-06-01":
-            continue
+        if sid not in PINNED_STATIONS:
+            if not por_start or por_start[:10] > min_por_start:
+                continue
         if not por_end or por_end[:10] < (datetime.date.today() - datetime.timedelta(days=21)).isoformat():
             continue
 
@@ -485,7 +498,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     prefetched_obs = {}
 
     if new_syn_ids:
-        print(f"Verifying Synoptic time-series completeness for {len(new_syn_ids)} new candidates...")
+        print(f"Verifying Synoptic time-series completeness (>= {min_valid_days} days) for {len(new_syn_ids)} new candidates...")
         for i, sid in enumerate(new_syn_ids, 1):
             try:
                 tier = candidates[sid]["network"]
@@ -493,7 +506,8 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
                 if df is None:
                     df = fetch_synoptic_timeseries_daily(session, sid, tier, START_DATE, today_str, token)
                     save_cached_obs(sid, df)
-                if df is None or df.empty or len(df) < 500 or df.index.max() < recent_cutoff:
+                req_days = 200 if sid in PINNED_STATIONS else min_valid_days
+                if df is None or df.empty or len(df) < req_days or df.index.max() < recent_cutoff:
                     continue
                 verified[sid] = candidates[sid]
                 prefetched_obs[sid] = df
@@ -507,7 +521,8 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
             if df is None:
                 df = fetch_iem_coop_daily_obs(sid, candidates[sid], START_DATE, today_str)
                 save_cached_obs(sid, df)
-            if df is not None and not df.empty and len(df) >= 500 and df.index.max() >= recent_cutoff:
+            req_days = 200 if sid in PINNED_STATIONS else min_valid_days
+            if df is not None and not df.empty and len(df) >= req_days and df.index.max() >= recent_cutoff:
                 verified[sid] = candidates[sid]
                 prefetched_obs[sid] = df
                 print(f"  [+] Verified COOP: {sid} — {candidates[sid]['name']} ({len(df)} days)")
@@ -816,6 +831,9 @@ def main():
     parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations from scratch using cached or fresh observations.")
     parser.add_argument("--discover-networks", action="store_true", help="Discover all active public Northern AZ stations across Synoptic & IEM COOP.")
     parser.add_argument("--refresh-obs", action="store_true", help="Force re-download of historical daily observations instead of using obs_cache.")
+    parser.add_argument("--min-por-start", default=DEFAULT_MIN_POR_START, help="Earliest record start date cutoff (YYYY-MM-DD) for station discovery.")
+    parser.add_argument("--min-valid-days", type=int, default=DEFAULT_MIN_VALID_DAYS, help="Minimum valid daily observation records required.")
+    parser.add_argument("--prune-stations", action="store_true", help="Remove stations with fewer than --min-valid-days from stations.json and mos_equations.json.")
     args = parser.parse_args()
 
     token = get_synoptic_token()
@@ -833,7 +851,46 @@ def main():
 
     prefetched_obs = {}
     if args.discover_networks:
-        all_stations, prefetched_obs = discover_all_public_northern_az_stations(all_stations, token, refresh_obs=args.refresh_obs)
+        all_stations, prefetched_obs = discover_all_public_northern_az_stations(
+            all_stations,
+            token,
+            min_por_start=args.min_por_start,
+            min_valid_days=args.min_valid_days,
+            refresh_obs=args.refresh_obs,
+        )
+        with open(STATIONS_FILE, "w") as f:
+            json.dump(all_stations, f, indent=2)
+
+    session = create_sync_session()
+    if args.prune_stations:
+        kept_stations = {}
+        pruned_ids = []
+        for sid, meta in all_stations.items():
+            if sid in PINNED_STATIONS:
+                kept_stations[sid] = meta
+                continue
+            obs_df = prefetched_obs.get(sid) or load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+            if obs_df is None:
+                try:
+                    if meta.get("source") == "SYNOPTIC":
+                        obs_df = fetch_synoptic_timeseries_daily(session, sid, meta.get("network", ""), START_DATE, END_DATE, token)
+                    else:
+                        obs_df = fetch_iem_coop_daily_obs(sid, meta, START_DATE, END_DATE)
+                    save_cached_obs(sid, obs_df)
+                except Exception:
+                    obs_df = pd.DataFrame()
+            valid_days = 0 if (obs_df is None or obs_df.empty) else len(obs_df[obs_df.index <= pd.Timestamp(END_DATE)])
+            if valid_days >= args.min_valid_days:
+                kept_stations[sid] = meta
+                if obs_df is not None and not obs_df.empty:
+                    prefetched_obs[sid] = obs_df
+            else:
+                pruned_ids.append((sid, meta.get("name", sid), valid_days))
+        if pruned_ids:
+            print(f"Pruned {len(pruned_ids)} short-record station(s) (< {args.min_valid_days} valid days):")
+            for sid, name, cnt in pruned_ids:
+                print(f"  [-] Removed {sid} — {name} ({cnt} valid days)")
+        all_stations = kept_stations
         with open(STATIONS_FILE, "w") as f:
             json.dump(all_stations, f, indent=2)
 
@@ -856,7 +913,6 @@ def main():
         target_stations = all_stations
         print(f"Full training mode: training all {len(target_stations)} stations...")
 
-    session = create_sync_session()
     obs_by_stn = {}
     valid_targets = {}
     cached_hits = 0
@@ -868,7 +924,9 @@ def main():
     for idx, sid in enumerate(syn_targets, 1):
         meta = target_stations[sid]
         obs_df = prefetched_obs.get(sid)
-        if obs_df is None:
+        if obs_df is not None:
+            cached_hits += 1
+        else:
             obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
             if obs_df is not None:
                 cached_hits += 1
@@ -902,7 +960,9 @@ def main():
     for sid in coop_targets:
         meta = target_stations[sid]
         obs_df = prefetched_obs.get(sid)
-        if obs_df is None:
+        if obs_df is not None:
+            cached_hits += 1
+        else:
             obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
             if obs_df is not None:
                 cached_hits += 1
