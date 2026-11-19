@@ -185,8 +185,8 @@ def _extract_stat_val(item) -> float:
 def fetch_synoptic_statistics_batch(session: requests.Session, stids: list, start_date: str, end_date: str, token: str) -> dict:
     """Fetches daily local-time High/Low stats sequentially in batches of 30 stations (<2M station-hrs)."""
     obs_by_stn = {}
-    start_str = start_date.replace("-", "") + "0000"
-    end_str = end_date.replace("-", "") + "2359"
+    start_str = start_date.replace("-", "")
+    end_str = end_date.replace("-", "")
 
     batch_size = 30
     for idx in range(0, len(stids), batch_size):
@@ -221,13 +221,17 @@ def fetch_synoptic_statistics_batch(session: requests.Session, stids: list, star
                 continue
 
             t_block = stats[t_key]
-            dts = t_block.get("date_time", [])
             mins = t_block.get("minimum", [])
             maxs = t_block.get("maximum", [])
+            dts = t_block.get("date_time", [])
+            if not dts and mins and isinstance(mins[0], dict):
+                dts = [m.get("date_time") if isinstance(m, dict) else None for m in mins]
             cnts = t_block.get("count", [None] * len(dts))
 
             rows = []
             for dt_raw, mn_raw, mx_raw, cnt_raw in zip(dts, mins, maxs, cnts):
+                if not dt_raw:
+                    continue
                 if cnt_raw is not None and int(cnt_raw) < 8:
                     continue
                 mn = _extract_stat_val(mn_raw)
