@@ -1,13 +1,14 @@
 """
 update_forecast.py — Operational 6-Hourly HRRR MOS Runner (Synoptic Data API + IEM COOP)
 1. Fetches the latest complete 48-hr synoptic HRRR run (00Z, 06Z, 12Z, 18Z) from AWS S3.
-2. Computes MOS forecasts using pure HRRR predictors + seasonal harmonic climatology, and
-   enforces the holdout MAE guardrail: whenever holdout_mos_mae > holdout_raw_mae for a
+2. Computes MOS forecasts across every consecutive hourly HRRR timestep in each diurnal window,
+   enforcing the holdout MAE guardrail: whenever holdout_mos_mae > holdout_raw_mae for a
    given station/cycle/period, discards the MOS adjustment and uses raw HRRR directly.
-3. Fetches 7-day local-time daily High/Low verification observations via batched sequential
-   requests to Synoptic Data API (/v2/stations/timeseries over the past 10 days, staying well
-   under the 100,000 station-hour cap and using standard Weather API endpoints) for all public
-   Synoptic networks, and IEM Climodat for NWS COOP sites.
+3. Fetches 7-day verification observations via batched sequential requests to Synoptic Data API
+   (/v2/stations/timeseries in UTC) aligned to standardized NWS MOS diurnal windows:
+   * Morning Min (Date D): 00:00Z to 18:00Z on Date D (5:00 PM MST D-1 to 11:00 AM MST D).
+   * Afternoon Max (Date D): 12:00Z on Date D to 06:00Z on Date D+1 (5:00 AM MST D to 11:00 PM MST D).
+   Applies a 5-point centered median spike-rejection filter to CWOP stations before aggregation.
 4. Maintains docs/verification_history.json across all four synoptic cycles (00Z, 06Z, 12Z, 18Z).
 """
 import datetime
@@ -106,19 +107,30 @@ def eval_harmonic_norm(w: list, doy: int) -> float:
     return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
 
 
-def fetch_synoptic_recent_obs_batch(session: requests.Session, stids: list, start_dt: datetime.date, end_dt: datetime.date, token: str) -> dict:
+def despike_cwop_series(temps: pd.Series, threshold_f: float = 4.0) -> pd.Series:
+    """Rejects isolated single-packet telemetry spikes (> threshold_f from 5-pt median) while preserving real peaks/troughs."""
+    if len(temps) < 3:
+        return temps
+    med = temps.rolling(window=5, center=True, min_periods=3).median()
+    is_spike = (temps - med).abs() > threshold_f
+    return temps.where(~is_spike, med)
+
+
+def fetch_synoptic_recent_obs_batch(session: requests.Session, stations: dict, syn_ids: list, start_dt: datetime.date, end_dt: datetime.date, token: str) -> dict:
     """
-    Fetches local-time air_temp time-series across [start_dt, end_dt] in sequential batches
+    Fetches UTC air_temp time-series across [start_dt, end_dt + 1d 06Z] in sequential batches
     of 150 stations (~10 days * 24h * 150 = 36,000 station-hours, well under Synoptic's
-    100,000 station-hour cap) and aggregates daily local MST High/Low temperatures.
+    100,000 station-hour cap) and aggregates standardized NWS MOS diurnal windows:
+      - Morning Min (Date D): 00:00Z to 18:00Z on Date D
+      - Afternoon Max (Date D): 12:00Z on Date D to 06:00Z on Date D+1
     """
-    obs_maps = {sid: {} for sid in stids}
+    obs_maps = {sid: {} for sid in syn_ids}
     start_str = start_dt.strftime("%Y%m%d") + "0000"
-    end_str = end_dt.strftime("%Y%m%d") + "2359"
+    end_str = (end_dt + datetime.timedelta(days=1)).strftime("%Y%m%d") + "0600"
 
     batch_size = 150
-    for idx in range(0, len(stids), batch_size):
-        chunk = stids[idx:idx + batch_size]
+    for idx in range(0, len(syn_ids), batch_size):
+        chunk = syn_ids[idx:idx + batch_size]
         payload = synoptic_get_sequential(
             session,
             "stations/timeseries",
@@ -127,7 +139,7 @@ def fetch_synoptic_recent_obs_batch(session: requests.Session, stids: list, star
                 "vars": "air_temp",
                 "start": start_str,
                 "end": end_str,
-                "obtimezone": "local",
+                "obtimezone": "UTC",
                 "units": "english",
                 "hfmetars": "1",
                 "qc_checks": "synopticlabs,madis",
@@ -151,22 +163,40 @@ def fetch_synoptic_recent_obs_batch(session: requests.Session, stids: list, star
                 continue
 
             df = pd.DataFrame({
-                "date_str": [str(d)[:10] for d in dts],
+                "ts": pd.to_datetime(dts, utc=True, errors="coerce"),
                 "temp": pd.to_numeric(temps, errors="coerce"),
-            }).dropna(subset=["temp"])
-            df = df[(df["temp"] >= -55.0) & (df["temp"] <= 135.0)]
+            }).dropna(subset=["ts", "temp"])
+            df = df[(df["temp"] >= -55.0) & (df["temp"] <= 135.0)].sort_values("ts").reset_index(drop=True)
             if df.empty:
                 continue
 
-            agg = df.groupby("date_str")["temp"].agg(obs_min="min", obs_max="max", cnt="count")
+            net = stations.get(sid, {}).get("meta", {}).get("network", "")
+            if net == "CWOP" and len(df) >= 3:
+                df["temp"] = despike_cwop_series(df["temp"], threshold_f=4.0)
+
             s_map = obs_maps.setdefault(sid, {})
-            for d_iso, row in agg.iterrows():
-                if int(row["cnt"]) < 8:
-                    continue
-                mn_v = round(float(row["obs_min"]), 1)
-                mx_v = round(float(row["obs_max"]), 1)
-                if mx_v >= mn_v and (mx_v - mn_v) <= 75.0:
-                    s_map[d_iso] = {"min": mn_v, "max": mx_v}
+
+            # 1. Morning Min window: 00:00Z <= ts <= 18:00Z on Date D
+            in_min = (df["ts"].dt.hour < 18) | ((df["ts"].dt.hour == 18) & (df["ts"].dt.minute == 0))
+            min_sub = df[in_min].copy()
+            min_sub["d_iso"] = min_sub["ts"].dt.strftime("%Y-%m-%d")
+            for d_iso, grp in min_sub.groupby("d_iso"):
+                if len(grp) >= 6:
+                    s_map.setdefault(d_iso, {"min": None, "max": None})["min"] = round(float(grp["temp"].min()), 1)
+
+            # 2. Afternoon Max window: 12:00Z on Date D <= ts <= 06:00Z on Date D+1
+            ts_shift = df["ts"] - pd.Timedelta(hours=12)
+            in_max = (ts_shift.dt.hour < 18) | ((ts_shift.dt.hour == 18) & (ts_shift.dt.minute == 0))
+            max_sub = df[in_max].copy()
+            max_sub["d_iso"] = ts_shift[in_max].dt.strftime("%Y-%m-%d")
+            for d_iso, grp in max_sub.groupby("d_iso"):
+                if len(grp) >= 6:
+                    s_map.setdefault(d_iso, {"min": None, "max": None})["max"] = round(float(grp["temp"].max()), 1)
+
+            for d_iso, vals in s_map.items():
+                mn_v, mx_v = vals.get("min"), vals.get("max")
+                if mn_v is not None and mx_v is not None and (mx_v < mn_v or (mx_v - mn_v) > 75.0):
+                    vals["min"], vals["max"] = None, None
 
     return obs_maps
 
@@ -397,12 +427,12 @@ def eval_period_guidance(eq: dict, feats: dict) -> tuple:
 
 
 def format_fhr_window_desc(init_dt: datetime.datetime, fhrs: list, az_tz: zoneinfo.ZoneInfo) -> str:
-    parts = []
-    for fh in fhrs:
-        v_utc = (init_dt + datetime.timedelta(hours=fh)).replace(tzinfo=datetime.timezone.utc)
-        v_mst = v_utc.astimezone(az_tz)
-        parts.append(f"f{fh:02d} ({v_utc.strftime('%HZ')} / {v_mst.strftime('%I:%M %p').lstrip('0')} MST)")
-    return ", ".join(parts)
+    fh0, fh1 = fhrs[0], fhrs[-1]
+    v0_utc = (init_dt + datetime.timedelta(hours=fh0)).replace(tzinfo=datetime.timezone.utc)
+    v1_utc = (init_dt + datetime.timedelta(hours=fh1)).replace(tzinfo=datetime.timezone.utc)
+    v0_mst = v0_utc.astimezone(az_tz).strftime("%I:%M %p").lstrip("0")
+    v1_mst = v1_utc.astimezone(az_tz).strftime("%I:%M %p").lstrip("0")
+    return f"f{fh0:02d}–f{fh1:02d} ({v0_utc.strftime('%HZ')}–{v1_utc.strftime('%HZ')} / {v0_mst}–{v1_mst} MST, {len(fhrs)} hourly steps)"
 
 
 def find_init_for_verify_date(target_v_date: datetime.date, cyc: str, fhrs: list) -> datetime.datetime:
@@ -563,8 +593,8 @@ def main():
     obs_start = today_mst - datetime.timedelta(days=10)
     obs_maps = {}
     if syn_ids:
-        print(f"Fetching 10-day local High/Low verification from Synoptic time-series for {len(syn_ids)} stations...")
-        obs_maps.update(fetch_synoptic_recent_obs_batch(session, syn_ids, obs_start, today_mst, token))
+        print(f"Fetching 10-day UTC diurnal High/Low verification from Synoptic for {len(syn_ids)} stations...")
+        obs_maps.update(fetch_synoptic_recent_obs_batch(session, stations, syn_ids, obs_start, today_mst, token))
 
     if coop_ids:
         coop_start = today_mst - datetime.timedelta(days=14)
