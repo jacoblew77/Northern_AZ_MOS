@@ -4,14 +4,29 @@ on:
   workflow_dispatch:
     inputs:
       discover_networks:
-        description: 'Auto-discover all active public Northern AZ stations (Synoptic + IEM COOP)'
+        description: 'Auto-discover active public Northern AZ stations (Synoptic + IEM COOP)'
         required: true
         default: false
         type: boolean
+      prune_stations:
+        description: 'Remove stations with fewer than min_valid_days from stations.json & mos_equations.json'
+        required: true
+        default: false
+        type: boolean
+      min_por_start:
+        description: 'Earliest record start date cutoff (YYYY-MM-DD; 2021-03-01 = long-record, 2024-06-01 = include newer)'
+        required: true
+        default: '2021-03-01'
+        type: string
+      min_valid_days:
+        description: 'Minimum valid observation days required (1400 = long-record, 500 = include newer)'
+        required: true
+        default: '1400'
+        type: string
       retrain_all:
         description: 'Retrain ALL stations from scratch (uses cached HRRR & obs when available)'
         required: true
-        default: true
+        default: false
         type: boolean
       refresh_obs:
         description: 'Force fresh Synoptic/IEM observation download (bypass obs_cache)'
@@ -57,9 +72,12 @@ jobs:
         env:
           SYNOPTIC_TOKEN: ${{ secrets.SYNOPTIC_TOKEN }}
         run: |
-          ARGS=""
+          ARGS="--min-por-start ${{ github.event.inputs.min_por_start }} --min-valid-days ${{ github.event.inputs.min_valid_days }}"
           if [ "${{ github.event.inputs.discover_networks }}" = "true" ]; then
             ARGS="$ARGS --discover-networks"
+          fi
+          if [ "${{ github.event.inputs.prune_stations }}" = "true" ]; then
+            ARGS="$ARGS --prune-stations"
           fi
           if [ "${{ github.event.inputs.retrain_all }}" = "true" ]; then
             ARGS="$ARGS --retrain-all"
@@ -74,5 +92,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stations.json mos_equations.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Train public Northern AZ stations with obs_cache [skip ci]"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update Northern AZ MOS stations and equations"
           git push
