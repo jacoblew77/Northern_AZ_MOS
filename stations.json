@@ -18,6 +18,13 @@
     "source": "SYNOPTIC",
     "synoptic_id": "KCMR"
   },
+  "CW4534": {
+    "name": "Camp Verde CWOP",
+    "network": "CWOP",
+    "lat": 34.557,
+    "lon": -111.8712,
+    "elev_ft": 3246
+  },
   "KFLG": {
     "name": "Flagstaff Pulliam Airport",
     "network": "AZ_ASOS",
