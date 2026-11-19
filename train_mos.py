@@ -3,6 +3,8 @@ train_mos.py — Multi-Station HRRRv4 MOS Trainer (Synoptic Data Time-Series API
 - Queries Synoptic Data API (/v2/networks, /v2/stations/metadata, /v2/stations/timeseries)
   for all public non-COOP networks (Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP)
   and IEM Climodat (AZCLIMATE) for manual NWS COOP sites.
+- Discovers all active public stations in WFO Flagstaff's CWA with records starting on or
+  before 2024-06-01 and >= 500 valid days (including Camp Verde CW4534 and newer Mesonet sites).
 - Caches parsed daily High/Low observation series in obs_cache/ alongside zarr_pixel_cache/
   so subsequent retraining runs and feature branches reuse cached observations with zero API calls.
 - Aligns all Synoptic observations to standardized NWS MOS diurnal windows in UTC:
@@ -150,7 +152,7 @@ def load_cached_obs(sid: str, target_end_date: str, refresh: bool = False):
     try:
         with open(path, "rb") as f:
             df = pickle.load(f)
-        if isinstance(df, pd.DataFrame) and not df.empty and isinstance(df.index, pd.DatetimeIndex):
+        if isinstance(df, pd.DataFrame) and len(df) >= 200 and isinstance(df.index, pd.DatetimeIndex):
             if df.index.max() >= (pd.Timestamp(target_end_date) - pd.Timedelta(days=7)):
                 return df
     except Exception:
@@ -159,7 +161,7 @@ def load_cached_obs(sid: str, target_end_date: str, refresh: bool = False):
 
 
 def save_cached_obs(sid: str, df: pd.DataFrame):
-    if df is None or df.empty or not isinstance(df.index, pd.DatetimeIndex):
+    if df is None or len(df) < 200 or not isinstance(df.index, pd.DatetimeIndex):
         return
     os.makedirs(OBS_CACHE_DIR, exist_ok=True)
     with open(get_obs_cache_path(sid), "wb") as f:
@@ -291,8 +293,7 @@ def fetch_synoptic_timeseries_daily(session: requests.Session, stid: str, networ
             "obtimezone": "UTC",
             "units": "english",
             "hfmetars": "1",
-            "qc_checks": "synopticlabs,madis",
-            "qc_remove_data": "on",
+            "qc_checks": "synopticlabs",
             "restricted": "false",
         },
         token=token,
@@ -345,7 +346,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     Discovers all active public stations across WFO Flagstaff CWA without spatial removal:
       1. Synoptic public networks (restricted=false): Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP.
       2. IEM Climodat NWS COOP (AZCLIMATE, 4-digit physical stations AZ#### only).
-    Saves newly fetched daily observation DataFrames into obs_cache/ so future runs reuse them.
+    Includes stations starting on or before 2024-06-01 with >= 500 valid days and recent reports.
     """
     session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
@@ -426,7 +427,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
         period = stn.get("PERIOD_OF_RECORD", {})
         por_start = str(period.get("start", ""))
         por_end = str(period.get("end", ""))
-        if not por_start or por_start[:10] > "2021-03-01":
+        if not por_start or por_start[:10] > "2024-06-01":
             continue
         if not por_end or por_end[:10] < (datetime.date.today() - datetime.timedelta(days=21)).isoformat():
             continue
@@ -484,7 +485,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     prefetched_obs = {}
 
     if new_syn_ids:
-        print(f"Verifying 2020-2026 Synoptic time-series completeness for {len(new_syn_ids)} new candidates...")
+        print(f"Verifying Synoptic time-series completeness for {len(new_syn_ids)} new candidates...")
         for i, sid in enumerate(new_syn_ids, 1):
             try:
                 tier = candidates[sid]["network"]
@@ -492,7 +493,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
                 if df is None:
                     df = fetch_synoptic_timeseries_daily(session, sid, tier, START_DATE, today_str, token)
                     save_cached_obs(sid, df)
-                if df is None or df.empty or len(df) < 1400 or df.index.max() < recent_cutoff:
+                if df is None or df.empty or len(df) < 500 or df.index.max() < recent_cutoff:
                     continue
                 verified[sid] = candidates[sid]
                 prefetched_obs[sid] = df
@@ -506,7 +507,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
             if df is None:
                 df = fetch_iem_coop_daily_obs(sid, candidates[sid], START_DATE, today_str)
                 save_cached_obs(sid, df)
-            if df is not None and not df.empty and len(df) >= 1400 and df.index.max() >= recent_cutoff:
+            if df is not None and not df.empty and len(df) >= 500 and df.index.max() >= recent_cutoff:
                 verified[sid] = candidates[sid]
                 prefetched_obs[sid] = df
                 print(f"  [+] Verified COOP: {sid} — {candidates[sid]['name']} ({len(df)} days)")
