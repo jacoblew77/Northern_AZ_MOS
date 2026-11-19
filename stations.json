@@ -559,42 +559,6 @@
     "elev_ft": 5097,
     "source": "IEM_COOP"
   },
-  "AZC003": {
-    "name": "Arizona - North Central Climate Division COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZC003",
-    "lat": 34.5994,
-    "lon": -112.5533,
-    "elev_ft": 5946,
-    "source": "IEM_COOP"
-  },
-  "AZC004": {
-    "name": "Arizona - East Central Climate Division COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZC004",
-    "lat": 33.8001,
-    "lon": -110.8121,
-    "elev_ft": 3247,
-    "source": "IEM_COOP"
-  },
-  "AZTFLG": {
-    "name": "Flagstaff Area COOP",
-    "network": "AZCLIMATE",
-    "source": "IEM_COOP",
-    "iem_id": "AZTFLG",
-    "lat": 35.1403,
-    "lon": -111.6722,
-    "elev_ft": 7014
-  },
-  "AZTINW": {
-    "name": "Winslow Area COOP",
-    "network": "AZCLIMATE",
-    "source": "IEM_COOP",
-    "iem_id": "AZTINW",
-    "lat": 35.0219,
-    "lon": -110.7225,
-    "elev_ft": 4896
-  },
   "AZPA3": {
     "name": "Aztca_Port1 RAWS",
     "network": "RAWS",
