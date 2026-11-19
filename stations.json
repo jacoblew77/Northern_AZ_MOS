@@ -1,4 +1,13 @@
 {
+  "AZ82": {
+    "name": "Mogollon",
+    "network": "AZ_ASOS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZ82",
+    "lat": 34.3973,
+    "lon": -110.5298,
+    "elev_ft": 6657
+  },
   "KCMR": {
     "name": "Williams / Clark Field",
     "network": "AZ_ASOS",
@@ -38,6 +47,24 @@
     "elev_ft": 4941,
     "source": "SYNOPTIC",
     "synoptic_id": "KINW"
+  },
+  "KJTC": {
+    "name": "Springerville Municipal Airport",
+    "network": "AZ_ASOS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "KJTC",
+    "lat": 34.1294,
+    "lon": -109.3109,
+    "elev_ft": 7054
+  },
+  "KP52": {
+    "name": "Cottonwood Airport",
+    "network": "AZ_ASOS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "KP52",
+    "lat": 34.7301,
+    "lon": -112.0351,
+    "elev_ft": 3560
   },
   "KPAN": {
     "name": "Payson Airport",
@@ -108,6 +135,15 @@
     "elev_ft": 6415,
     "source": "SYNOPTIC",
     "synoptic_id": "KSOW"
+  },
+  "KTYL": {
+    "name": "Taylor Airport",
+    "network": "AZ_ASOS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "KTYL",
+    "lat": 34.4527,
+    "lon": -110.115,
+    "elev_ft": 5823
   },
   "AZ0000": {
     "name": "Arizona Average COOP",
@@ -558,6 +594,708 @@
     "lat": 35.0219,
     "lon": -110.7225,
     "elev_ft": 4896
+  },
+  "AZPA3": {
+    "name": "Aztca_Port1 RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZPA3",
+    "lat": 35.6717,
+    "lon": -113.1217,
+    "elev_ft": 6480
+  },
+  "QFLA3": {
+    "name": "Flagstaff RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QFLA3",
+    "lat": 35.1411,
+    "lon": -111.6725,
+    "elev_ft": 6903
+  },
+  "QHBA3": {
+    "name": "Humbug Creek RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QHBA3",
+    "lat": 34.11,
+    "lon": -112.3,
+    "elev_ft": 5250
+  },
+  "QHEA3": {
+    "name": "Heber RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QHEA3",
+    "lat": 34.3978,
+    "lon": -110.5644,
+    "elev_ft": 6635
+  },
+  "QLMA3": {
+    "name": "Mountain Lion RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QLMA3",
+    "lat": 33.6951,
+    "lon": -109.7108,
+    "elev_ft": 7269
+  },
+  "QNMA3": {
+    "name": "Navajo Monument RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QNMA3",
+    "lat": 36.6767,
+    "lon": -110.5439,
+    "elev_ft": 7204
+  },
+  "QOCA3": {
+    "name": "Oak Creek RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QOCA3",
+    "lat": 34.9469,
+    "lon": -111.7544,
+    "elev_ft": 4804
+  },
+  "QPVA3": {
+    "name": "Pleasant Valley RAWS",
+    "network": "RAWS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "QPVA3",
+    "lat": 34.0886,
+    "lon": -110.9423,
+    "elev_ft": 5232
+  },
+  "BBSA3": {
+    "name": "Baker Butte Smt SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "BBSA3",
+    "lat": 34.4566,
+    "lon": -111.4064,
+    "elev_ft": 7700
+  },
+  "BKBA3": {
+    "name": "Baker Butte SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "BKBA3",
+    "lat": 34.4555,
+    "lon": -111.4064,
+    "elev_ft": 7300
+  },
+  "BLDA3": {
+    "name": "Baldy SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "BLDA3",
+    "lat": 33.9788,
+    "lon": -109.5034,
+    "elev_ft": 9125
+  },
+  "BVRA3": {
+    "name": "Beaver Spring SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "BVRA3",
+    "lat": 36.3268,
+    "lon": -109.0571,
+    "elev_ft": 9200
+  },
+  "CDRA3": {
+    "name": "Chalender SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "CDRA3",
+    "lat": 35.2625,
+    "lon": -112.0623,
+    "elev_ft": 7100
+  },
+  "CNDA3": {
+    "name": "Coronado Trail SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "CNDA3",
+    "lat": 33.8039,
+    "lon": -109.1528,
+    "elev_ft": 8400
+  },
+  "FRVA3": {
+    "name": "Fort Valley SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "FRVA3",
+    "lat": 35.2681,
+    "lon": -111.7449,
+    "elev_ft": 7350
+  },
+  "FRYA3": {
+    "name": "Fry SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "FRYA3",
+    "lat": 35.073,
+    "lon": -111.8437,
+    "elev_ft": 7200
+  },
+  "HAWA3": {
+    "name": "Hawley Lake SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "HAWA3",
+    "lat": 33.9714,
+    "lon": -109.7653,
+    "elev_ft": 8300
+  },
+  "HBEA3": {
+    "name": "Heber SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "HBEA3",
+    "lat": 34.312,
+    "lon": -110.7543,
+    "elev_ft": 7640
+  },
+  "MMNA3": {
+    "name": "Mormon Mtn Summit SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "MMNA3",
+    "lat": 34.9696,
+    "lon": -111.5092,
+    "elev_ft": 8500
+  },
+  "MRMA3": {
+    "name": "Mormon Mountain SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "MRMA3",
+    "lat": 34.9411,
+    "lon": -111.5185,
+    "elev_ft": 7500
+  },
+  "MVFA3": {
+    "name": "Maverick Fork SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "MVFA3",
+    "lat": 33.9212,
+    "lon": -109.4588,
+    "elev_ft": 9200
+  },
+  "NUTA3": {
+    "name": "Nutrioso SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "NUTA3",
+    "lat": 33.8975,
+    "lon": -109.1552,
+    "elev_ft": 8500
+  },
+  "PROA3": {
+    "name": "Promontory SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "PROA3",
+    "lat": 34.3682,
+    "lon": -111.0108,
+    "elev_ft": 7930
+  },
+  "WCTA3": {
+    "name": "Wildcat SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "WCTA3",
+    "lat": 33.7584,
+    "lon": -109.4797,
+    "elev_ft": 7850
+  },
+  "WHLA3": {
+    "name": "White Horse Lake SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "WHLA3",
+    "lat": 35.142,
+    "lon": -112.1492,
+    "elev_ft": 7180
+  },
+  "WKMA3": {
+    "name": "Workman Creek SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "WKMA3",
+    "lat": 33.8124,
+    "lon": -110.9177,
+    "elev_ft": 6900
+  },
+  "XHJA3": {
+    "name": "Happy Jack SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "XHJA3",
+    "lat": 34.746,
+    "lon": -111.4121,
+    "elev_ft": 7630
+  },
+  "XSCA3": {
+    "name": "Snowslide Canyon SNOTEL",
+    "network": "SNOTEL",
+    "source": "SYNOPTIC",
+    "synoptic_id": "XSCA3",
+    "lat": 35.3416,
+    "lon": -111.6506,
+    "elev_ft": 9730
+  },
+  "AZT02": {
+    "name": "I-40 @ Crookton RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT02",
+    "lat": 35.2586,
+    "lon": -112.7138,
+    "elev_ft": 5780
+  },
+  "AZT03": {
+    "name": "I-40 @ Ash Fork Hill RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT03",
+    "lat": 35.2199,
+    "lon": -112.3379,
+    "elev_ft": 6230
+  },
+  "AZT04": {
+    "name": "I-40 @ Pine Springs RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT04",
+    "lat": 35.2229,
+    "lon": -112.2542,
+    "elev_ft": 6850
+  },
+  "AZT05": {
+    "name": "I-40 @ Roirdan Overpass RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT05",
+    "lat": 35.1953,
+    "lon": -111.739,
+    "elev_ft": 7290
+  },
+  "AZT06": {
+    "name": "I-40 @ Little Colorado RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT06",
+    "lat": 35.0123,
+    "lon": -110.6555,
+    "elev_ft": 4855
+  },
+  "AZT07": {
+    "name": "I-40 @ Lupton RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT07",
+    "lat": 35.3541,
+    "lon": -109.0553,
+    "elev_ft": 6190
+  },
+  "AZT09": {
+    "name": "I-40 @ Two Guns RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT09",
+    "lat": 35.1177,
+    "lon": -111.0991,
+    "elev_ft": 5450
+  },
+  "AZT10": {
+    "name": "Sr-277 @ Sr-377 RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT10",
+    "lat": 34.4649,
+    "lon": -110.4762,
+    "elev_ft": 6360
+  },
+  "AZT11": {
+    "name": "I-40 @ Jackrabbit RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT11",
+    "lat": 34.9686,
+    "lon": -110.4337,
+    "elev_ft": 4940
+  },
+  "AZT12": {
+    "name": "Sr-77 - 14 Mile Hill RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT12",
+    "lat": 34.7191,
+    "lon": -110.1138,
+    "elev_ft": 5440
+  },
+  "AZT13": {
+    "name": "I-40 @ Painted Desert NP Hq RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT13",
+    "lat": 35.0637,
+    "lon": -109.7756,
+    "elev_ft": 5745
+  },
+  "AZT14": {
+    "name": "Sr-264 @ Summit Campground RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT14",
+    "lat": 35.6792,
+    "lon": -109.2056,
+    "elev_ft": 7720
+  },
+  "AZT17": {
+    "name": "Sr-87 @ Clints Well RWIS",
+    "network": "RWIS",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AZT17",
+    "lat": 34.5542,
+    "lon": -111.3098,
+    "elev_ft": 6860
+  },
+  "JE045": {
+    "name": "Black Canyon Lake ALERT",
+    "network": "ALERT",
+    "source": "SYNOPTIC",
+    "synoptic_id": "JE045",
+    "lat": 34.3311,
+    "lon": -110.6981,
+    "elev_ft": 7077
+  },
+  "JE128": {
+    "name": "Flagstaff Landfill ALERT",
+    "network": "ALERT",
+    "source": "SYNOPTIC",
+    "synoptic_id": "JE128",
+    "lat": 35.3072,
+    "lon": -111.52,
+    "elev_ft": 6635
+  },
+  "MALP": {
+    "name": "Lake Pleasant North ALERT",
+    "network": "ALERT",
+    "source": "SYNOPTIC",
+    "synoptic_id": "MALP",
+    "lat": 33.9046,
+    "lon": -112.2708,
+    "elev_ft": 1750
+  },
+  "MAMU": {
+    "name": "Mt. Union ALERT",
+    "network": "ALERT",
+    "source": "SYNOPTIC",
+    "synoptic_id": "MAMU",
+    "lat": 34.4151,
+    "lon": -112.4047,
+    "elev_ft": 7980
+  },
+  "AR412": {
+    "name": "Kl1Sf-7 Grand Canyon CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AR412",
+    "lat": 36.048,
+    "lon": -112.1245,
+    "elev_ft": 6977
+  },
+  "AS035": {
+    "name": "Ai7R Payson CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AS035",
+    "lat": 34.378,
+    "lon": -111.2237,
+    "elev_ft": 5960
+  },
+  "AS520": {
+    "name": "N7Cw Prescott CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AS520",
+    "lat": 34.5712,
+    "lon": -112.5147,
+    "elev_ft": 5552
+  },
+  "AS699": {
+    "name": "Kc7Kgf Young CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AS699",
+    "lat": 34.103,
+    "lon": -110.993,
+    "elev_ft": 5231
+  },
+  "AT907": {
+    "name": "Wx7Fgz-3 Tsaile CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AT907",
+    "lat": 36.2953,
+    "lon": -109.2227,
+    "elev_ft": 7044
+  },
+  "AU373": {
+    "name": "Wx7Fgz-6 Snowbowl CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AU373",
+    "lat": 35.3267,
+    "lon": -111.6917,
+    "elev_ft": 10856
+  },
+  "AU480": {
+    "name": "Kc6Utr Sedona CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AU480",
+    "lat": 34.8571,
+    "lon": -111.8163,
+    "elev_ft": 4436
+  },
+  "AU751": {
+    "name": "W7Bnw Paulden CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AU751",
+    "lat": 34.856,
+    "lon": -112.4517,
+    "elev_ft": 4423
+  },
+  "AV444": {
+    "name": "N6Tka2 Williams CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AV444",
+    "lat": 35.5253,
+    "lon": -112.1888,
+    "elev_ft": 6082
+  },
+  "AV459": {
+    "name": "Wx7Fgz-7 Tuba City CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AV459",
+    "lat": 36.1362,
+    "lon": -111.242,
+    "elev_ft": 4980
+  },
+  "AV601": {
+    "name": "Wx7Fgz-5 Bellemont CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AV601",
+    "lat": 35.2303,
+    "lon": -111.8222,
+    "elev_ft": 7054
+  },
+  "AV622": {
+    "name": "N7Cee Flagstaff CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "AV622",
+    "lat": 35.2165,
+    "lon": -111.645,
+    "elev_ft": 7054
+  },
+  "D3979": {
+    "name": "Dw3979 Cottonwood CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "D3979",
+    "lat": 34.6862,
+    "lon": -112.0583,
+    "elev_ft": 4252
+  },
+  "D4348": {
+    "name": "Dw4348 Clarkdale CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "D4348",
+    "lat": 34.7378,
+    "lon": -112.0582,
+    "elev_ft": 3731
+  },
+  "D5827": {
+    "name": "Dw5827 Munds Park CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "D5827",
+    "lat": 34.945,
+    "lon": -111.633,
+    "elev_ft": 6643
+  },
+  "D6970": {
+    "name": "Dw6970 Payson CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "D6970",
+    "lat": 34.2337,
+    "lon": -111.3043,
+    "elev_ft": 4999
+  },
+  "D7267": {
+    "name": "Dw7267 Strawberry CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "D7267",
+    "lat": 34.401,
+    "lon": -111.5402,
+    "elev_ft": 5709
+  },
+  "D9216": {
+    "name": "Dw9216 Cleator CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "D9216",
+    "lat": 34.2825,
+    "lon": -112.1988,
+    "elev_ft": 3229
+  },
+  "E1448": {
+    "name": "Ew1448 Cottonwood CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "E1448",
+    "lat": 34.6867,
+    "lon": -112.0313,
+    "elev_ft": 3786
+  },
+  "E2593": {
+    "name": "Ew2593 Prescott CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "E2593",
+    "lat": 34.5765,
+    "lon": -112.5128,
+    "elev_ft": 5633
+  },
+  "E3049": {
+    "name": "Ew3049 Overgaard CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "E3049",
+    "lat": 34.4058,
+    "lon": -110.5672,
+    "elev_ft": 6562
+  },
+  "E4246": {
+    "name": "Ew4246 Prescott Valley CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "E4246",
+    "lat": 34.609,
+    "lon": -112.3652,
+    "elev_ft": 81
+  },
+  "E7398": {
+    "name": "Ew7398 Prescott Valley CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "E7398",
+    "lat": 34.6648,
+    "lon": -112.3308,
+    "elev_ft": 4892
+  },
+  "E9903": {
+    "name": "Ew9903 Sedona CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "E9903",
+    "lat": 34.8765,
+    "lon": -111.7625,
+    "elev_ft": 4392
+  },
+  "F0633": {
+    "name": "Fw0633 Prescott CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F0633",
+    "lat": 34.6,
+    "lon": -112.4622,
+    "elev_ft": 5188
+  },
+  "F1196": {
+    "name": "Fw1196 Payson CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F1196",
+    "lat": 34.263,
+    "lon": -111.3082,
+    "elev_ft": 5117
+  },
+  "F1362": {
+    "name": "Al3A Flagstaff CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F1362",
+    "lat": 35.2558,
+    "lon": -111.7287,
+    "elev_ft": 7333
+  },
+  "F3074": {
+    "name": "Fw3074 Cordes Lakes CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F3074",
+    "lat": 34.2992,
+    "lon": -112.1042,
+    "elev_ft": 3673
+  },
+  "F4060": {
+    "name": "Fw4060 Lakeside CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F4060",
+    "lat": 34.1897,
+    "lon": -110.0132,
+    "elev_ft": 6598
+  },
+  "F4370": {
+    "name": "Fw4370 Prescott CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F4370",
+    "lat": 34.724,
+    "lon": -112.5527,
+    "elev_ft": 5188
+  },
+  "F5186": {
+    "name": "Fw5186 Nutrioso CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F5186",
+    "lat": 33.9472,
+    "lon": -109.2448,
+    "elev_ft": 7885
+  },
+  "F5355": {
+    "name": "Fw5355 Prescott CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F5355",
+    "lat": 34.6565,
+    "lon": -112.503,
+    "elev_ft": 5215
+  },
+  "F7304": {
+    "name": "Fw7304 Prescott CWOP",
+    "network": "CWOP",
+    "source": "SYNOPTIC",
+    "synoptic_id": "F7304",
+    "lat": 34.665,
+    "lon": -112.5338,
+    "elev_ft": 5085
   },
   "ALRA3": {
     "name": "Alpine RAWS",
