@@ -8,55 +8,65 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; --coop: #a78bfa; --uscrn: #34d399; --raws: #fbbf24; }
+    :root {
+      --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8;
+      --accent: #38bdf8; --coop: #a78bfa; --uscrn: #34d399; --raws: #fbbf24;
+      --snotel: #60a5fa; --rwis: #f472b6; --alert: #fb7185; --cwop: #94a3b8;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
-    header { padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    header h1 { font-size: 1.1rem; font-weight: 700; }
-    .controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .filter-btn, .vtoggle-btn, .vcyc-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; cursor: pointer; font-size: 0.76rem; font-weight: 600; }
+    header { padding: 10px 18px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    header h1 { font-size: 1.05rem; font-weight: 700; }
+    .controls { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+    .filter-btn, .vtoggle-btn, .vcyc-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.74rem; font-weight: 600; }
     .filter-btn.active, .vtoggle-btn.active, .vcyc-btn.active { color: var(--text); border-color: var(--accent); background: #1e293b; }
-    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; max-width: 280px; }
-    .meta-badge { font-size: 0.78rem; color: var(--muted); background: #0f172a; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .layout { display: grid; grid-template-columns: 1.15fr 1fr; height: calc(100vh - 56px); }
+    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; font-size: 0.8rem; max-width: 265px; }
+    .meta-badge { font-size: 0.76rem; color: var(--muted); background: #0f172a; padding: 4px 9px; border-radius: 6px; border: 1px solid var(--border); }
+    .layout { display: grid; grid-template-columns: 1.15fr 1fr; height: calc(100vh - 54px); }
     @media (max-width: 960px) { .layout { grid-template-columns: 1fr; height: auto; } #map { height: 420px; } }
     #map { width: 100%; height: 100%; z-index: 1; background: #0f172a; }
     .dark-tiles { filter: invert(100%) hue-rotate(180deg) brightness(94%) contrast(90%); }
-    .panel { padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-    .stn-header h2 { font-size: 1.25rem; }
-    .stn-header p { color: var(--muted); font-size: 0.86rem; margin-top: 3px; }
+    .panel { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 13px; }
+    .stn-header h2 { font-size: 1.2rem; }
+    .stn-header p { color: var(--muted); font-size: 0.84rem; margin-top: 3px; }
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; cursor: pointer; transition: border-color 0.15s; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 11px; cursor: pointer; transition: border-color 0.15s; }
     .card.active, .card:hover { border-color: var(--accent); }
-    .card .lbl { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .card .dt { font-size: 0.84rem; color: var(--text); margin: 2px 0 6px; }
-    .card .temp { font-size: 1.85rem; font-weight: 800; }
+    .card .lbl { font-size: 0.73rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; gap: 4px; }
+    .fb-pill { font-size: 0.65rem; background: rgba(244, 63, 94, 0.16); color: #fda4af; border: 1px solid #f43f5e; padding: 1px 5px; border-radius: 4px; font-weight: 700; }
+    .card .dt { font-size: 0.82rem; color: var(--text); margin: 2px 0 5px; }
+    .card .temp { font-size: 1.8rem; font-weight: 800; }
     .card.min .temp { color: #38bdf8; }
     .card.max .temp { color: #fb923c; }
-    .card .sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
-    .box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
-    .box-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-    .box h3 { font-size: 0.88rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .window-sub { font-size: 0.78rem; color: var(--muted); margin: -6px 0 10px; }
-    .mae-pill { font-size: 0.78rem; color: #38bdf8; background: #0f172a; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; }
+    .card .sub { font-size: 0.76rem; color: var(--muted); margin-top: 3px; }
+    .box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 13px; }
+    .box-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; flex-wrap: wrap; gap: 8px; }
+    .box h3 { font-size: 0.86rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .window-sub { font-size: 0.76rem; color: var(--muted); margin: -5px 0 9px; }
+    .mae-pill { font-size: 0.76rem; color: #38bdf8; background: #0f172a; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; }
     .btn-group { display: flex; align-items: center; gap: 4px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     th { color: var(--muted); font-weight: 600; }
     .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .pred-row { cursor: pointer; transition: background 0.12s; }
     .pred-row:hover { background: rgba(56, 189, 248, 0.06); }
-    .pred-cell { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .pred-cell { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .pred-title { font-weight: 600; color: var(--text); }
-    .pred-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.72rem; color: var(--muted); background: #0f172a; border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; }
-    .info-btn { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--accent); background: rgba(56, 189, 248, 0.12); color: var(--accent); font-size: 11px; font-weight: 800; font-style: italic; font-family: Georgia, serif; cursor: pointer; flex-shrink: 0; line-height: 1; }
+    .pred-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.7rem; color: var(--muted); background: #0f172a; border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; }
+    .info-btn { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; border: 1px solid var(--accent); background: rgba(56, 189, 248, 0.12); color: var(--accent); font-size: 11px; font-weight: 800; font-style: italic; font-family: Georgia, serif; cursor: pointer; flex-shrink: 0; line-height: 1; }
     .info-btn:hover, .info-btn.open { background: var(--accent); color: #0f172a; }
-    .info-drawer td { background: #0f172a; padding: 9px 12px; border-bottom: 1px solid var(--border); color: #cbd5e1; font-size: 0.8rem; line-height: 1.45; }
-    .info-meta { margin-top: 5px; color: #38bdf8; font-size: 0.76rem; font-weight: 600; }
+    .info-drawer td { background: #0f172a; padding: 8px 11px; border-bottom: 1px solid var(--border); color: #cbd5e1; font-size: 0.79rem; line-height: 1.45; }
+    .info-meta { margin-top: 4px; color: #38bdf8; font-size: 0.75rem; font-weight: 600; }
     .pin-label { display: inline-block; transform: translate(-50%, -50%); background: #1e293b; color: #f8fafc; border: 1.5px solid var(--accent); border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.55); }
     .pin-label.coop { border-color: var(--coop); }
     .pin-label.uscrn { border-color: var(--uscrn); }
     .pin-label.raws { border-color: var(--raws); }
+    .pin-label.snotel { border-color: var(--snotel); }
+    .pin-label.rwis { border-color: var(--rwis); }
+    .pin-label.alert { border-color: var(--alert); }
+    .pin-label.cwop { border-color: var(--cwop); }
+    .attribution-note { font-size: 0.72rem; color: var(--muted); text-align: center; padding: 4px 6px 10px; line-height: 1.4; }
   </style>
 </head>
 <body>
@@ -67,7 +77,11 @@
       <button class="filter-btn" data-net="AZ_ASOS" style="border-bottom:2px solid #38bdf8;">Airports</button>
       <button class="filter-btn" data-net="AZCLIMATE" style="border-bottom:2px solid #a78bfa;">COOP</button>
       <button class="filter-btn" data-net="USCRN" style="border-bottom:2px solid #34d399;">USCRN</button>
-      <button class="filter-btn" data-net="AZ_DCP" style="border-bottom:2px solid #fbbf24;">RAWS</button>
+      <button class="filter-btn" data-net="RAWS" style="border-bottom:2px solid #fbbf24;">RAWS</button>
+      <button class="filter-btn" data-net="SNOTEL" style="border-bottom:2px solid #60a5fa;">SNOTEL</button>
+      <button class="filter-btn" data-net="RWIS" style="border-bottom:2px solid #f472b6;">RWIS</button>
+      <button class="filter-btn" data-net="ALERT" style="border-bottom:2px solid #fb7185;">ALERT</button>
+      <button class="filter-btn" data-net="CWOP" style="border-bottom:2px solid #94a3b8;">CWOP</button>
       <select id="stn-select"></select>
       <div class="meta-badge" id="run-meta">Loading HRRR run...</div>
     </div>
@@ -78,7 +92,7 @@
     <div class="panel">
       <div class="stn-header">
         <h2 id="stn-title">Select a Station</h2>
-        <p id="stn-sub">Click any Airport (cyan), COOP (violet), USCRN (green), or RAWS (amber) pin</p>
+        <p id="stn-sub">Zoom in to reveal denser local stations; highest-priority networks display first when zoomed out</p>
       </div>
 
       <div class="cards" id="period-cards"></div>
@@ -87,7 +101,7 @@
         <div class="box-head">
           <h3>36-Hour Raw HRRR Hourly Trajectory</h3>
         </div>
-        <canvas id="trajChart" height="110"></canvas>
+        <canvas id="trajChart" height="108"></canvas>
       </div>
 
       <div class="box">
@@ -107,7 +121,7 @@
             </div>
           </div>
         </div>
-        <canvas id="verifChart" height="125"></canvas>
+        <canvas id="verifChart" height="122"></canvas>
       </div>
 
       <div class="box">
@@ -121,6 +135,11 @@
           </thead>
           <tbody id="breakdown-body"></tbody>
         </table>
+      </div>
+
+      <div class="attribution-note">
+        Model guidance derived from NOAA HRRRv4 (AWS Open Data). Surface observations &amp; 7-day verification provided via
+        <strong>Synoptic Data</strong> (public mesonet feeds), <strong>Iowa Environmental Mesonet (IEM)</strong>, and <strong>NOAA/NWS</strong>.
       </div>
     </div>
   </div>
@@ -137,11 +156,26 @@
     let chartInstance = null;
     let verifChartInstance = null;
 
+    const NETWORK_PRIORITY = {
+      AZ_ASOS: 1,
+      AZCLIMATE: 2,
+      USCRN: 3,
+      RAWS: 4,
+      SNOTEL: 5,
+      RWIS: 6,
+      ALERT: 7,
+      CWOP: 8
+    };
+
     const NETWORK_LABELS = {
       AZ_ASOS: "ASOS/AWOS",
       AZCLIMATE: "NWS COOP",
       USCRN: "NOAA USCRN",
-      AZ_DCP: "RAWS"
+      RAWS: "RAWS",
+      SNOTEL: "NRCS SNOTEL",
+      RWIS: "ADOT RWIS",
+      ALERT: "County ALERT",
+      CWOP: "CWOP"
     };
 
     const FALLBACK_WINDOWS = {
@@ -155,16 +189,22 @@
       if (stn.network === "AZ_ASOS") return stn.id;
       return stn.name
         .replace(/\s*\([^)]*\)/g, "")
-        .replace(/\s+(?:COOP|USCRN)$/i, "")
+        .replace(/\s+(?:COOP|USCRN|RAWS|SNOTEL|RWIS|ALERT|CWOP)$/i, "")
         .replace(/\s+Nat'l Mon(?:ument)?$/i, "")
         .trim();
     }
 
     function getPinClass(net) {
-      if (net === "AZCLIMATE") return "pin-label coop";
-      if (net === "USCRN") return "pin-label uscrn";
-      if (net === "AZ_DCP") return "pin-label raws";
-      return "pin-label";
+      const mapCls = {
+        AZCLIMATE: "pin-label coop",
+        USCRN: "pin-label uscrn",
+        RAWS: "pin-label raws",
+        SNOTEL: "pin-label snotel",
+        RWIS: "pin-label rwis",
+        ALERT: "pin-label alert",
+        CWOP: "pin-label cwop"
+      };
+      return mapCls[net] || "pin-label";
     }
 
     function getPredictorInfo(term, period, cycleName) {
@@ -172,12 +212,7 @@
       const isMin = period.kind === "min";
 
       const catalog = {
-        Intercept: {
-          title: "Regression Intercept",
-          unit: "°F",
-          agg: "Constant equation baseline",
-          desc: "Station-specific constant offset (°F) from the multiple linear regression model before adding HRRR physical and seasonal predictors."
-        },
+        Intercept: { title: "Regression Intercept", unit: "°F", agg: "Constant equation baseline", desc: "Station-specific constant offset (°F) from the multiple linear regression model before adding HRRR physical and seasonal predictors." },
         hrrr_ext_t: {
           title: isMin ? "Raw HRRR Window Min 2m Temp" : "Raw HRRR Window Max 2m Temp",
           unit: "°F",
@@ -186,177 +221,36 @@
             ? "Coldest raw 2-meter air temperature (°F) simulated by HRRR across the overnight/morning target window. Serves as the primary baseline predictor."
             : "Warmest raw 2-meter air temperature (°F) simulated by HRRR across the afternoon heating target window. Serves as the primary baseline predictor."
         },
-        hrrr_win_temp: {
-          title: "Mean 2m Temperature",
-          unit: "°F",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 2-meter air temperature (°F) across the target forecast window."
-        },
-        hrrr_win_dp2m: {
-          title: "Mean 2m Dewpoint",
-          unit: "°F",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 2-meter dewpoint temperature (°F) across the target window. Higher boundary-layer moisture inhibits nocturnal radiational cooling and moderates daytime highs."
-        },
-        hrrr_win_dpd: {
-          title: "Mean 2m Dewpoint Depression",
-          unit: "°F",
-          agg: "Mean (T − Td) across window hours",
-          desc: "Average spread between 2-meter temperature and dewpoint (T − Td, °F). Larger spreads indicate dry high-desert air with stronger overnight radiational cooling and steeper daytime lapse rates."
-        },
-        hrrr_win_rh: {
-          title: "Mean 2m Relative Humidity",
-          unit: "%",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 2-meter relative humidity (%) across the target forecast window."
-        },
-        hrrr_u10_kt: {
-          title: "Mean 10m U-Wind (West–East)",
-          unit: "kt",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 10-meter zonal wind component (knots; positive = westerly wind from the west, negative = easterly). Captures local downslope/upslope terrain flow."
-        },
-        hrrr_v10_kt: {
-          title: "Mean 10m V-Wind (South–North)",
-          unit: "kt",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 10-meter meridional wind component (knots; positive = southerly wind from the south, negative = northerly). Captures warm or cold air advection across the Mogollon Rim."
-        },
-        hrrr_wspd10_kt: {
-          title: "Mean 10m Wind Speed",
-          unit: "kt",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 10-meter wind speed magnitude (knots). Stronger winds mix the nocturnal boundary layer and prevent cold-air drainage inversions from pooling in valleys."
-        },
-        hrrr_wspd700_kt: {
-          title: "Mean 700 mb Wind Speed",
-          unit: "kt",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 700 mb (~10,000 ft MSL) ridge-level wind speed (knots), reflecting synoptic flow strength and mechanical mixing potential over the Colorado Plateau."
-        },
-        hrrr_lcdc: {
-          title: "Mean Low Cloud Cover",
-          unit: "%",
-          agg: "Mean across window hours",
-          desc: "Average HRRR low-level cloud fraction (%). Low clouds strongly trap outgoing longwave radiation at night (warmer lows) and block daytime solar insolation (cooler highs)."
-        },
-        hrrr_mcdc: {
-          title: "Mean Mid-Level Cloud Cover",
-          unit: "%",
-          agg: "Mean across window hours",
-          desc: "Average HRRR mid-level cloud fraction (%) across the target forecast window."
-        },
-        hrrr_hcdc: {
-          title: "Mean High Cloud Cover",
-          unit: "%",
-          agg: "Mean across window hours",
-          desc: "Average HRRR high-level cirrus cloud fraction (%) across the target forecast window."
-        },
-        hrrr_tcdc: {
-          title: "Mean Total Cloud Cover",
-          unit: "%",
-          agg: "Mean across window hours",
-          desc: "Average HRRR entire-atmosphere total cloud cover (%) across the target window, regulating both daytime solar heating and nighttime radiative heat loss."
-        },
-        hrrr_tmp_500: {
-          title: "Mean 500 mb Temperature",
-          unit: "°C",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 500 mb (~18,000 ft MSL) air temperature (°C), representing deep-layer synoptic airmass warmth aloft."
-        },
-        hrrr_tmp_700: {
-          title: "Mean 700 mb Temperature",
-          unit: "°C",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 700 mb (~10,000 ft MSL) free-atmosphere temperature (°C)—near Flagstaff/Rim elevation, capturing ambient airmass temperature above shallow surface inversions."
-        },
-        hrrr_hgt_500: {
-          title: "Mean 500 mb Geopotential Height",
-          unit: "gpm",
-          agg: "Mean across window hours",
-          desc: "Average HRRR 500 mb geopotential height (meters), distinguishing upper-level troughs from warm subtropical ridges."
-        },
-        hrrr_thick_1000_500: {
-          title: "Mean 1000–500 mb Thickness",
-          unit: "gpm",
-          agg: "Mean (Z500 − Z1000) across window hours",
-          desc: "Average HRRR 1000–500 mb layer thickness (meters), proportional to the column-mean virtual temperature of the lower troposphere."
-        },
-        hrrr_lapse_500_700: {
-          title: "Mean 700–500 mb Temp Difference",
-          unit: "°C",
-          agg: "Mean (T500 − T700) across window hours",
-          desc: "Average HRRR temperature change from 700 mb to 500 mb (T500 − T700, °C). More negative values indicate steeper mid-level lapse rates and deeper afternoon mixing."
-        },
-        hrrr_pwat: {
-          title: "Mean Precipitable Water (PWAT)",
-          unit: "mm",
-          agg: "Mean across window hours",
-          desc: "Average HRRR column-integrated precipitable water (mm). Higher PWAT enhances downward infrared greenhouse warming at night and reduces diurnal temperature range."
-        },
-        hrrr_qpf_in: {
-          title: "Window Accumulated Precipitation (QPF)",
-          unit: "in",
-          agg: "Cumulative QPF from 6h before window to window end",
-          desc: "HRRR accumulated liquid-equivalent precipitation (inches) from 6 hours prior to the window start through the final hour of the window (APCP[end] − APCP[start−6h]). Captures evaporative and cloud-shield cooling."
-        },
-        hrrr_snow_in: {
-          title: "Mean Snow Depth on Ground",
-          unit: "in",
-          agg: "Mean across window hours",
-          desc: "Average HRRR modeled snow depth (inches) across the target window. Snow cover sharply increases surface albedo (cooler afternoons) and promotes intense overnight radiational cooling."
-        },
-        hrrr_dlwrf: {
-          title: "Mean Downward Longwave Radiation",
-          unit: "W/m²",
-          agg: "Mean across window hours",
-          desc: "Average HRRR downward longwave (infrared) radiative flux at the surface (W/m²). Directly measures greenhouse warming emitted back to the surface by clouds and water vapor."
-        },
-        hrrr_dswrf: {
-          title: "Mean Downward Shortwave Radiation",
-          unit: "W/m²",
-          agg: "Mean across window hours",
-          desc: "Average HRRR downward shortwave solar radiation flux at the surface (W/m²), measuring direct daytime solar heating."
-        },
-        norm_t: {
-          title: "Station Climatological Normal",
-          unit: "°F",
-          agg: `Daily harmonic normal for ${period.verify_date}`,
-          desc: "Station's smooth annual harmonic normal Max or Min temperature (°F) on the verification date, fitted from its 2020–2026 daily record. Anchors forecasts toward seasonal climatology at longer lead times."
-        },
-        sin_doy_1: {
-          title: "Annual Seasonal Harmonic (sin)",
-          unit: "unitless",
-          agg: `Calendar Day-of-Year on ${period.verify_date}`,
-          desc: "First-order annual sine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias across winter and summer regimes."
-        },
-        cos_doy_1: {
-          title: "Annual Seasonal Harmonic (cos)",
-          unit: "unitless",
-          agg: `Calendar Day-of-Year on ${period.verify_date}`,
-          desc: "First-order annual cosine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias between mid-winter and mid-summer."
-        },
-        sin_doy_2: {
-          title: "Semi-Annual Seasonal Harmonic (sin)",
-          unit: "unitless",
-          agg: `Calendar Day-of-Year on ${period.verify_date}`,
-          desc: "Second-order (6-month) sine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon transition bias patterns."
-        },
-        cos_doy_2: {
-          title: "Semi-Annual Seasonal Harmonic (cos)",
-          unit: "unitless",
-          agg: `Calendar Day-of-Year on ${period.verify_date}`,
-          desc: "Second-order (6-month) cosine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon transition bias patterns."
-        }
+        hrrr_win_temp: { title: "Mean 2m Temperature", unit: "°F", agg: "Mean across window hours", desc: "Average HRRR 2-meter air temperature (°F) across the target forecast window." },
+        hrrr_win_dp2m: { title: "Mean 2m Dewpoint", unit: "°F", agg: "Mean across window hours", desc: "Average HRRR 2-meter dewpoint temperature (°F) across the target window. Higher boundary-layer moisture inhibits nocturnal radiational cooling and moderates daytime highs." },
+        hrrr_win_dpd: { title: "Mean 2m Dewpoint Depression", unit: "°F", agg: "Mean (T − Td) across window hours", desc: "Average spread between 2-meter temperature and dewpoint (T − Td, °F). Larger spreads indicate dry high-desert air with stronger overnight radiational cooling and steeper daytime lapse rates." },
+        hrrr_win_rh: { title: "Mean 2m Relative Humidity", unit: "%", agg: "Mean across window hours", desc: "Average HRRR 2-meter relative humidity (%) across the target forecast window." },
+        hrrr_u10_kt: { title: "Mean 10m U-Wind (West–East)", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 10-meter zonal wind component (knots; positive = westerly wind from the west, negative = easterly). Captures local downslope/upslope terrain flow." },
+        hrrr_v10_kt: { title: "Mean 10m V-Wind (South–North)", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 10-meter meridional wind component (knots; positive = southerly wind from the south, negative = northerly). Captures warm or cold air advection across the Mogollon Rim." },
+        hrrr_wspd10_kt: { title: "Mean 10m Wind Speed", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 10-meter wind speed magnitude (knots). Stronger winds mix the nocturnal boundary layer and prevent cold-air drainage inversions from pooling in valleys." },
+        hrrr_wspd700_kt: { title: "Mean 700 mb Wind Speed", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 700 mb (~10,000 ft MSL) ridge-level wind speed (knots), reflecting synoptic flow strength and mechanical mixing potential over the Colorado Plateau." },
+        hrrr_lcdc: { title: "Mean Low Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR low-level cloud fraction (%). Low clouds strongly trap outgoing longwave radiation at night (warmer lows) and block daytime solar insolation (cooler highs)." },
+        hrrr_mcdc: { title: "Mean Mid-Level Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR mid-level cloud fraction (%) across the target forecast window." },
+        hrrr_hcdc: { title: "Mean High Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR high-level cirrus cloud fraction (%) across the target forecast window." },
+        hrrr_tcdc: { title: "Mean Total Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR entire-atmosphere total cloud cover (%) across the target window, regulating both daytime solar heating and nighttime radiative heat loss." },
+        hrrr_tmp_500: { title: "Mean 500 mb Temperature", unit: "°C", agg: "Mean across window hours", desc: "Average HRRR 500 mb (~18,000 ft MSL) air temperature (°C), representing deep-layer synoptic airmass warmth aloft." },
+        hrrr_tmp_700: { title: "Mean 700 mb Temperature", unit: "°C", agg: "Mean across window hours", desc: "Average HRRR 700 mb (~10,000 ft MSL) free-atmosphere temperature (°C)—near Flagstaff/Rim elevation, capturing ambient airmass temperature above shallow surface inversions." },
+        hrrr_hgt_500: { title: "Mean 500 mb Geopotential Height", unit: "gpm", agg: "Mean across window hours", desc: "Average HRRR 500 mb geopotential height (meters), distinguishing upper-level troughs from warm subtropical ridges." },
+        hrrr_thick_1000_500: { title: "Mean 1000–500 mb Thickness", unit: "gpm", agg: "Mean (Z500 − Z1000) across window hours", desc: "Average HRRR 1000–500 mb layer thickness (meters), proportional to the column-mean virtual temperature of the lower troposphere." },
+        hrrr_lapse_500_700: { title: "Mean 700–500 mb Temp Difference", unit: "°C", agg: "Mean (T500 − T700) across window hours", desc: "Average HRRR temperature change from 700 mb to 500 mb (T500 − T700, °C). More negative values indicate steeper mid-level lapse rates and deeper afternoon mixing." },
+        hrrr_pwat: { title: "Mean Precipitable Water (PWAT)", unit: "mm", agg: "Mean across window hours", desc: "Average HRRR column-integrated precipitable water (mm). Higher PWAT enhances downward infrared greenhouse warming at night and reduces diurnal temperature range." },
+        hrrr_qpf_in: { title: "Window Accumulated Precipitation (QPF)", unit: "in", agg: "Cumulative QPF from 6h before window to window end", desc: "HRRR accumulated liquid-equivalent precipitation (inches) from 6 hours prior to the window start through the final hour of the window (APCP[end] − APCP[start−6h])." },
+        hrrr_snow_in: { title: "Mean Snow Depth on Ground", unit: "in", agg: "Mean across window hours", desc: "Average HRRR modeled snow depth (inches) across the target window. Snow cover sharply increases surface albedo and promotes intense overnight radiational cooling." },
+        hrrr_dlwrf: { title: "Mean Downward Longwave Radiation", unit: "W/m²", agg: "Mean across window hours", desc: "Average HRRR downward longwave (infrared) radiative flux at the surface (W/m²). Directly measures greenhouse warming emitted back to the surface by clouds and water vapor." },
+        hrrr_dswrf: { title: "Mean Downward Shortwave Radiation", unit: "W/m²", agg: "Mean across window hours", desc: "Average HRRR downward shortwave solar radiation flux at the surface (W/m²), measuring direct daytime solar heating." },
+        norm_t: { title: "Station Climatological Normal", unit: "°F", agg: `Daily harmonic normal for ${period.verify_date}`, desc: "Station's smooth annual harmonic normal Max or Min temperature (°F) on the verification date, fitted from its 2020–2026 daily record." },
+        sin_doy_1: { title: "Annual Seasonal Harmonic (sin)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "First-order annual sine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias." },
+        cos_doy_1: { title: "Annual Seasonal Harmonic (cos)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "First-order annual cosine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias." },
+        sin_doy_2: { title: "Semi-Annual Seasonal Harmonic (sin)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "Second-order (6-month) sine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon bias patterns." },
+        cos_doy_2: { title: "Semi-Annual Seasonal Harmonic (cos)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "Second-order (6-month) cosine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon bias patterns." }
       };
 
-      const entry = catalog[term] || {
-        title: term,
-        unit: "",
-        agg: "Window predictor",
-        desc: "HRRR model predictor selected by forward stepwise screening regression."
-      };
-
+      const entry = catalog[term] || { title: term, unit: "", agg: "Window predictor", desc: "HRRR model predictor selected by forward stepwise screening regression." };
       const isWindowTerm = !["Intercept", "norm_t", "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2"].includes(term);
       const timeDetail = isWindowTerm ? `${entry.agg} — Window: ${winText}` : entry.agg;
       return { ...entry, timeDetail };
@@ -393,19 +287,52 @@
     markersLayer.addTo(map);
 
     function renderMarkers() {
+      if (!forecastData) return;
       markersLayer.clearLayers();
-      Object.values(forecastData.stations).forEach(stn => {
-        if (activeNetwork !== "ALL" && stn.network !== activeNetwork) return;
+
+      const zoom = map.getZoom();
+      // Progressive screen-space collision box: larger when zoomed out so highest-priority
+      // networks (Airports > COOP > USCRN > RAWS > SNOTEL > RWIS > ALERT > CWOP) display first,
+      // shrinking to 0 at zoom >= 11 so every single station renders when zoomed in.
+      let minDx = 0;
+      let minDy = 0;
+      if (activeNetwork === "ALL") {
+        if (zoom <= 7) { minDx = 84; minDy = 26; }
+        else if (zoom === 8) { minDx = 68; minDy = 23; }
+        else if (zoom === 9) { minDx = 52; minDy = 19; }
+        else if (zoom === 10) { minDx = 36; minDy = 15; }
+      }
+
+      const sortedStations = Object.values(forecastData.stations)
+        .filter(stn => activeNetwork === "ALL" || stn.network === activeNetwork)
+        .sort((a, b) => {
+          const pa = NETWORK_PRIORITY[a.network] || 99;
+          const pb = NETWORK_PRIORITY[b.network] || 99;
+          if (pa !== pb) return pa - pb;
+          return a.id.localeCompare(b.id);
+        });
+
+      const placedPoints = [];
+      sortedStations.forEach(stn => {
+        const pt = map.latLngToContainerPoint([stn.lat, stn.lon]);
+        if (minDx > 0) {
+          const overlaps = placedPoints.some(p => Math.abs(p.x - pt.x) < minDx && Math.abs(p.y - pt.y) < minDy);
+          if (overlaps) return;
+        }
+        placedPoints.push(pt);
+
         const p0 = stn.periods[0];
         const tileName = getMapTileLabel(stn);
         const badge = p0 ? `${tileName}: ${p0.mos_f.toFixed(0)}°` : tileName;
         const cls = getPinClass(stn.network);
+        const prio = NETWORK_PRIORITY[stn.network] || 99;
         const icon = L.divIcon({
           className: "",
           html: `<div class="${cls}" title="${stn.id} — ${stn.name} (${NETWORK_LABELS[stn.network] || stn.network})">${badge}</div>`,
           iconSize: null
         });
-        L.marker([stn.lat, stn.lon], { icon })
+
+        L.marker([stn.lat, stn.lon], { icon, zIndexOffset: (10 - prio) * 100 })
           .addTo(markersLayer)
           .on("click", () => {
             selectedPeriodIdx = 0;
@@ -414,6 +341,8 @@
           });
       });
     }
+
+    map.on("zoomend", renderMarkers);
 
     function renderVerificationChart(stn) {
       const verifAll = stn.past_7d_verification;
@@ -428,7 +357,7 @@
       const mosMae = verif[`${activeVerifKind}_mos_mae`];
       const rawMae = verif[`${activeVerifKind}_raw_mae`];
       badgeEl.textContent = mosMae !== null
-        ? `${activeVerifCycle} 7d MOS MAE: ${mosMae.toFixed(1)}°F (Raw: ${rawMae !== null ? rawMae.toFixed(1) + "°F" : "--"})`
+        ? `${activeVerifCycle} 7d Guidance MAE: ${mosMae.toFixed(1)}°F (Raw: ${rawMae !== null ? rawMae.toFixed(1) + "°F" : "--"})`
         : `${activeVerifCycle} 7d MAE: Pending Obs`;
 
       const mosColor = activeVerifKind === "min" ? "#38bdf8" : "#fb923c";
@@ -451,7 +380,7 @@
             },
             {
               type: "line",
-              label: `${activeVerifCycle} HRRR MOS (°F)`,
+              label: `${activeVerifCycle} Active Guidance (°F)`,
               data: rows.map(r => r.mos_f),
               borderColor: mosColor,
               backgroundColor: mosColor,
@@ -491,9 +420,11 @@
       const cyc = forecastData.synoptic_cycle || "";
       const winText = activeP.window_desc || (FALLBACK_WINDOWS[cyc] && FALLBACK_WINDOWS[cyc][activeP.key]) || "";
       document.getElementById("breakdown-title").textContent = `Equation Breakdown — ${activeP.label} (${activeP.verify_date})`;
-      document.getElementById("breakdown-window").textContent = winText
-        ? `Target Window: ${winText} • Click ⓘ on any row for details`
-        : "Click ⓘ on any row for parameter details";
+
+      const fallbackNote = activeP.used_raw_fallback
+        ? `⚠️ Raw HRRR (${activeP.raw_hrrr_f.toFixed(1)}°F) substituted because MOS holdout MAE (${activeP.holdout_mos_mae}°F) > Raw MAE (${activeP.holdout_raw_mae}°F). Underlying equation (${activeP.mos_eq_f.toFixed(1)}°F) shown below:`
+        : (winText ? `Target Window: ${winText} • Click ⓘ on any row for details` : "Click ⓘ on any row for parameter details");
+      document.getElementById("breakdown-window").textContent = fallbackNote;
 
       const tbody = document.getElementById("breakdown-body");
       tbody.innerHTML = "";
@@ -520,11 +451,8 @@
           <td class="num">${row.contrib >= 0 ? "+" : ""}${row.contrib.toFixed(2)}°F</td>
         `;
         tr.onclick = () => {
-          if (openInfoTerms.has(row.term)) {
-            openInfoTerms.delete(row.term);
-          } else {
-            openInfoTerms.add(row.term);
-          }
+          if (openInfoTerms.has(row.term)) openInfoTerms.delete(row.term);
+          else openInfoTerms.add(row.term);
           renderBreakdownTable(activeP);
         };
         tbody.appendChild(tr);
@@ -560,10 +488,11 @@
       cardsEl.innerHTML = "";
       stn.periods.forEach((p, idx) => {
         const sign = p.delta_f >= 0 ? "+" : "";
+        const fbTag = p.used_raw_fallback ? `<span class="fb-pill" title="Holdout MOS MAE > Raw HRRR MAE; using Raw HRRR">RAW HRRR</span>` : "";
         const card = document.createElement("div");
         card.className = `card ${p.kind} ${idx === selectedPeriodIdx ? "active" : ""}`;
         card.innerHTML = `
-          <div class="lbl">${p.label}</div>
+          <div class="lbl"><span>${p.label}</span>${fbTag}</div>
           <div class="dt">${p.verify_date}</div>
           <div class="temp">${p.mos_f.toFixed(1)}°F</div>
           <div class="sub">Raw HRRR: ${p.raw_hrrr_f.toFixed(1)}°F (${sign}${p.delta_f.toFixed(1)}°F)</div>
@@ -579,9 +508,7 @@
       });
 
       const activeP = stn.periods[selectedPeriodIdx] || stn.periods[0];
-      if (activeP) {
-        renderBreakdownTable(activeP);
-      }
+      if (activeP) renderBreakdownTable(activeP);
 
       const ctx = document.getElementById("trajChart").getContext("2d");
       if (chartInstance) chartInstance.destroy();
@@ -650,15 +577,25 @@
         }
 
         const allVals = Object.values(data.stations);
-        const asosCount = allVals.filter(s => s.network === "AZ_ASOS").length;
-        const coopCount = allVals.filter(s => s.network === "AZCLIMATE").length;
-        const uscrnCount = allVals.filter(s => s.network === "USCRN").length;
-        const rawsCount = allVals.filter(s => s.network === "AZ_DCP").length;
         document.querySelector('[data-net="ALL"]').textContent = `All (${allVals.length})`;
-        document.querySelector('[data-net="AZ_ASOS"]').textContent = `Airports (${asosCount})`;
-        document.querySelector('[data-net="AZCLIMATE"]').textContent = `COOP (${coopCount})`;
-        document.querySelector('[data-net="USCRN"]').textContent = `USCRN (${uscrnCount})`;
-        document.querySelector('[data-net="AZ_DCP"]').textContent = `RAWS (${rawsCount})`;
+        const netNames = {
+          AZ_ASOS: "Airports",
+          AZCLIMATE: "COOP",
+          USCRN: "USCRN",
+          RAWS: "RAWS",
+          SNOTEL: "SNOTEL",
+          RWIS: "RWIS",
+          ALERT: "ALERT",
+          CWOP: "CWOP"
+        };
+        Object.entries(netNames).forEach(([netKey, label]) => {
+          const cnt = allVals.filter(s => s.network === netKey).length;
+          const btn = document.querySelector(`[data-net="${netKey}"]`);
+          if (btn) {
+            btn.textContent = `${label} (${cnt})`;
+            if (cnt === 0) btn.style.display = "none";
+          }
+        });
 
         document.getElementById("run-meta").textContent =
           `HRRR: ${data.hrrr_init_utc} (${data.synoptic_cycle}) | Updated: ${data.updated_mst}`;
