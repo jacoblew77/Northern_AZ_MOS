@@ -6,12 +6,17 @@ on:
       discover_networks:
         description: 'Auto-discover all active public Northern AZ stations (Synoptic + IEM COOP)'
         required: true
-        default: true
+        default: false
         type: boolean
       retrain_all:
-        description: 'Retrain ALL stations from scratch (check this when switching to Synoptic)'
+        description: 'Retrain ALL stations from scratch (uses cached HRRR & obs when available)'
         required: true
         default: true
+        type: boolean
+      refresh_obs:
+        description: 'Force fresh Synoptic/IEM observation download (bypass obs_cache)'
+        required: true
+        default: false
         type: boolean
 
 permissions:
@@ -37,6 +42,14 @@ jobs:
           restore-keys: |
             hrrr-zarr-cache-
 
+      - name: Cache daily surface observation series
+        uses: actions/cache@v4
+        with:
+          path: obs_cache
+          key: obs-diurnal-cache-${{ hashFiles('stations.json') }}-v1
+          restore-keys: |
+            obs-diurnal-cache-
+
       - name: Install training packages
         run: pip install -q aiohttp fsspec numcodecs "numpy<2" pandas requests tqdm "zarr<3"
 
@@ -51,6 +64,9 @@ jobs:
           if [ "${{ github.event.inputs.retrain_all }}" = "true" ]; then
             ARGS="$ARGS --retrain-all"
           fi
+          if [ "${{ github.event.inputs.refresh_obs }}" = "true" ]; then
+            ARGS="$ARGS --refresh-obs"
+          fi
           python -u train_mos.py $ARGS
 
       - name: Commit updated stations.json and mos_equations.json
@@ -58,5 +74,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stations.json mos_equations.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Train public Northern AZ stations via Synoptic API [skip ci]"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Train public Northern AZ stations with obs_cache [skip ci]"
           git push
