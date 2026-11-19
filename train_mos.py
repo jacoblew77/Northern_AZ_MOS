@@ -3,6 +3,8 @@ train_mos.py — Multi-Station HRRRv4 MOS Trainer (Synoptic Data Time-Series API
 - Queries Synoptic Data API (/v2/networks, /v2/stations/metadata, /v2/stations/timeseries)
   for all public non-COOP networks (Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP)
   and IEM Climodat (AZCLIMATE) for manual NWS COOP sites.
+- Caches parsed daily High/Low observation series in obs_cache/ alongside zarr_pixel_cache/
+  so subsequent retraining runs and feature branches reuse cached observations with zero API calls.
 - Aligns all Synoptic observations to standardized NWS MOS diurnal windows in UTC:
   * Morning Min (Date D): 00:00Z to 18:00Z on Date D (5:00 PM MST D-1 to 11:00 AM MST D).
   * Afternoon Max (Date D): 12:00Z on Date D to 06:00Z on Date D+1 (5:00 AM MST D to 11:00 PM MST D).
@@ -45,6 +47,7 @@ MAX_CONCURRENT_RUNS = 180
 OUTPUT_EQ_FILE = "mos_equations.json"
 STATIONS_FILE = "stations.json"
 CACHE_DIR = "zarr_pixel_cache"
+OBS_CACHE_DIR = "obs_cache"
 SYNOPTIC_BASE = "https://api.synopticdata.com/v2"
 
 NETWORK_PRIORITY = {
@@ -131,6 +134,36 @@ def synoptic_get_sequential(session: requests.Session, endpoint: str, params: di
         return payload
     except Exception as exc:
         raise RuntimeError(str(exc).replace(token, "***")) from None
+
+
+def get_obs_cache_path(sid: str) -> str:
+    safe_sid = "".join(c for c in sid if c.isalnum() or c in ("_", "-"))
+    return os.path.join(OBS_CACHE_DIR, f"{safe_sid}_diurnal.pkl")
+
+
+def load_cached_obs(sid: str, target_end_date: str, refresh: bool = False):
+    if refresh:
+        return None
+    path = get_obs_cache_path(sid)
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "rb") as f:
+            df = pickle.load(f)
+        if isinstance(df, pd.DataFrame) and not df.empty:
+            if df.index.max() >= (pd.Timestamp(target_end_date) - pd.Timedelta(days=7)):
+                return df
+    except Exception:
+        return None
+    return None
+
+
+def save_cached_obs(sid: str, df: pd.DataFrame):
+    if df is None or df.empty:
+        return
+    os.makedirs(OBS_CACHE_DIR, exist_ok=True)
+    with open(get_obs_cache_path(sid), "wb") as f:
+        pickle.dump(df, f)
 
 
 def get_verify_date_mst(init_dt: datetime.datetime, fhrs: list) -> datetime.date:
@@ -307,11 +340,12 @@ def fetch_iem_coop_daily_obs(stn_id: str, meta: dict, start_date: str, end_date:
     )
 
 
-def discover_all_public_northern_az_stations(existing_stations: dict, token: str) -> tuple:
+def discover_all_public_northern_az_stations(existing_stations: dict, token: str, refresh_obs: bool = False) -> tuple:
     """
     Discovers all active public stations across WFO Flagstaff CWA without spatial removal:
       1. Synoptic public networks (restricted=false): Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP.
       2. IEM Climodat NWS COOP (AZCLIMATE).
+    Saves newly fetched daily observation DataFrames into obs_cache/ so future runs reuse them.
     """
     session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
@@ -454,7 +488,10 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
         for i, sid in enumerate(new_syn_ids, 1):
             try:
                 tier = candidates[sid]["network"]
-                df = fetch_synoptic_timeseries_daily(session, sid, tier, START_DATE, today_str, token)
+                df = load_cached_obs(sid, END_DATE, refresh=refresh_obs)
+                if df is None:
+                    df = fetch_synoptic_timeseries_daily(session, sid, tier, START_DATE, today_str, token)
+                    save_cached_obs(sid, df)
                 if len(df) < 1400 or df.index.max() < recent_cutoff:
                     continue
                 verified[sid] = candidates[sid]
@@ -465,7 +502,10 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
 
     for sid in new_coop_ids:
         try:
-            df = fetch_iem_coop_daily_obs(sid, candidates[sid], START_DATE, today_str)
+            df = load_cached_obs(sid, END_DATE, refresh=refresh_obs)
+            if df is None:
+                df = fetch_iem_coop_daily_obs(sid, candidates[sid], START_DATE, today_str)
+                save_cached_obs(sid, df)
             if len(df) >= 1400 and df.index.max() >= recent_cutoff:
                 verified[sid] = candidates[sid]
                 prefetched_obs[sid] = df
@@ -772,11 +812,13 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations from scratch using Synoptic + IEM COOP.")
+    parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations from scratch using cached or fresh observations.")
     parser.add_argument("--discover-networks", action="store_true", help="Discover all active public Northern AZ stations across Synoptic & IEM COOP.")
+    parser.add_argument("--refresh-obs", action="store_true", help="Force re-download of historical daily observations instead of using obs_cache.")
     args = parser.parse_args()
 
     token = get_synoptic_token()
+    os.makedirs(OBS_CACHE_DIR, exist_ok=True)
 
     with open(STATIONS_FILE, "r") as f:
         all_stations = json.load(f)
@@ -790,7 +832,7 @@ def main():
 
     prefetched_obs = {}
     if args.discover_networks:
-        all_stations, prefetched_obs = discover_all_public_northern_az_stations(all_stations, token)
+        all_stations, prefetched_obs = discover_all_public_northern_az_stations(all_stations, token, refresh_obs=args.refresh_obs)
         with open(STATIONS_FILE, "w") as f:
             json.dump(all_stations, f, indent=2)
 
@@ -816,6 +858,8 @@ def main():
     session = create_sync_session()
     obs_by_stn = {}
     valid_targets = {}
+    cached_hits = 0
+    api_fetches = 0
 
     syn_targets = [sid for sid, m in target_stations.items() if m.get("source") == "SYNOPTIC"]
     coop_targets = [sid for sid, m in target_stations.items() if m.get("source") == "IEM_COOP"]
@@ -824,15 +868,20 @@ def main():
         meta = target_stations[sid]
         obs_df = prefetched_obs.get(sid)
         if obs_df is None:
-            print(f"[{idx}/{len(syn_targets)}] Fetching Synoptic time-series for {sid} ({meta['name']})...")
-            try:
-                obs_df = fetch_synoptic_timeseries_daily(session, sid, meta.get("network", ""), START_DATE, END_DATE, token)
-            except Exception as exc:
-                print(f"  [!] Skipping {sid}: {exc}")
-                continue
-        else:
-            obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
+            obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+            if obs_df is not None:
+                cached_hits += 1
+            else:
+                print(f"[{idx}/{len(syn_targets)}] Fetching Synoptic time-series for {sid} ({meta['name']})...")
+                try:
+                    obs_df = fetch_synoptic_timeseries_daily(session, sid, meta.get("network", ""), START_DATE, END_DATE, token)
+                    save_cached_obs(sid, obs_df)
+                    api_fetches += 1
+                except Exception as exc:
+                    print(f"  [!] Skipping {sid}: {exc}")
+                    continue
 
+        obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
         if obs_df is None or len(obs_df) < 200:
             print(f"  [!] Skipping {sid}: insufficient daily records ({0 if obs_df is None else len(obs_df)}).")
             continue
@@ -849,15 +898,19 @@ def main():
         meta = target_stations[sid]
         obs_df = prefetched_obs.get(sid)
         if obs_df is None:
-            print(f"Fetching Climodat COOP observations for {sid} ({meta['name']})...")
-            try:
-                obs_df = fetch_iem_coop_daily_obs(sid, meta, START_DATE, END_DATE)
-            except Exception as exc:
-                print(f"  [!] Skipping {sid} due to COOP fetch error: {exc}")
-                continue
-        else:
-            obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
+            obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+            if obs_df is not None:
+                cached_hits += 1
+            else:
+                print(f"Fetching Climodat COOP observations for {sid} ({meta['name']})...")
+                try:
+                    obs_df = fetch_iem_coop_daily_obs(sid, meta, START_DATE, END_DATE)
+                    save_cached_obs(sid, obs_df)
+                except Exception as exc:
+                    print(f"  [!] Skipping {sid} due to COOP fetch error: {exc}")
+                    continue
 
+        obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
         if len(obs_df) < 200:
             print(f"  [!] Skipping {sid}: only {len(obs_df)} daily records available.")
             continue
@@ -869,6 +922,8 @@ def main():
         meta_enriched["clim_max_w"] = w_max
         obs_by_stn[sid] = obs_df
         valid_targets[sid] = meta_enriched
+
+    print(f"Observation ingestion complete: {cached_hits} loaded from obs_cache, {api_fetches} fetched from Synoptic API.")
 
     if not valid_targets:
         print("No valid stations to train.")
