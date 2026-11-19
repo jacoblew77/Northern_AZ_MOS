@@ -1,12 +1,14 @@
 """
-train_mos.py — Multi-Station HRRRv4 MOS Trainer (Synoptic Data API + IEM COOP)
-- Queries Synoptic Data API (/v2/networks, /v2/stations/metadata, /v2/stations/statistics)
+train_mos.py — Multi-Station HRRRv4 MOS Trainer (Synoptic Data Time-Series API + IEM COOP)
+- Queries Synoptic Data API (/v2/networks, /v2/stations/metadata, /v2/stations/timeseries)
   for all public non-COOP networks (Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP)
   and IEM Climodat (AZCLIMATE) for manual NWS COOP sites.
+- Computes local Arizona calendar-day (MST) High/Low temperatures from Synoptic time-series
+  observations with Synoptic + MADIS automated QC filtering (qc_remove_data=on).
 - Includes every verified active station in WFO Flagstaff's CWA (no 1-mile exclusion),
   ordered by network priority (Airports > COOP > USCRN > RAWS > SNOTEL > RWIS > ALERT > CWOP).
-- Enforces Synoptic API rules: token via env var only, concurrency=1 sequential batching,
-  restricted=false public-only filtering, and advanced automated QC checks.
+- Enforces Synoptic API rules: token via env var only, concurrency=1 sequential requests,
+  <= 100,000 station-hours per timeseries call, and restricted=false public-only filtering.
 """
 import argparse
 import asyncio
@@ -170,84 +172,65 @@ def format_station_name(raw_name: str, network: str) -> str:
     return name
 
 
-def _extract_stat_val(item) -> float:
-    if item is None:
-        return np.nan
-    if isinstance(item, dict):
-        v = item.get("value")
-        return float(v) if v is not None else np.nan
-    try:
-        return float(item)
-    except (TypeError, ValueError):
-        return np.nan
+def parse_timeseries_daily_df(stn_obj: dict, min_obs_per_day: int = 8) -> pd.DataFrame:
+    """Aggregates local-time air_temp time-series into daily High/Low temperatures."""
+    obs = stn_obj.get("OBSERVATIONS", {})
+    dts = obs.get("date_time", [])
+    t_key = "air_temp_set_1" if "air_temp_set_1" in obs else next((k for k in obs if k.startswith("air_temp")), None)
+    if not dts or not t_key:
+        return pd.DataFrame()
+    temps = obs.get(t_key, [])
+    if len(dts) != len(temps):
+        return pd.DataFrame()
+
+    df = pd.DataFrame({
+        "date_str": [str(d)[:10] for d in dts],
+        "temp": pd.to_numeric(temps, errors="coerce"),
+    }).dropna(subset=["temp"])
+
+    df = df[(df["temp"] >= -55.0) & (df["temp"] <= 135.0)]
+    if df.empty:
+        return pd.DataFrame()
+
+    agg = df.groupby("date_str")["temp"].agg(obs_min="min", obs_max="max", cnt="count")
+    agg = agg[(agg["cnt"] >= min_obs_per_day) & (agg["obs_max"] >= agg["obs_min"]) & ((agg["obs_max"] - agg["obs_min"]) <= 75.0)]
+    if agg.empty:
+        return pd.DataFrame()
+
+    agg.index = pd.to_datetime(agg.index).normalize()
+    agg.index.name = "date"
+    return agg[["obs_min", "obs_max"]].round(1).sort_index()
 
 
-def fetch_synoptic_statistics_batch(session: requests.Session, stids: list, start_date: str, end_date: str, token: str) -> dict:
-    """Fetches daily local-time High/Low stats sequentially in batches of 30 stations (<2M station-hrs)."""
-    obs_by_stn = {}
-    start_str = start_date.replace("-", "")
-    end_str = end_date.replace("-", "")
-
-    batch_size = 30
-    for idx in range(0, len(stids), batch_size):
-        chunk = stids[idx:idx + batch_size]
-        print(f"  Querying Synoptic daily statistics batch {idx // batch_size + 1} ({len(chunk)} stations)...")
-        payload = synoptic_get_sequential(
-            session,
-            "stations/statistics",
-            {
-                "stid": ",".join(chunk),
-                "vars": "air_temp",
-                "period": "day",
-                "type": "all",
-                "start": start_str,
-                "end": end_str,
-                "obtimezone": "local",
-                "units": "english",
-                "qc_checks": "synopticlabs,madis",
-                "restricted": "false",
-            },
-            token=token,
-            timeout=90,
-        )
-
-        for stn_obj in payload.get("STATION", []):
-            if stn_obj.get("RESTRICTED"):
-                continue
-            sid = str(stn_obj.get("STID", "")).strip().upper()
-            stats = stn_obj.get("STATISTICS", {})
-            t_key = "air_temp_set_1" if "air_temp_set_1" in stats else next((k for k in stats if k.startswith("air_temp")), None)
-            if not sid or not t_key:
-                continue
-
-            t_block = stats[t_key]
-            mins = t_block.get("minimum", [])
-            maxs = t_block.get("maximum", [])
-            dts = t_block.get("date_time", [])
-            if not dts and mins and isinstance(mins[0], dict):
-                dts = [m.get("date_time") if isinstance(m, dict) else None for m in mins]
-            cnts = t_block.get("count", [None] * len(dts))
-
-            rows = []
-            for dt_raw, mn_raw, mx_raw, cnt_raw in zip(dts, mins, maxs, cnts):
-                if not dt_raw:
-                    continue
-                if cnt_raw is not None and int(cnt_raw) < 8:
-                    continue
-                mn = _extract_stat_val(mn_raw)
-                mx = _extract_stat_val(mx_raw)
-                if np.isnan(mn) or np.isnan(mx):
-                    continue
-                if not (-55.0 <= mn <= 135.0 and -55.0 <= mx <= 135.0 and mx >= mn and (mx - mn) <= 75.0):
-                    continue
-                dt_norm = pd.to_datetime(str(dt_raw)[:10]).normalize()
-                rows.append({"date": dt_norm, "obs_min": round(mn, 1), "obs_max": round(mx, 1)})
-
-            if rows:
-                df = pd.DataFrame(rows).drop_duplicates(subset=["date"]).sort_values("date").set_index("date")
-                obs_by_stn[sid] = df
-
-    return obs_by_stn
+def fetch_synoptic_timeseries_daily(session: requests.Session, stid: str, start_date: str, end_date: str, token: str) -> pd.DataFrame:
+    """
+    Fetches 2020-2026 air_temp time-series for a single station (~52,000 station-hours,
+    well under Synoptic's 100,000 station-hour per-request limit) and aggregates daily High/Low.
+    """
+    start_str = start_date.replace("-", "") + "0000"
+    end_str = end_date.replace("-", "") + "2359"
+    payload = synoptic_get_sequential(
+        session,
+        "stations/timeseries",
+        {
+            "stid": stid,
+            "vars": "air_temp",
+            "start": start_str,
+            "end": end_str,
+            "obtimezone": "local",
+            "units": "english",
+            "hfmetars": "1",
+            "qc_checks": "synopticlabs,madis",
+            "qc_remove_data": "on",
+            "restricted": "false",
+        },
+        token=token,
+        timeout=90,
+    )
+    stn_list = payload.get("STATION", [])
+    if not stn_list or stn_list[0].get("RESTRICTED"):
+        return pd.DataFrame()
+    return parse_timeseries_daily_df(stn_list[0], min_obs_per_day=8)
 
 
 def fetch_iem_coop_daily_obs(stn_id: str, meta: dict, start_date: str, end_date: str) -> pd.DataFrame:
@@ -286,12 +269,13 @@ def fetch_iem_coop_daily_obs(stn_id: str, meta: dict, start_date: str, end_date:
     )
 
 
-def discover_all_public_northern_az_stations(existing_stations: dict, token: str) -> dict:
+def discover_all_public_northern_az_stations(existing_stations: dict, token: str) -> tuple:
     """
     Discovers all active public stations across WFO Flagstaff CWA without spatial removal:
       1. Synoptic public networks (restricted=false): Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP.
       2. IEM Climodat NWS COOP (AZCLIMATE).
-    Verifies >= 1,400 valid days since 2020-12-03 and recent reports within 21 days.
+    Verifies >= 1,400 valid days since 2020-12-03 and recent reports within 21 days, returning
+    both the verified stations dict and pre-fetched observation DataFrames so no API call is wasted.
     """
     session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
@@ -431,29 +415,34 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     new_coop_ids = [sid for sid, m in candidates.items() if sid not in existing_stations and m.get("source") == "IEM_COOP"]
 
     verified = {sid: candidates[sid] for sid in existing_stations if sid in candidates}
+    prefetched_obs = {}
 
     if new_syn_ids:
-        print(f"Verifying 2020-2026 completeness for {len(new_syn_ids)} new Synoptic candidates...")
-        syn_stats = fetch_synoptic_statistics_batch(session, new_syn_ids, START_DATE, today_str, token)
-        for sid in new_syn_ids:
-            df = syn_stats.get(sid)
-            if df is None or len(df) < 1400 or df.index.max() < recent_cutoff:
-                continue
-            verified[sid] = candidates[sid]
-            print(f"  [+] Verified {candidates[sid]['network']}: {sid} — {candidates[sid]['name']} ({len(df)} days)")
+        print(f"Verifying 2020-2026 Synoptic time-series completeness for {len(new_syn_ids)} new candidates...")
+        for i, sid in enumerate(new_syn_ids, 1):
+            try:
+                df = fetch_synoptic_timeseries_daily(session, sid, START_DATE, today_str, token)
+                if len(df) < 1400 or df.index.max() < recent_cutoff:
+                    continue
+                verified[sid] = candidates[sid]
+                prefetched_obs[sid] = df
+                print(f"  [{i}/{len(new_syn_ids)}] Verified {candidates[sid]['network']}: {sid} — {candidates[sid]['name']} ({len(df)} days)")
+            except Exception as exc:
+                print(f"  [{i}/{len(new_syn_ids)}] Skipping {sid}: {exc}")
 
     for sid in new_coop_ids:
         try:
             df = fetch_iem_coop_daily_obs(sid, candidates[sid], START_DATE, today_str)
             if len(df) >= 1400 and df.index.max() >= recent_cutoff:
                 verified[sid] = candidates[sid]
+                prefetched_obs[sid] = df
                 print(f"  [+] Verified COOP: {sid} — {candidates[sid]['name']} ({len(df)} days)")
         except Exception:
             continue
 
     ordered = dict(sorted(verified.items(), key=lambda kv: (NETWORK_PRIORITY.get(kv[1].get("network", ""), 99), kv[0])))
     print(f"Discovery complete: {len(ordered)} verified public stations across all networks.")
-    return ordered
+    return ordered, prefetched_obs
 
 
 def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
@@ -757,8 +746,9 @@ def main():
             meta["source"] = "SYNOPTIC"
             meta["synoptic_id"] = sid
 
+    prefetched_obs = {}
     if args.discover_networks:
-        all_stations = discover_all_public_northern_az_stations(all_stations, token)
+        all_stations, prefetched_obs = discover_all_public_northern_az_stations(all_stations, token)
         with open(STATIONS_FILE, "w") as f:
             json.dump(all_stations, f, indent=2)
 
@@ -788,39 +778,55 @@ def main():
     syn_targets = [sid for sid, m in target_stations.items() if m.get("source") == "SYNOPTIC"]
     coop_targets = [sid for sid, m in target_stations.items() if m.get("source") == "IEM_COOP"]
 
-    if syn_targets:
-        syn_obs_map = fetch_synoptic_statistics_batch(session, syn_targets, START_DATE, END_DATE, token)
-        for sid in syn_targets:
-            meta = target_stations[sid]
-            obs_df = syn_obs_map.get(sid)
-            if obs_df is None or len(obs_df) < 200:
-                print(f"  [!] Skipping {sid}: insufficient Synoptic statistics rows.")
+    for idx, sid in enumerate(syn_targets, 1):
+        meta = target_stations[sid]
+        obs_df = prefetched_obs.get(sid)
+        if obs_df is None:
+            print(f"[{idx}/{len(syn_targets)}] Fetching Synoptic time-series for {sid} ({meta['name']})...")
+            try:
+                obs_df = fetch_synoptic_timeseries_daily(session, sid, START_DATE, END_DATE, token)
+            except Exception as exc:
+                print(f"  [!] Skipping {sid}: {exc}")
                 continue
-            w_min, w_max = fit_harmonic_climatology(obs_df)
-            meta_enriched = dict(meta)
-            meta_enriched.setdefault("elev_ft", 5000)
-            meta_enriched["clim_min_w"] = w_min
-            meta_enriched["clim_max_w"] = w_max
-            obs_by_stn[sid] = obs_df
-            valid_targets[sid] = meta_enriched
+        else:
+            obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
+
+        if obs_df is None or len(obs_df) < 200:
+            print(f"  [!] Skipping {sid}: insufficient daily records ({0 if obs_df is None else len(obs_df)}).")
+            continue
+
+        w_min, w_max = fit_harmonic_climatology(obs_df)
+        meta_enriched = dict(meta)
+        meta_enriched.setdefault("elev_ft", 5000)
+        meta_enriched["clim_min_w"] = w_min
+        meta_enriched["clim_max_w"] = w_max
+        obs_by_stn[sid] = obs_df
+        valid_targets[sid] = meta_enriched
 
     for sid in coop_targets:
         meta = target_stations[sid]
-        print(f"Fetching Climodat COOP observations for {sid} ({meta['name']})...")
-        try:
-            obs_df = fetch_iem_coop_daily_obs(sid, meta, START_DATE, END_DATE)
-            if len(obs_df) < 200:
-                print(f"  [!] Skipping {sid}: only {len(obs_df)} daily records available.")
+        obs_df = prefetched_obs.get(sid)
+        if obs_df is None:
+            print(f"Fetching Climodat COOP observations for {sid} ({meta['name']})...")
+            try:
+                obs_df = fetch_iem_coop_daily_obs(sid, meta, START_DATE, END_DATE)
+            except Exception as exc:
+                print(f"  [!] Skipping {sid} due to COOP fetch error: {exc}")
                 continue
-            w_min, w_max = fit_harmonic_climatology(obs_df)
-            meta_enriched = dict(meta)
-            meta_enriched.setdefault("elev_ft", 5000)
-            meta_enriched["clim_min_w"] = w_min
-            meta_enriched["clim_max_w"] = w_max
-            obs_by_stn[sid] = obs_df
-            valid_targets[sid] = meta_enriched
-        except Exception as exc:
-            print(f"  [!] Skipping {sid} due to COOP fetch error: {exc}")
+        else:
+            obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
+
+        if len(obs_df) < 200:
+            print(f"  [!] Skipping {sid}: only {len(obs_df)} daily records available.")
+            continue
+
+        w_min, w_max = fit_harmonic_climatology(obs_df)
+        meta_enriched = dict(meta)
+        meta_enriched.setdefault("elev_ft", 5000)
+        meta_enriched["clim_min_w"] = w_min
+        meta_enriched["clim_max_w"] = w_max
+        obs_by_stn[sid] = obs_df
+        valid_targets[sid] = meta_enriched
 
     if not valid_targets:
         print("No valid stations to train.")
