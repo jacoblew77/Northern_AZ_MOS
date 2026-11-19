@@ -451,7 +451,7 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     coop_geo = coop_resp.json()
     for feat in coop_geo.get("features", []):
         sid = str(feat.get("id", "")).strip().upper()
-        if not sid.startswith("AZ") or sid in candidates:
+        if not re.match(r"^AZ\d{4}$", sid) or sid in candidates:
             continue
         props = feat.get("properties", {})
         coords = feat.get("geometry", {}).get("coordinates", [None, None])
