@@ -1,11 +1,13 @@
 """
-update_forecast.py — Operational 6-Hourly HRRR MOS Runner + Multi-Cycle 7-Day Verification
+update_forecast.py — Operational 6-Hourly HRRR MOS Runner (Synoptic Data API + IEM COOP)
 1. Fetches the latest complete 48-hr synoptic HRRR run (00Z, 06Z, 12Z, 18Z) from AWS S3.
-2. Computes MOS forecasts using pure HRRR predictors + seasonal harmonic climatology across
-   Airports (AZ_ASOS), NWS COOP (AZCLIMATE), NOAA USCRN (USCRN), and RAWS (AZ_DCP).
-3. Maintains docs/verification_history.json keyed by station, date, and synoptic cycle
-   (00Z, 06Z, 12Z, 18Z), auto-backfilling missing cycles across the past 7 days from AWS S3,
-   and exports cycle-selectable 7-day verification metrics into docs/latest_forecasts.json.
+2. Computes MOS forecasts using pure HRRR predictors + seasonal harmonic climatology, and
+   enforces the holdout MAE guardrail: whenever holdout_mos_mae > holdout_raw_mae for a
+   given station/cycle/period, discards the MOS adjustment and uses raw HRRR directly.
+3. Fetches 7-day local-time daily High/Low verification observations via batched sequential
+   requests to Synoptic Data API (/v2/stations/latest?minmax=7&minmaxtype=local&hfmetars=1,
+   restricted=false) for all public Synoptic networks, and IEM Climodat for NWS COOP sites.
+4. Maintains docs/verification_history.json across all four synoptic cycles (00Z, 06Z, 12Z, 18Z).
 """
 import datetime
 import io
@@ -13,6 +15,7 @@ import json
 import logging
 import math
 import os
+import time
 import warnings
 import zoneinfo
 from concurrent.futures import ThreadPoolExecutor
@@ -31,6 +34,7 @@ EQ_FILE = "mos_equations.json"
 OUT_JSON = "docs/latest_forecasts.json"
 HIST_JSON = "docs/verification_history.json"
 ALL_CYCLES = ("00Z", "06Z", "12Z", "18Z")
+SYNOPTIC_BASE = "https://api.synopticdata.com/v2"
 
 HRRR_IDX_PATTERNS = {
     "tmp_2m":   ":TMP:2 m above ground:",
@@ -56,10 +60,36 @@ HRRR_IDX_PATTERNS = {
 }
 
 
+def get_synoptic_token() -> str:
+    token = os.environ.get("SYNOPTIC_TOKEN", "").strip()
+    if not token:
+        raise RuntimeError("SYNOPTIC_TOKEN environment variable is missing. Set it in GitHub Actions Secrets.")
+    return token
+
+
+def synoptic_get_sequential(session: requests.Session, endpoint: str, params: dict, token: str, timeout: int = 45) -> dict:
+    """Executes one sequential Synoptic GET request (concurrency=1) and scrubs token from errors."""
+    q_params = dict(params)
+    q_params["token"] = token
+    url = f"{SYNOPTIC_BASE}/{endpoint.lstrip('/')}"
+    try:
+        resp = session.get(url, params=q_params, timeout=timeout)
+        time.sleep(0.35)
+        if resp.status_code != 200:
+            raise RuntimeError(f"Synoptic HTTP {resp.status_code} on {endpoint}")
+        payload = resp.json()
+        summary = payload.get("SUMMARY", {})
+        if summary.get("RESPONSE_CODE") not in (1, 2):
+            msg = str(summary.get("RESPONSE_MESSAGE", "Unknown Synoptic error")).replace(token, "***")
+            raise RuntimeError(f"Synoptic API error on {endpoint}: {msg}")
+        return payload
+    except Exception as exc:
+        raise RuntimeError(str(exc).replace(token, "***")) from None
+
+
 def get_verify_date_mst(init_dt: datetime.datetime, fhrs: list) -> datetime.date:
     mid_fh = fhrs[len(fhrs) // 2]
-    valid_mst = init_dt + datetime.timedelta(hours=mid_fh) - datetime.timedelta(hours=7)
-    return valid_mst.date()
+    return (init_dt + datetime.timedelta(hours=mid_fh) - datetime.timedelta(hours=7)).date()
 
 
 def create_sync_session() -> requests.Session:
@@ -75,26 +105,76 @@ def eval_harmonic_norm(w: list, doy: int) -> float:
     return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
 
 
-def fetch_station_obs_window(stn_id: str, meta: dict, start_dt: datetime.date, end_dt: datetime.date) -> tuple:
-    """Fetches daily High/Low observations from IEM across [start_dt, end_dt] for ASOS, COOP, USCRN, or RAWS."""
-    session = create_sync_session()
-    if meta["network"] == "AZCLIMATE":
-        url = (
-            f"https://mesonet.agron.iastate.edu/cgi-bin/request/coop.py?"
-            f"network=AZCLIMATE&station={meta['iem_id']}&"
-            f"year1={start_dt.year}&month1={start_dt.month}&day1={start_dt.day}&"
-            f"year2={end_dt.year}&month2={end_dt.month}&day2={end_dt.day}&"
-            f"vars=high,low&what=download&delim=comma&with_header=true"
-        )
-    else:
-        url = (
-            f"https://mesonet.agron.iastate.edu/cgi-bin/request/daily.py?"
-            f"network={meta['network']}&stations={meta['iem_id']}&"
-            f"year1={start_dt.year}&month1={start_dt.month}&day1={start_dt.day}&"
-            f"year2={end_dt.year}&month2={end_dt.month}&day2={end_dt.day}&"
-            f"var=max_temp_f&var=min_temp_f&format=csv"
-        )
+def _extract_num(item) -> float:
+    if item is None:
+        return np.nan
+    if isinstance(item, dict):
+        v = item.get("value")
+        return float(v) if v is not None else np.nan
+    try:
+        return float(item)
+    except (TypeError, ValueError):
+        return np.nan
 
+
+def fetch_synoptic_latest_7d_batch(session: requests.Session, stids: list, token: str) -> dict:
+    """Fetches local-time daily High/Low summaries for the past 7 days in sequential batches of 75."""
+    obs_maps = {sid: {} for sid in stids}
+    batch_size = 75
+    for idx in range(0, len(stids), batch_size):
+        chunk = stids[idx:idx + batch_size]
+        payload = synoptic_get_sequential(
+            session,
+            "stations/latest",
+            {
+                "stid": ",".join(chunk),
+                "vars": "air_temp",
+                "minmax": "7",
+                "minmaxtype": "local",
+                "hfmetars": "1",
+                "obtimezone": "local",
+                "units": "english",
+                "qc_checks": "synopticlabs,madis",
+                "restricted": "false",
+            },
+            token=token,
+            timeout=45,
+        )
+        for stn_obj in payload.get("STATION", []):
+            if stn_obj.get("RESTRICTED"):
+                continue
+            sid = str(stn_obj.get("STID", "")).strip().upper()
+            mm_all = stn_obj.get("MINMAX", {})
+            t_key = "air_temp_set_1" if "air_temp_set_1" in mm_all else next((k for k in mm_all if k.startswith("air_temp")), None)
+            if not sid or not t_key:
+                continue
+            mm = mm_all[t_key]
+            dates = mm.get("dates", [])
+            vmins = mm.get("value_min", mm.get("minimum", []))
+            vmaxs = mm.get("value_max", mm.get("maximum", []))
+            s_map = obs_maps.setdefault(sid, {})
+            for d_raw, mn_raw, mx_raw in zip(dates, vmins, vmaxs):
+                d_iso = str(d_raw)[:10]
+                mn = _extract_num(mn_raw)
+                mx = _extract_num(mx_raw)
+                mn_v = None if (np.isnan(mn) or not (-55.0 <= mn <= 135.0)) else round(mn, 1)
+                mx_v = None if (np.isnan(mx) or not (-55.0 <= mx <= 135.0)) else round(mx, 1)
+                if mn_v is not None and mx_v is not None and (mx_v < mn_v or (mx_v - mn_v) > 75.0):
+                    mn_v, mx_v = None, None
+                s_map[d_iso] = {"min": mn_v, "max": mx_v}
+    return obs_maps
+
+
+def fetch_iem_coop_obs_window(stn_id: str, meta: dict, start_dt: datetime.date, end_dt: datetime.date) -> tuple:
+    """Fetches daily High/Low observations from IEM Climodat for NWS COOP (AZCLIMATE) sites."""
+    session = create_sync_session()
+    url = (
+        f"https://mesonet.agron.iastate.edu/cgi-bin/request/coop.py?"
+        f"network=AZCLIMATE&station={meta.get('iem_id', stn_id)}&"
+        f"year1={start_dt.year}&month1={start_dt.month}&day1={start_dt.day}&"
+        f"year2={end_dt.year}&month2={end_dt.month}&day2={end_dt.day}&"
+        f"vars=high,low&what=download&delim=comma&with_header=true"
+    )
     obs_map = {}
     try:
         resp = session.get(url, timeout=20)
@@ -126,7 +206,6 @@ def fetch_station_obs_window(stn_id: str, meta: dict, start_dt: datetime.date, e
 
 
 def get_latest_obs_display(obs_map: dict, before_date: datetime.date) -> tuple:
-    """Returns the most recent completed daily High/Low before today_mst for display in the station header."""
     valid_dates = sorted(
         d_iso for d_iso, vals in obs_map.items()
         if d_iso < before_date.isoformat() and vals.get("min") is not None and vals.get("max") is not None
@@ -298,8 +377,20 @@ def extract_period_features(var_arrays: dict, period: dict, init_dt: datetime.da
     }
 
 
+def eval_period_guidance(eq: dict, feats: dict) -> tuple:
+    """
+    Computes the MOS prediction and enforces the holdout MAE skill guardrail:
+    if holdout_mos_mae > holdout_raw_mae, discards the MOS adjustment and returns
+    raw HRRR directly (active_f = raw_val, used_raw_fallback = True).
+    """
+    raw_val = float(feats["hrrr_ext_t"])
+    mos_eq_val = float(eq["intercept"] + sum(w * feats[v] for v, w in zip(eq["predictors"], eq["weights"])))
+    use_raw_fallback = float(eq["holdout_mos_mae"]) > float(eq["holdout_raw_mae"])
+    active_val = raw_val if use_raw_fallback else mos_eq_val
+    return active_val, raw_val, mos_eq_val, use_raw_fallback
+
+
 def format_fhr_window_desc(init_dt: datetime.datetime, fhrs: list, az_tz: zoneinfo.ZoneInfo) -> str:
-    """Formats the exact forecast hours, UTC hours, and MST local times for UI tooltips."""
     parts = []
     for fh in fhrs:
         v_utc = (init_dt + datetime.timedelta(hours=fh)).replace(tzinfo=datetime.timezone.utc)
@@ -309,7 +400,6 @@ def format_fhr_window_desc(init_dt: datetime.datetime, fhrs: list, az_tz: zonein
 
 
 def find_init_for_verify_date(target_v_date: datetime.date, cyc: str, fhrs: list) -> datetime.datetime:
-    """Finds the exact UTC initialization datetime for `cyc` whose `fhrs` verify on `target_v_date`."""
     cyc_hr = int(cyc.replace("Z", ""))
     for day_shift in (-2, -1, 0):
         cand_d = target_v_date + datetime.timedelta(days=day_shift)
@@ -320,15 +410,11 @@ def find_init_for_verify_date(target_v_date: datetime.date, cyc: str, fhrs: list
 
 
 def backfill_past_7_days(stations: dict, hist_records: dict, today_mst: datetime.date):
-    """
-    Backfills any missing (date, cycle, kind) slots across the past 7 completed MST days
-    for all 4 synoptic cycles (00Z, 06Z, 12Z, 18Z) using archived AWS S3 HRRR runs.
-    """
     past_dates = [today_mst - datetime.timedelta(days=offset) for offset in range(7, 0, -1)]
     sample_stn = next(iter(stations.values()))
 
-    needed_runs = {}   # init_dt -> set of required fhrs
-    missing_jobs = []  # (v_date, cyc, p_key, init_dt)
+    needed_runs = {}
+    missing_jobs = []
 
     for v_dt in past_dates:
         v_iso = v_dt.isoformat()
@@ -384,17 +470,16 @@ def backfill_past_7_days(stations: dict, hist_records: dict, today_mst: datetime
             feats = extract_period_features(var_arrays, eq, init_dt, meta)
             if not feats:
                 continue
-            mos_val = float(eq["intercept"] + sum(w * feats[v] for v, w in zip(eq["predictors"], eq["weights"])))
-            raw_val = float(feats["hrrr_ext_t"])
+            active_val, raw_val, _, used_fallback = eval_period_guidance(eq, feats)
             cyc_slot[kind] = {
-                "mos_f": round(mos_val, 1),
+                "mos_f": round(active_val, 1),
                 "raw_f": round(raw_val, 1),
+                "used_raw_fallback": used_fallback,
                 "init_utc": init_dt.strftime("%Y-%m-%d %H:%MZ"),
             }
 
 
 def build_station_7d_verification(stn_id: str, obs_map: dict, hist_records: dict, today_mst: datetime.date) -> dict:
-    """Builds cycle-specific (00Z, 06Z, 12Z, 18Z) 7-day verification series and MAE stats."""
     past_dates = [today_mst - datetime.timedelta(days=offset) for offset in range(7, 0, -1)]
     stn_hist = hist_records.get(stn_id, {})
 
@@ -431,6 +516,7 @@ def build_station_7d_verification(stn_id: str, obs_map: dict, hist_records: dict
 
 
 def main():
+    token = get_synoptic_token()
     with open(EQ_FILE, "r") as f:
         eq_bundle = json.load(f)
 
@@ -464,10 +550,21 @@ def main():
     with ThreadPoolExecutor(max_workers=16) as pool:
         fhr_results = dict(zip(fhrs_to_fetch, pool.map(lambda fh: fetch_fhr_all_stations(chosen_init, fh, stations), fhrs_to_fetch)))
 
-    obs_start = today_mst - datetime.timedelta(days=14)
-    with ThreadPoolExecutor(max_workers=12) as pool:
-        obs_futures = [pool.submit(fetch_station_obs_window, sid, sinfo["meta"], obs_start, today_mst) for sid, sinfo in stations.items()]
-        obs_maps = {sid: omap for sid, omap in (f.result() for f in obs_futures)}
+    session = create_sync_session()
+    syn_ids = [sid for sid, s in stations.items() if s["meta"].get("network") != "AZCLIMATE"]
+    coop_ids = [sid for sid, s in stations.items() if s["meta"].get("network") == "AZCLIMATE"]
+
+    obs_maps = {}
+    if syn_ids:
+        print(f"Fetching 7-day local High/Low verification from Synoptic for {len(syn_ids)} stations...")
+        obs_maps.update(fetch_synoptic_latest_7d_batch(session, syn_ids, token))
+
+    if coop_ids:
+        obs_start = today_mst - datetime.timedelta(days=14)
+        with ThreadPoolExecutor(max_workers=10) as pool:
+            coop_futures = [pool.submit(fetch_iem_coop_obs_window, sid, stations[sid]["meta"], obs_start, today_mst) for sid in coop_ids]
+            for sid, omap in (f.result() for f in coop_futures):
+                obs_maps[sid] = omap
 
     hist_records = {}
     if os.path.exists(HIST_JSON):
@@ -488,7 +585,7 @@ def main():
 
     for stn_id, s_info in stations.items():
         meta = s_info["meta"]
-        obs_map = obs_maps[stn_id]
+        obs_map = obs_maps.get(stn_id, {})
         last_min, last_max, obs_date_lbl = get_latest_obs_display(obs_map, today_mst)
 
         var_arrays = {}
@@ -520,8 +617,7 @@ def main():
             feats = extract_period_features(var_arrays, eq, chosen_init, meta)
             if not feats:
                 continue
-            mos_val = float(eq["intercept"] + sum(w * feats[v] for v, w in zip(eq["predictors"], eq["weights"])))
-            raw_val = float(feats["hrrr_ext_t"])
+            active_val, raw_val, mos_eq_val, used_fallback = eval_period_guidance(eq, feats)
             verify_dt = get_verify_date_mst(chosen_init, eq["fhrs"])
             v_iso = verify_dt.isoformat()
             kind = eq["kind"]
@@ -529,8 +625,9 @@ def main():
             cyc_slot = stn_hist.setdefault(v_iso, {}).setdefault(chosen_cyc, {})
             if p_key in ("min_1", "max_1") or kind not in cyc_slot:
                 cyc_slot[kind] = {
-                    "mos_f": round(mos_val, 1),
+                    "mos_f": round(active_val, 1),
                     "raw_f": round(raw_val, 1),
+                    "used_raw_fallback": used_fallback,
                     "init_utc": chosen_init.strftime("%Y-%m-%d %H:%MZ"),
                 }
 
@@ -551,8 +648,10 @@ def main():
                 "window_desc": format_fhr_window_desc(chosen_init, eq["fhrs"], az_tz),
                 "verify_date": verify_dt.strftime("%a, %b %d"),
                 "raw_hrrr_f": round(raw_val, 1),
-                "mos_f": round(mos_val, 1),
-                "delta_f": round(mos_val - raw_val, 1),
+                "mos_f": round(active_val, 1),
+                "mos_eq_f": round(mos_eq_val, 1),
+                "used_raw_fallback": used_fallback,
+                "delta_f": round(active_val - raw_val, 1),
                 "holdout_mos_mae": eq["holdout_mos_mae"],
                 "holdout_raw_mae": eq["holdout_raw_mae"],
                 "breakdown": breakdown,
