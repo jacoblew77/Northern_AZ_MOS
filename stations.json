@@ -116,16 +116,6 @@
     "source": "SYNOPTIC",
     "synoptic_id": "KSEZ"
   },
-  "KSJN": {
-    "name": "St. Johns Industrial Air Park",
-    "network": "AZ_ASOS",
-    "iem_id": "SJN",
-    "lat": 34.5184,
-    "lon": -109.3789,
-    "elev_ft": 5737,
-    "source": "SYNOPTIC",
-    "synoptic_id": "KSJN"
-  },
   "KSOW": {
     "name": "Show Low Regional Airport",
     "network": "AZ_ASOS",
@@ -631,42 +621,6 @@
     "lon": -110.9423,
     "elev_ft": 5232
   },
-  "TR488": {
-    "name": "Coconino Micro #3 RAWS",
-    "network": "RAWS",
-    "source": "SYNOPTIC",
-    "synoptic_id": "TR488",
-    "lat": 34.7332,
-    "lon": -111.5319,
-    "elev_ft": 6400
-  },
-  "TS876": {
-    "name": "Prescott Portable #1 RAWS",
-    "network": "RAWS",
-    "source": "SYNOPTIC",
-    "synoptic_id": "TS876",
-    "lat": 34.9219,
-    "lon": -112.8452,
-    "elev_ft": 5157
-  },
-  "TT417": {
-    "name": "Tonto Portable #1 RAWS",
-    "network": "RAWS",
-    "source": "SYNOPTIC",
-    "synoptic_id": "TT417",
-    "lat": 34.005,
-    "lon": -110.9964,
-    "elev_ft": 5593
-  },
-  "TT762": {
-    "name": "Cave Creek RAWS",
-    "network": "RAWS",
-    "source": "SYNOPTIC",
-    "synoptic_id": "TT762",
-    "lat": 34.0899,
-    "lon": -111.8465,
-    "elev_ft": 3477
-  },
   "BBSA3": {
     "name": "Baker Butte Smt SNOTEL",
     "network": "SNOTEL",
@@ -991,33 +945,6 @@
     "lon": -111.52,
     "elev_ft": 6635
   },
-  "JE223": {
-    "name": "Silver Creek Site 2 ALERT",
-    "network": "ALERT",
-    "source": "SYNOPTIC",
-    "synoptic_id": "JE223",
-    "lat": 34.3306,
-    "lon": -109.9286,
-    "elev_ft": 6122
-  },
-  "JE360": {
-    "name": "Silver Creek Site 3 ALERT",
-    "network": "ALERT",
-    "source": "SYNOPTIC",
-    "synoptic_id": "JE360",
-    "lat": 34.3333,
-    "lon": -109.9325,
-    "elev_ft": 6119
-  },
-  "JE361": {
-    "name": "Silver Creek Site 1 ALERT",
-    "network": "ALERT",
-    "source": "SYNOPTIC",
-    "synoptic_id": "JE361",
-    "lat": 34.3311,
-    "lon": -109.925,
-    "elev_ft": 6123
-  },
   "MALP": {
     "name": "Lake Pleasant North ALERT",
     "network": "ALERT",
@@ -1108,15 +1035,6 @@
     "lon": -112.4517,
     "elev_ft": 4423
   },
-  "AV363": {
-    "name": "Kc6Ujn Concho CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "AV363",
-    "lat": 34.5222,
-    "lon": -109.736,
-    "elev_ft": 5689
-  },
   "AV444": {
     "name": "N6Tka2 Williams CWOP",
     "network": "CWOP",
@@ -1152,24 +1070,6 @@
     "lat": 35.2165,
     "lon": -111.645,
     "elev_ft": 7054
-  },
-  "C4534": {
-    "name": "Cw4534 Camp Verde CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "C4534",
-    "lat": 34.557,
-    "lon": -111.8712,
-    "elev_ft": 3247
-  },
-  "C6521": {
-    "name": "Cw6521 Cornville CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "C6521",
-    "lat": 34.7283,
-    "lon": -111.9697,
-    "elev_ft": 3379
   },
   "D3979": {
     "name": "Dw3979 Cottonwood CWOP",
@@ -1387,15 +1287,6 @@
     "lon": -112.5338,
     "elev_ft": 5085
   },
-  "F8925": {
-    "name": "Fw8925 Flagstaff CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "F8925",
-    "lat": 35.2637,
-    "lon": -111.7293,
-    "elev_ft": 7337
-  },
   "F9626": {
     "name": "Fw9626 Mayer CWOP",
     "network": "CWOP",
@@ -1449,33 +1340,6 @@
     "lat": 36.9342,
     "lon": -111.4628,
     "elev_ft": 4165
-  },
-  "G3851": {
-    "name": "Gw3851 Heber CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "G3851",
-    "lat": 34.4328,
-    "lon": -110.6093,
-    "elev_ft": 6627
-  },
-  "G4061": {
-    "name": "Gw4061 Prescott Valley CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "G4061",
-    "lat": 34.6712,
-    "lon": -112.236,
-    "elev_ft": 5328
-  },
-  "G4319": {
-    "name": "Gw4319 Lakeside CWOP",
-    "network": "CWOP",
-    "source": "SYNOPTIC",
-    "synoptic_id": "G4319",
-    "lat": 34.1217,
-    "lon": -109.9555,
-    "elev_ft": 6870
   },
   "ALRA3": {
     "name": "Alpine RAWS",
