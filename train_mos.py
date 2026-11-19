@@ -3,12 +3,13 @@ train_mos.py — Multi-Station HRRRv4 MOS Trainer (Synoptic Data Time-Series API
 - Queries Synoptic Data API (/v2/networks, /v2/stations/metadata, /v2/stations/timeseries)
   for all public non-COOP networks (Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP)
   and IEM Climodat (AZCLIMATE) for manual NWS COOP sites.
-- Computes local Arizona calendar-day (MST) High/Low temperatures from Synoptic time-series
-  observations with Synoptic + MADIS automated QC filtering (qc_remove_data=on).
-- Includes every verified active station in WFO Flagstaff's CWA (no 1-mile exclusion),
-  ordered by network priority (Airports > COOP > USCRN > RAWS > SNOTEL > RWIS > ALERT > CWOP).
-- Enforces Synoptic API rules: token via env var only, concurrency=1 sequential requests,
-  <= 100,000 station-hours per timeseries call, and restricted=false public-only filtering.
+- Aligns all Synoptic observations to standardized NWS MOS diurnal windows in UTC:
+  * Morning Min (Date D): 00:00Z to 18:00Z on Date D (5:00 PM MST D-1 to 11:00 AM MST D).
+  * Afternoon Max (Date D): 12:00Z on Date D to 06:00Z on Date D+1 (5:00 AM MST D to 11:00 PM MST D).
+- Applies a 5-point centered median spike-rejection filter to high-frequency CWOP telemetry
+  before computing window extremes so single-packet glitches are removed while true peaks/troughs remain intact.
+- Evaluates every consecutive hourly HRRR timestep across each target diurnal window when computing
+  hrrr_ext_t and window-mean physical predictors.
 """
 import argparse
 import asyncio
@@ -57,26 +58,27 @@ NETWORK_PRIORITY = {
     "CWOP":      8,
 }
 
+# Every consecutive hourly HRRR timestep across each target diurnal window
 CYCLE_PERIODS = {
     "00Z": [
-        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [9, 12, 14]},
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [20, 21, 23]},
-        {"key": "min_2", "kind": "min", "label": "Morning Min (Day 2)",   "fhrs": [33, 36]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]},
+        {"key": "min_2", "kind": "min", "label": "Morning Min (Day 2)",   "fhrs": [28, 29, 30, 31, 32, 33, 34, 35, 36]},
     ],
     "06Z": [
-        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [3, 6, 8]},
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [14, 15, 17]},
-        {"key": "min_2", "kind": "min", "label": "Morning Min (Day 2)",   "fhrs": [27, 30, 32]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]},
+        {"key": "min_2", "kind": "min", "label": "Morning Min (Day 2)",   "fhrs": [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]},
     ],
     "12Z": [
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)", "fhrs": [8, 9, 11]},
-        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [21, 24, 26]},
-        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [32, 33, 35]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)", "fhrs": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]},
+        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [29, 30, 31, 32, 33, 34, 35, 36]},
     ],
     "18Z": [
-        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)", "fhrs": [2, 3, 5]},
-        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [15, 18, 20]},
-        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [26, 27, 29]},
+        {"key": "max_1", "kind": "max", "label": "Afternoon Max (Today)", "fhrs": [1, 2, 3, 4, 5, 6, 7, 8, 9]},
+        {"key": "min_1", "kind": "min", "label": "Morning Min (Day 1)",   "fhrs": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]},
+        {"key": "max_2", "kind": "max", "label": "Afternoon Max (Day 1)", "fhrs": [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]},
     ],
 }
 
@@ -172,8 +174,21 @@ def format_station_name(raw_name: str, network: str) -> str:
     return name
 
 
-def parse_timeseries_daily_df(stn_obj: dict, min_obs_per_day: int = 8) -> pd.DataFrame:
-    """Aggregates local-time air_temp time-series into daily High/Low temperatures."""
+def despike_cwop_series(temps: pd.Series, threshold_f: float = 4.0) -> pd.Series:
+    """Rejects isolated single-packet telemetry spikes (> threshold_f from 5-pt median) while preserving real peaks/troughs."""
+    if len(temps) < 3:
+        return temps
+    med = temps.rolling(window=5, center=True, min_periods=3).median()
+    is_spike = (temps - med).abs() > threshold_f
+    return temps.where(~is_spike, med)
+
+
+def parse_timeseries_diurnal_df(stn_obj: dict, apply_spike_filter: bool = False, min_obs_per_window: int = 6) -> pd.DataFrame:
+    """
+    Aggregates UTC air_temp time-series into standardized NWS MOS diurnal windows:
+      - Morning Min (obs_min) for Date D: 00:00Z to 18:00Z on Date D (5:00 PM MST D-1 to 11:00 AM MST D).
+      - Afternoon Max (obs_max) for Date D: 12:00Z on Date D to 06:00Z on Date D+1 (5:00 AM MST D to 11:00 PM MST D).
+    """
     obs = stn_obj.get("OBSERVATIONS", {})
     dts = obs.get("date_time", [])
     t_key = "air_temp_set_1" if "air_temp_set_1" in obs else next((k for k in obs if k.startswith("air_temp")), None)
@@ -184,31 +199,54 @@ def parse_timeseries_daily_df(stn_obj: dict, min_obs_per_day: int = 8) -> pd.Dat
         return pd.DataFrame()
 
     df = pd.DataFrame({
-        "date_str": [str(d)[:10] for d in dts],
+        "ts": pd.to_datetime(dts, utc=True, errors="coerce"),
         "temp": pd.to_numeric(temps, errors="coerce"),
-    }).dropna(subset=["temp"])
+    }).dropna(subset=["ts", "temp"])
 
-    df = df[(df["temp"] >= -55.0) & (df["temp"] <= 135.0)]
+    df = df[(df["temp"] >= -55.0) & (df["temp"] <= 135.0)].sort_values("ts").reset_index(drop=True)
     if df.empty:
         return pd.DataFrame()
 
-    agg = df.groupby("date_str")["temp"].agg(obs_min="min", obs_max="max", cnt="count")
-    agg = agg[(agg["cnt"] >= min_obs_per_day) & (agg["obs_max"] >= agg["obs_min"]) & ((agg["obs_max"] - agg["obs_min"]) <= 75.0)]
-    if agg.empty:
+    if apply_spike_filter and len(df) >= 3:
+        df["temp"] = despike_cwop_series(df["temp"], threshold_f=4.0)
+
+    # 1. Morning Min window: 00:00Z <= ts <= 18:00Z on Date D
+    in_min_win = (df["ts"].dt.hour < 18) | ((df["ts"].dt.hour == 18) & (df["ts"].dt.minute == 0))
+    min_df = df[in_min_win].copy()
+    min_df["date"] = min_df["ts"].dt.tz_localize(None).dt.normalize()
+    min_agg = min_df.groupby("date")["temp"].agg(obs_min="min", min_cnt="count")
+    min_agg = min_agg[min_agg["min_cnt"] >= min_obs_per_window][["obs_min"]]
+
+    # 2. Afternoon Max window: 12:00Z on Date D <= ts <= 06:00Z on Date D+1
+    ts_shift = df["ts"] - pd.Timedelta(hours=12)
+    in_max_win = (ts_shift.dt.hour < 18) | ((ts_shift.dt.hour == 18) & (ts_shift.dt.minute == 0))
+    max_df = df[in_max_win].copy()
+    max_df["date"] = ts_shift[in_max_win].dt.tz_localize(None).dt.normalize()
+    max_agg = max_df.groupby("date")["temp"].agg(obs_max="max", max_cnt="count")
+    max_agg = max_agg[max_agg["max_cnt"] >= min_obs_per_window][["obs_max"]]
+
+    out = min_agg.join(max_agg, how="outer").sort_index()
+    if out.empty:
         return pd.DataFrame()
 
-    agg.index = pd.to_datetime(agg.index).normalize()
-    agg.index.name = "date"
-    return agg[["obs_min", "obs_max"]].round(1).sort_index()
+    both = out["obs_min"].notna() & out["obs_max"].notna()
+    bad = both & ((out["obs_max"] < out["obs_min"]) | ((out["obs_max"] - out["obs_min"]) > 75.0))
+    out.loc[bad, ["obs_min", "obs_max"]] = np.nan
+    out = out.dropna(how="all").round(1)
+    out.index.name = "date"
+    return out
 
 
-def fetch_synoptic_timeseries_daily(session: requests.Session, stid: str, start_date: str, end_date: str, token: str) -> pd.DataFrame:
+def fetch_synoptic_timeseries_daily(session: requests.Session, stid: str, network: str, start_date: str, end_date: str, token: str) -> pd.DataFrame:
     """
-    Fetches 2020-2026 air_temp time-series for a single station (~52,000 station-hours,
-    well under Synoptic's 100,000 station-hour per-request limit) and aggregates daily High/Low.
+    Fetches 2020-2026 UTC air_temp time-series for a single station (~52,000 station-hours,
+    well under Synoptic's 100,000 station-hour per-request limit) and aggregates standardized
+    00Z-18Z Morning Min and 12Z-06Z Afternoon Max values.
     """
-    start_str = start_date.replace("-", "") + "0000"
-    end_str = end_date.replace("-", "") + "2359"
+    s_dt = datetime.datetime.strptime(start_date, "%Y-%m-%d") - datetime.timedelta(days=1)
+    e_dt = datetime.datetime.strptime(end_date, "%Y-%m-%d") + datetime.timedelta(days=1)
+    start_str = s_dt.strftime("%Y%m%d") + "0000"
+    end_str = e_dt.strftime("%Y%m%d") + "0600"
     payload = synoptic_get_sequential(
         session,
         "stations/timeseries",
@@ -217,7 +255,7 @@ def fetch_synoptic_timeseries_daily(session: requests.Session, stid: str, start_
             "vars": "air_temp",
             "start": start_str,
             "end": end_str,
-            "obtimezone": "local",
+            "obtimezone": "UTC",
             "units": "english",
             "hfmetars": "1",
             "qc_checks": "synopticlabs,madis",
@@ -230,7 +268,7 @@ def fetch_synoptic_timeseries_daily(session: requests.Session, stid: str, start_
     stn_list = payload.get("STATION", [])
     if not stn_list or stn_list[0].get("RESTRICTED"):
         return pd.DataFrame()
-    return parse_timeseries_daily_df(stn_list[0], min_obs_per_day=8)
+    return parse_timeseries_diurnal_df(stn_list[0], apply_spike_filter=(network == "CWOP"), min_obs_per_window=6)
 
 
 def fetch_iem_coop_daily_obs(stn_id: str, meta: dict, start_date: str, end_date: str) -> pd.DataFrame:
@@ -274,8 +312,6 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     Discovers all active public stations across WFO Flagstaff CWA without spatial removal:
       1. Synoptic public networks (restricted=false): Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP.
       2. IEM Climodat NWS COOP (AZCLIMATE).
-    Passes cwa=FGZ and complete=1 to Synoptic metadata so every public network in Flagstaff's
-    CWA is returned, then verifies >= 1,400 valid days since 2020-12-03 and recent activity.
     """
     session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
@@ -417,12 +453,13 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
         print(f"Verifying 2020-2026 Synoptic time-series completeness for {len(new_syn_ids)} new candidates...")
         for i, sid in enumerate(new_syn_ids, 1):
             try:
-                df = fetch_synoptic_timeseries_daily(session, sid, START_DATE, today_str, token)
+                tier = candidates[sid]["network"]
+                df = fetch_synoptic_timeseries_daily(session, sid, tier, START_DATE, today_str, token)
                 if len(df) < 1400 or df.index.max() < recent_cutoff:
                     continue
                 verified[sid] = candidates[sid]
                 prefetched_obs[sid] = df
-                print(f"  [{i}/{len(new_syn_ids)}] Verified {candidates[sid]['network']}: {sid} — {candidates[sid]['name']} ({len(df)} days)")
+                print(f"  [{i}/{len(new_syn_ids)}] Verified {tier}: {sid} — {candidates[sid]['name']} ({len(df)} days)")
             except Exception as exc:
                 print(f"  [{i}/{len(new_syn_ids)}] Skipping {sid}: {exc}")
 
@@ -442,14 +479,23 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
 
 
 def fit_harmonic_climatology(obs_df: pd.DataFrame) -> tuple:
-    doys = obs_df.index.dayofyear.values
-    X = np.column_stack([
-        np.ones(len(doys)),
-        np.cos(2.0 * math.pi * doys / 365.25),
-        np.sin(2.0 * math.pi * doys / 365.25),
+    min_sub = obs_df.dropna(subset=["obs_min"])
+    doys_min = min_sub.index.dayofyear.values
+    X_min = np.column_stack([
+        np.ones(len(doys_min)),
+        np.cos(2.0 * math.pi * doys_min / 365.25),
+        np.sin(2.0 * math.pi * doys_min / 365.25),
     ])
-    w_min, _, _, _ = np.linalg.lstsq(X, obs_df["obs_min"].values, rcond=None)
-    w_max, _, _, _ = np.linalg.lstsq(X, obs_df["obs_max"].values, rcond=None)
+    w_min, _, _, _ = np.linalg.lstsq(X_min, min_sub["obs_min"].values, rcond=None)
+
+    max_sub = obs_df.dropna(subset=["obs_max"])
+    doys_max = max_sub.index.dayofyear.values
+    X_max = np.column_stack([
+        np.ones(len(doys_max)),
+        np.cos(2.0 * math.pi * doys_max / 365.25),
+        np.sin(2.0 * math.pi * doys_max / 365.25),
+    ])
+    w_max, _, _, _ = np.linalg.lstsq(X_max, max_sub["obs_max"].values, rcond=None)
     return [round(float(x), 4) for x in w_min], [round(float(x), 4) for x in w_max]
 
 
@@ -780,7 +826,7 @@ def main():
         if obs_df is None:
             print(f"[{idx}/{len(syn_targets)}] Fetching Synoptic time-series for {sid} ({meta['name']})...")
             try:
-                obs_df = fetch_synoptic_timeseries_daily(session, sid, START_DATE, END_DATE, token)
+                obs_df = fetch_synoptic_timeseries_daily(session, sid, meta.get("network", ""), START_DATE, END_DATE, token)
             except Exception as exc:
                 print(f"  [!] Skipping {sid}: {exc}")
                 continue
@@ -860,6 +906,7 @@ def main():
             equations_bundle["stations"][stn_id]["cycles"][cyc] = {}
 
             for period in periods:
+                obs_col = "obs_min" if period["kind"] == "min" else "obs_max"
                 rows = []
                 for init_dt, var_arrays in stn_runs.items():
                     if init_dt.hour != cyc_hr:
@@ -867,11 +914,14 @@ def main():
                     v_date = pd.Timestamp(get_verify_date_mst(init_dt, period["fhrs"]))
                     if v_date not in obs_df.index:
                         continue
+                    target_val = obs_df.loc[v_date, obs_col]
+                    if pd.isna(target_val):
+                        continue
 
                     feats = extract_period_features(var_arrays, period, init_dt, meta)
                     if not feats:
                         continue
-                    feats["target"] = float(obs_df.loc[v_date, "obs_min" if period["kind"] == "min" else "obs_max"])
+                    feats["target"] = float(target_val)
                     feats["verify_date"] = v_date
                     rows.append(feats)
 
