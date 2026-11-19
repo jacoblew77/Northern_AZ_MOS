@@ -751,4 +751,270 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
     active_tiles = sorted({info["tile_id"] for info in uncached_stations.values()})
     tile_to_pixels = {t: {} for t in active_tiles}
     for stn_id, info in uncached_stations.items():
-        tile_to_pixels[info["tile_id"]][stn_id] = (info["
+        tile_to_pixels[info["tile_id"]][stn_id] = (info["ly"], info["lx"])
+
+    queue = asyncio.Queue()
+    for r in unique_runs:
+        queue.put_nowait(r)
+
+    connector = aiohttp.TCPConnector(limit=350, ttl_dns_cache=600)
+    timeout = aiohttp.ClientTimeout(total=15, sock_connect=5, sock_read=8)
+    compressor = numcodecs.Blosc()
+    pbar = tqdm(total=len(unique_runs), desc="Multi-Station HRRR-Zarr Ingestion", unit="run", smoothing=0.05)
+
+    async def worker(session):
+        while True:
+            try:
+                init_dt = queue.get_nowait()
+            except asyncio.QueueEmpty:
+                break
+            try:
+                d_str = init_dt.strftime("%Y%m%d")
+                h_str = f"{init_dt.hour:02d}"
+                base_zarr = f"https://hrrrzarr.s3.amazonaws.com/sfc/{d_str}/{d_str}_{h_str}z_fcst.zarr"
+                tmp_spec = resolved_specs["tmp_2m"]
+
+                for tile_id, pix_map in tile_to_pixels.items():
+                    tmp_res = await fetch_tile_var(session, compressor, f"{base_zarr}/{tmp_spec['path']}/{tile_id}", tmp_spec, pix_map)
+                    if tmp_res is None:
+                        continue
+                    for stn_id, ts in tmp_res.items():
+                        data_store[stn_id].setdefault(init_dt, {})["tmp_2m"] = ts
+
+                    other_keys = [k for k in resolved_specs if k != "tmp_2m"]
+                    coros = [
+                        fetch_tile_var(session, compressor, f"{base_zarr}/{resolved_specs[k]['path']}/{tile_id}", resolved_specs[k], pix_map)
+                        for k in other_keys
+                    ]
+                    res_list = await asyncio.gather(*coros)
+                    for k, res in zip(other_keys, res_list):
+                        if res is not None:
+                            for stn_id, ts in res.items():
+                                data_store[stn_id].setdefault(init_dt, {})[k] = ts
+            finally:
+                pbar.update(1)
+                queue.task_done()
+
+    try:
+        async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
+            workers = [asyncio.create_task(worker(session)) for _ in range(MAX_CONCURRENT_RUNS)]
+            await asyncio.gather(*workers)
+    finally:
+        pbar.close()
+
+    for stn_id in uncached_stations:
+        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_step{SAMPLE_STEP_DAYS}.pkl")
+        with open(cache_path, "wb") as f:
+            pickle.dump(data_store[stn_id], f)
+
+    return data_store
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--retrain-all", action="store_true", help="Retrain all stations from scratch using cached or fresh observations.")
+    parser.add_argument("--discover-networks", action="store_true", help="Discover all active public Northern AZ stations across Synoptic & IEM COOP.")
+    parser.add_argument("--refresh-obs", action="store_true", help="Force re-download of historical daily observations instead of using obs_cache.")
+    args = parser.parse_args()
+
+    token = get_synoptic_token()
+    os.makedirs(OBS_CACHE_DIR, exist_ok=True)
+
+    with open(STATIONS_FILE, "r") as f:
+        all_stations = json.load(f)
+
+    for sid, meta in all_stations.items():
+        if meta.get("network") == "AZCLIMATE":
+            meta["source"] = "IEM_COOP"
+        else:
+            meta["source"] = "SYNOPTIC"
+            meta["synoptic_id"] = sid
+
+    prefetched_obs = {}
+    if args.discover_networks:
+        all_stations, prefetched_obs = discover_all_public_northern_az_stations(all_stations, token, refresh_obs=args.refresh_obs)
+        with open(STATIONS_FILE, "w") as f:
+            json.dump(all_stations, f, indent=2)
+
+    if os.path.exists(OUTPUT_EQ_FILE) and not args.retrain_all:
+        with open(OUTPUT_EQ_FILE, "r") as f:
+            equations_bundle = json.load(f)
+        existing_ids = set(equations_bundle.get("stations", {}).keys())
+        target_stations = {k: v for k, v in all_stations.items() if k not in existing_ids}
+        for old_id in list(existing_ids):
+            if old_id not in all_stations:
+                del equations_bundle["stations"][old_id]
+        if not target_stations:
+            print(f"All {len(all_stations)} stations in {STATIONS_FILE} are already trained in {OUTPUT_EQ_FILE}!")
+            with open(OUTPUT_EQ_FILE, "w") as f:
+                json.dump(equations_bundle, f, indent=2)
+            return
+        print(f"Incremental mode: training {len(target_stations)} newly added station(s)...")
+    else:
+        equations_bundle = {"stations": {}}
+        target_stations = all_stations
+        print(f"Full training mode: training all {len(target_stations)} stations...")
+
+    session = create_sync_session()
+    obs_by_stn = {}
+    valid_targets = {}
+    cached_hits = 0
+    api_fetches = 0
+
+    syn_targets = [sid for sid, m in target_stations.items() if m.get("source") == "SYNOPTIC"]
+    coop_targets = [sid for sid, m in target_stations.items() if m.get("source") == "IEM_COOP"]
+
+    for idx, sid in enumerate(syn_targets, 1):
+        meta = target_stations[sid]
+        obs_df = prefetched_obs.get(sid)
+        if obs_df is None:
+            obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+            if obs_df is not None:
+                cached_hits += 1
+            else:
+                print(f"[{idx}/{len(syn_targets)}] Fetching Synoptic time-series for {sid} ({meta['name']})...")
+                try:
+                    obs_df = fetch_synoptic_timeseries_daily(session, sid, meta.get("network", ""), START_DATE, END_DATE, token)
+                    save_cached_obs(sid, obs_df)
+                    api_fetches += 1
+                except Exception as exc:
+                    print(f"  [!] Skipping {sid}: {exc}")
+                    continue
+
+        if obs_df is None or obs_df.empty or not isinstance(obs_df.index, pd.DatetimeIndex):
+            print(f"  [!] Skipping {sid}: no valid Synoptic air_temp time-series returned.")
+            continue
+
+        obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
+        if len(obs_df) < 200:
+            print(f"  [!] Skipping {sid}: insufficient daily records ({len(obs_df)}).")
+            continue
+
+        w_min, w_max = fit_harmonic_climatology(obs_df)
+        meta_enriched = dict(meta)
+        meta_enriched.setdefault("elev_ft", 5000)
+        meta_enriched["clim_min_w"] = w_min
+        meta_enriched["clim_max_w"] = w_max
+        obs_by_stn[sid] = obs_df
+        valid_targets[sid] = meta_enriched
+
+    for sid in coop_targets:
+        meta = target_stations[sid]
+        obs_df = prefetched_obs.get(sid)
+        if obs_df is None:
+            obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+            if obs_df is not None:
+                cached_hits += 1
+            else:
+                print(f"Fetching Climodat COOP observations for {sid} ({meta['name']})...")
+                try:
+                    obs_df = fetch_iem_coop_daily_obs(sid, meta, START_DATE, END_DATE)
+                    save_cached_obs(sid, obs_df)
+                except Exception as exc:
+                    print(f"  [!] Skipping {sid} due to COOP fetch error: {exc}")
+                    continue
+
+        if obs_df is None or obs_df.empty or not isinstance(obs_df.index, pd.DatetimeIndex):
+            print(f"  [!] Skipping {sid}: no valid COOP records returned.")
+            continue
+
+        obs_df = obs_df[obs_df.index <= pd.Timestamp(END_DATE)]
+        if len(obs_df) < 200:
+            print(f"  [!] Skipping {sid}: only {len(obs_df)} daily records available.")
+            continue
+
+        w_min, w_max = fit_harmonic_climatology(obs_df)
+        meta_enriched = dict(meta)
+        meta_enriched.setdefault("elev_ft", 5000)
+        meta_enriched["clim_min_w"] = w_min
+        meta_enriched["clim_max_w"] = w_max
+        obs_by_stn[sid] = obs_df
+        valid_targets[sid] = meta_enriched
+
+    print(f"Observation ingestion complete: {cached_hits} loaded from obs_cache, {api_fetches} fetched from Synoptic API.")
+
+    if not valid_targets:
+        print("No valid stations to train.")
+        return
+
+    station_pixels, unique_tiles, resolved_specs = resolve_zarr_pixels(valid_targets)
+    init_dates = pd.date_range(START_DATE, END_DATE, freq=f"{SAMPLE_STEP_DAYS}D")
+    unique_runs = [
+        datetime.datetime(d.year, d.month, d.day, hr)
+        for d in init_dates
+        for hr in (0, 6, 12, 18)
+    ]
+
+    data_store = asyncio.run(download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, resolved_specs))
+
+    candidate_cols = [
+        "hrrr_ext_t", "hrrr_win_dp2m", "hrrr_win_dpd", "hrrr_win_rh",
+        "hrrr_tmp_500", "hrrr_tmp_700", "hrrr_hgt_500", "hrrr_thick_1000_500", "hrrr_lapse_500_700",
+        "hrrr_lcdc", "hrrr_mcdc", "hrrr_hcdc", "hrrr_tcdc", "hrrr_dlwrf", "hrrr_dswrf",
+        "hrrr_pwat", "hrrr_qpf_in", "hrrr_snow_in",
+        "hrrr_u10_kt", "hrrr_v10_kt", "hrrr_wspd10_kt", "hrrr_wspd700_kt",
+        "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2", "norm_t",
+    ]
+
+    equations_bundle["generated_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    equations_bundle["training_window"] = f"{START_DATE} to {END_DATE}"
+
+    for stn_id, meta in valid_targets.items():
+        obs_df = obs_by_stn[stn_id]
+        stn_runs = data_store[stn_id]
+        equations_bundle["stations"][stn_id] = {"meta": meta, "cycles": {}}
+
+        for cyc, periods in CYCLE_PERIODS.items():
+            cyc_hr = int(cyc.replace("Z", ""))
+            equations_bundle["stations"][stn_id]["cycles"][cyc] = {}
+
+            for period in periods:
+                obs_col = "obs_min" if period["kind"] == "min" else "obs_max"
+                rows = []
+                for init_dt, var_arrays in stn_runs.items():
+                    if init_dt.hour != cyc_hr:
+                        continue
+                    v_date = pd.Timestamp(get_verify_date_mst(init_dt, period["fhrs"]))
+                    if v_date not in obs_df.index:
+                        continue
+                    target_val = obs_df.loc[v_date, obs_col]
+                    if pd.isna(target_val):
+                        continue
+
+                    feats = extract_period_features(var_arrays, period, init_dt, meta)
+                    if not feats:
+                        continue
+                    feats["target"] = float(target_val)
+                    feats["verify_date"] = v_date
+                    rows.append(feats)
+
+                df_p = pd.DataFrame(rows).sort_values("verify_date")
+                split_idx = int(len(df_p) * 0.75)
+                tr_df, te_df = df_p.iloc[:split_idx], df_p.iloc[split_idx:]
+
+                sel_vars, wts = forward_screening_regression(tr_df, "target", candidate_cols)
+                te_pred = np.column_stack([np.ones(len(te_df)), te_df[sel_vars].values]) @ wts
+                mos_mae = float(np.mean(np.abs(te_pred - te_df["target"].values)))
+                raw_mae = float(np.mean(np.abs(te_df["hrrr_ext_t"].values - te_df["target"].values)))
+
+                equations_bundle["stations"][stn_id]["cycles"][cyc][period["key"]] = {
+                    "kind": period["kind"],
+                    "label": period["label"],
+                    "fhrs": period["fhrs"],
+                    "intercept": round(float(wts[0]), 6),
+                    "predictors": sel_vars,
+                    "weights": [round(float(w), 6) for w in wts[1:]],
+                    "holdout_raw_mae": round(raw_mae, 2),
+                    "holdout_mos_mae": round(mos_mae, 2),
+                    "sample_size": len(df_p),
+                }
+                flag = " [RAW FALLBACK]" if mos_mae > raw_mae else ""
+                print(f"[{stn_id} | {cyc} | {period['key']}] Raw MAE: {raw_mae:.2f}°F -> MOS MAE: {mos_mae:.2f}°F (n={len(df_p)}){flag}")
+
+    with open(OUTPUT_EQ_FILE, "w") as f:
+        json.dump(equations_bundle, f, indent=2)
+    print(f"\nSaved {len(equations_bundle['stations'])} trained stations to {OUTPUT_EQ_FILE}!")
+
+
+if __name__ == "__main__":
+    main()
