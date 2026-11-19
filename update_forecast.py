@@ -5,8 +5,9 @@ update_forecast.py — Operational 6-Hourly HRRR MOS Runner (Synoptic Data API +
    enforces the holdout MAE guardrail: whenever holdout_mos_mae > holdout_raw_mae for a
    given station/cycle/period, discards the MOS adjustment and uses raw HRRR directly.
 3. Fetches 7-day local-time daily High/Low verification observations via batched sequential
-   requests to Synoptic Data API (/v2/stations/latest?minmax=7&minmaxtype=local&hfmetars=1,
-   restricted=false) for all public Synoptic networks, and IEM Climodat for NWS COOP sites.
+   requests to Synoptic Data API (/v2/stations/timeseries over the past 10 days, staying well
+   under the 100,000 station-hour cap and using standard Weather API endpoints) for all public
+   Synoptic networks, and IEM Climodat for NWS COOP sites.
 4. Maintains docs/verification_history.json across all four synoptic cycles (00Z, 06Z, 12Z, 18Z).
 """
 import datetime
@@ -105,63 +106,68 @@ def eval_harmonic_norm(w: list, doy: int) -> float:
     return float(w[0] + w[1] * math.cos(2.0 * math.pi * doy / 365.25) + w[2] * math.sin(2.0 * math.pi * doy / 365.25))
 
 
-def _extract_num(item) -> float:
-    if item is None:
-        return np.nan
-    if isinstance(item, dict):
-        v = item.get("value")
-        return float(v) if v is not None else np.nan
-    try:
-        return float(item)
-    except (TypeError, ValueError):
-        return np.nan
-
-
-def fetch_synoptic_latest_7d_batch(session: requests.Session, stids: list, token: str) -> dict:
-    """Fetches local-time daily High/Low summaries for the past 7 days in sequential batches of 75."""
+def fetch_synoptic_recent_obs_batch(session: requests.Session, stids: list, start_dt: datetime.date, end_dt: datetime.date, token: str) -> dict:
+    """
+    Fetches local-time air_temp time-series across [start_dt, end_dt] in sequential batches
+    of 150 stations (~10 days * 24h * 150 = 36,000 station-hours, well under Synoptic's
+    100,000 station-hour cap) and aggregates daily local MST High/Low temperatures.
+    """
     obs_maps = {sid: {} for sid in stids}
-    batch_size = 75
+    start_str = start_dt.strftime("%Y%m%d") + "0000"
+    end_str = end_dt.strftime("%Y%m%d") + "2359"
+
+    batch_size = 150
     for idx in range(0, len(stids), batch_size):
         chunk = stids[idx:idx + batch_size]
         payload = synoptic_get_sequential(
             session,
-            "stations/latest",
+            "stations/timeseries",
             {
                 "stid": ",".join(chunk),
                 "vars": "air_temp",
-                "minmax": "7",
-                "minmaxtype": "local",
-                "hfmetars": "1",
+                "start": start_str,
+                "end": end_str,
                 "obtimezone": "local",
                 "units": "english",
+                "hfmetars": "1",
                 "qc_checks": "synopticlabs,madis",
+                "qc_remove_data": "on",
                 "restricted": "false",
             },
             token=token,
-            timeout=45,
+            timeout=60,
         )
         for stn_obj in payload.get("STATION", []):
             if stn_obj.get("RESTRICTED"):
                 continue
             sid = str(stn_obj.get("STID", "")).strip().upper()
-            mm_all = stn_obj.get("MINMAX", {})
-            t_key = "air_temp_set_1" if "air_temp_set_1" in mm_all else next((k for k in mm_all if k.startswith("air_temp")), None)
-            if not sid or not t_key:
+            obs = stn_obj.get("OBSERVATIONS", {})
+            dts = obs.get("date_time", [])
+            t_key = "air_temp_set_1" if "air_temp_set_1" in obs else next((k for k in obs if k.startswith("air_temp")), None)
+            if not sid or not dts or not t_key:
                 continue
-            mm = mm_all[t_key]
-            dates = mm.get("dates", [])
-            vmins = mm.get("value_min", mm.get("minimum", []))
-            vmaxs = mm.get("value_max", mm.get("maximum", []))
+            temps = obs.get(t_key, [])
+            if len(dts) != len(temps):
+                continue
+
+            df = pd.DataFrame({
+                "date_str": [str(d)[:10] for d in dts],
+                "temp": pd.to_numeric(temps, errors="coerce"),
+            }).dropna(subset=["temp"])
+            df = df[(df["temp"] >= -55.0) & (df["temp"] <= 135.0)]
+            if df.empty:
+                continue
+
+            agg = df.groupby("date_str")["temp"].agg(obs_min="min", obs_max="max", cnt="count")
             s_map = obs_maps.setdefault(sid, {})
-            for d_raw, mn_raw, mx_raw in zip(dates, vmins, vmaxs):
-                d_iso = str(d_raw)[:10]
-                mn = _extract_num(mn_raw)
-                mx = _extract_num(mx_raw)
-                mn_v = None if (np.isnan(mn) or not (-55.0 <= mn <= 135.0)) else round(mn, 1)
-                mx_v = None if (np.isnan(mx) or not (-55.0 <= mx <= 135.0)) else round(mx, 1)
-                if mn_v is not None and mx_v is not None and (mx_v < mn_v or (mx_v - mn_v) > 75.0):
-                    mn_v, mx_v = None, None
-                s_map[d_iso] = {"min": mn_v, "max": mx_v}
+            for d_iso, row in agg.iterrows():
+                if int(row["cnt"]) < 8:
+                    continue
+                mn_v = round(float(row["obs_min"]), 1)
+                mx_v = round(float(row["obs_max"]), 1)
+                if mx_v >= mn_v and (mx_v - mn_v) <= 75.0:
+                    s_map[d_iso] = {"min": mn_v, "max": mx_v}
+
     return obs_maps
 
 
@@ -554,15 +560,16 @@ def main():
     syn_ids = [sid for sid, s in stations.items() if s["meta"].get("network") != "AZCLIMATE"]
     coop_ids = [sid for sid, s in stations.items() if s["meta"].get("network") == "AZCLIMATE"]
 
+    obs_start = today_mst - datetime.timedelta(days=10)
     obs_maps = {}
     if syn_ids:
-        print(f"Fetching 7-day local High/Low verification from Synoptic for {len(syn_ids)} stations...")
-        obs_maps.update(fetch_synoptic_latest_7d_batch(session, syn_ids, token))
+        print(f"Fetching 10-day local High/Low verification from Synoptic time-series for {len(syn_ids)} stations...")
+        obs_maps.update(fetch_synoptic_recent_obs_batch(session, syn_ids, obs_start, today_mst, token))
 
     if coop_ids:
-        obs_start = today_mst - datetime.timedelta(days=14)
+        coop_start = today_mst - datetime.timedelta(days=14)
         with ThreadPoolExecutor(max_workers=10) as pool:
-            coop_futures = [pool.submit(fetch_iem_coop_obs_window, sid, stations[sid]["meta"], obs_start, today_mst) for sid in coop_ids]
+            coop_futures = [pool.submit(fetch_iem_coop_obs_window, sid, stations[sid]["meta"], coop_start, today_mst) for sid in coop_ids]
             for sid, omap in (f.result() for f in coop_futures):
                 obs_maps[sid] = omap
 
