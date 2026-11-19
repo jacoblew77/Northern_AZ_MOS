@@ -274,8 +274,8 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
     Discovers all active public stations across WFO Flagstaff CWA without spatial removal:
       1. Synoptic public networks (restricted=false): Airports, USCRN, RAWS, SNOTEL, RWIS, ALERT, CWOP.
       2. IEM Climodat NWS COOP (AZCLIMATE).
-    Verifies >= 1,400 valid days since 2020-12-03 and recent reports within 21 days, returning
-    both the verified stations dict and pre-fetched observation DataFrames so no API call is wasted.
+    Passes cwa=FGZ and complete=1 to Synoptic metadata so every public network in Flagstaff's
+    CWA is returned, then verifies >= 1,400 valid days since 2020-12-03 and recent activity.
     """
     session = create_sync_session()
     fgz_counties = {"Coconino", "Yavapai", "Navajo", "Apache", "Gila"}
@@ -319,14 +319,15 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
 
     print(f"Matched {len(mnet_to_tier)} public Synoptic network IDs across 7 tiers.")
 
-    print("Querying Synoptic metadata for all active public Northern AZ stations...")
+    print("Querying Synoptic metadata for all active public Northern AZ stations (cwa=FGZ)...")
     meta_payload = synoptic_get_sequential(
         session,
         "stations/metadata",
         {
-            "state": "AZ",
+            "cwa": "FGZ",
             "status": "active",
             "restricted": "false",
+            "complete": "1",
             "vars": "air_temp",
             "network": ",".join(sorted(mnet_to_tier.keys())),
         },
@@ -346,15 +347,10 @@ def discover_all_public_northern_az_stations(existing_stations: dict, token: str
         if not tier:
             continue
 
-        cwa = str(stn.get("CWA", "")).strip().upper()
-        county = str(stn.get("COUNTY", "")).strip().title()
         try:
             lat = float(stn.get("LATITUDE"))
             lon = float(stn.get("LONGITUDE"))
         except (TypeError, ValueError):
-            continue
-
-        if not ((cwa == "FGZ") or (county in fgz_counties and lat >= 33.75)):
             continue
 
         period = stn.get("PERIOD_OF_RECORD", {})
