@@ -567,7 +567,7 @@
       };
     });
 
-    fetch("./latest_forecasts.json")
+    fetch("./`all_forecasts.json?t=${Date.now()}`")
       .then(r => r.json())
       .then(data => {
         forecastData = data;
@@ -618,7 +618,7 @@
         renderStation(selectedStn);
       })
       .catch(() => {
-        document.getElementById("run-meta").textContent = "Run GitHub Action first to generate latest_forecasts.json";
+        document.getElementById("run-meta").textContent = "Run GitHub Action first to generate `all_forecasts.json?t=${Date.now()}`";
       });
   </script>
 </body>
