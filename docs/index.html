@@ -3,623 +3,889 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Northern Arizona HRRR-MOS Guidance (WFO Flagstaff CWA)</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <title>Northern Arizona HRRR MOS Guidance</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
     :root {
-      --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8;
-      --accent: #38bdf8; --coop: #a78bfa; --uscrn: #34d399; --raws: #fbbf24;
-      --snotel: #60a5fa; --rwis: #f472b6; --alert: #fb7185; --cwop: #94a3b8;
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --panel-alt: #162032;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --warm: #fb923c;
+      --cool: #60a5fa;
+      --good: #34d399;
+      --warn: #fbbf24;
+      --bad: #f87171;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
-    header { padding: 10px 18px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    header h1 { font-size: 1.05rem; font-weight: 700; }
-    .controls { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-    .filter-btn, .vtoggle-btn, .vcyc-btn { background: #0f172a; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.74rem; font-weight: 600; }
-    .filter-btn.active, .vtoggle-btn.active, .vcyc-btn.active { color: var(--text); border-color: var(--accent); background: #1e293b; }
-    select { background: #0f172a; color: var(--text); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; font-size: 0.8rem; max-width: 265px; }
-    .meta-badge { font-size: 0.76rem; color: var(--muted); background: #0f172a; padding: 4px 9px; border-radius: 6px; border: 1px solid var(--border); }
-    .layout { display: grid; grid-template-columns: 1.15fr 1fr; height: calc(100vh - 54px); }
-    @media (max-width: 960px) { .layout { grid-template-columns: 1fr; height: auto; } #map { height: 420px; } }
-    #map { width: 100%; height: 100%; z-index: 1; background: #0f172a; }
-    .dark-tiles { filter: invert(100%) hue-rotate(180deg) brightness(94%) contrast(90%); }
-    .panel { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 13px; }
-    .stn-header h2 { font-size: 1.2rem; }
-    .stn-header p { color: var(--muted); font-size: 0.84rem; margin-top: 3px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 11px; cursor: pointer; transition: border-color 0.15s; }
-    .card.active, .card:hover { border-color: var(--accent); }
-    .card .lbl { font-size: 0.73rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; gap: 4px; }
-    .fb-pill { font-size: 0.65rem; background: rgba(244, 63, 94, 0.16); color: #fda4af; border: 1px solid #f43f5e; padding: 1px 5px; border-radius: 4px; font-weight: 700; }
-    .card .dt { font-size: 0.82rem; color: var(--text); margin: 2px 0 5px; }
-    .card .temp { font-size: 1.8rem; font-weight: 800; }
-    .card.min .temp { color: #38bdf8; }
-    .card.max .temp { color: #fb923c; }
-    .card .sub { font-size: 0.76rem; color: var(--muted); margin-top: 3px; }
-    .box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 13px; }
-    .box-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; flex-wrap: wrap; gap: 8px; }
-    .box h3 { font-size: 0.86rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .window-sub { font-size: 0.76rem; color: var(--muted); margin: -5px 0 9px; }
-    .mae-pill { font-size: 0.76rem; color: #38bdf8; background: #0f172a; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; }
-    .btn-group { display: flex; align-items: center; gap: 4px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    th { color: var(--muted); font-weight: 600; }
-    .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .pred-row { cursor: pointer; transition: background 0.12s; }
-    .pred-row:hover { background: rgba(56, 189, 248, 0.06); }
-    .pred-cell { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .pred-title { font-weight: 600; color: var(--text); }
-    .pred-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.7rem; color: var(--muted); background: #0f172a; border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; }
-    .info-btn { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; border: 1px solid var(--accent); background: rgba(56, 189, 248, 0.12); color: var(--accent); font-size: 11px; font-weight: 800; font-style: italic; font-family: Georgia, serif; cursor: pointer; flex-shrink: 0; line-height: 1; }
-    .info-btn:hover, .info-btn.open { background: var(--accent); color: #0f172a; }
-    .info-drawer td { background: #0f172a; padding: 8px 11px; border-bottom: 1px solid var(--border); color: #cbd5e1; font-size: 0.79rem; line-height: 1.45; }
-    .info-meta { margin-top: 4px; color: #38bdf8; font-size: 0.75rem; font-weight: 600; }
-    .pin-label { display: inline-block; transform: translate(-50%, -50%); background: #1e293b; color: #f8fafc; border: 1.5px solid var(--accent); border-radius: 6px; padding: 2px 6px; font-weight: 700; font-size: 11px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.55); }
-    .pin-label.coop { border-color: var(--coop); }
-    .pin-label.uscrn { border-color: var(--uscrn); }
-    .pin-label.raws { border-color: var(--raws); }
-    .pin-label.snotel { border-color: var(--snotel); }
-    .pin-label.rwis { border-color: var(--rwis); }
-    .pin-label.alert { border-color: var(--alert); }
-    .pin-label.cwop { border-color: var(--cwop); }
-    .attribution-note { font-size: 0.72rem; color: var(--muted); text-align: center; padding: 4px 6px 10px; line-height: 1.4; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    header {
+      background: linear-gradient(135deg, #0b1220 0%, #172554 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    header .sub {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-top: 2px;
+    }
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .pill {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+    .pill strong { color: var(--accent); }
+    button.btn {
+      background: var(--accent);
+      color: #082f49;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    button.btn:hover { filter: brightness(1.08); }
+    button.btn-secondary {
+      background: var(--panel-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    button.btn-secondary.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .container {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 16px 20px 40px;
+    }
+    #statusBanner {
+      display: none;
+      background: rgba(248, 113, 113, 0.15);
+      border: 1px solid var(--bad);
+      color: #fecaca;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+    .toolbar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .toolbar label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    select, input[type="text"] {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 0.88rem;
+      min-width: 220px;
+    }
+    .net-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-left: auto;
+    }
+    .net-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      user-select: none;
+      color: var(--muted);
+    }
+    .net-chip.active {
+      color: var(--text);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .grid-main {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 1060px) {
+      .grid-main { grid-template-columns: 1fr; }
+      .net-filters { margin-left: 0; }
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    #map {
+      width: 100%;
+      height: 490px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0b1220;
+    }
+    .stn-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .stn-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .stn-sub {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-top: 2px;
+    }
+    .obs-badge {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      text-align: right;
+    }
+    .periods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 780px) {
+      .periods-grid { grid-template-columns: 1fr; }
+    }
+    .period-card {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .period-card.min { border-top: 3px solid var(--cool); }
+    .period-card.max { border-top: 3px solid var(--warm); }
+    .period-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .period-date {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin: 2px 0 8px;
+    }
+    .temp-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .mos-temp {
+      font-size: 1.85rem;
+      font-weight: 800;
+    }
+    .min .mos-temp { color: var(--cool); }
+    .max .mos-temp { color: var(--warm); }
+    .raw-temp {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+    .delta-pos { color: var(--warm); font-weight: 600; }
+    .delta-neg { color: var(--cool); font-weight: 600; }
+    .delta-zero { color: var(--muted); }
+    .mae-line {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .fallback-tag {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(251, 191, 36, 0.16);
+      color: var(--warn);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+    }
+    details.breakdown {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    details.breakdown summary {
+      cursor: pointer;
+      color: var(--accent);
+      user-select: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .chart-box {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+    }
+    .chart-title {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .verif-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .cycle-tabs {
+      display: flex;
+      gap: 6px;
+    }
+    .verif-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 780px) {
+      .verif-grid { grid-template-columns: 1fr; }
+    }
+    .all-table-wrap {
+      max-height: 440px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .all-table-wrap tr.clickable { cursor: pointer; }
+    .all-table-wrap tr.clickable:hover { background: rgba(56, 189, 248, 0.08); }
+    .all-table-wrap tr.selected-row { background: rgba(56, 189, 248, 0.16); }
   </style>
 </head>
 <body>
   <header>
-    <h1>Northern AZ HRRRv4 MOS — WFO Flagstaff CWA</h1>
-    <div class="controls">
-      <button class="filter-btn active" data-net="ALL">All</button>
-      <button class="filter-btn" data-net="AZ_ASOS" style="border-bottom:2px solid #38bdf8;">Airports</button>
-      <button class="filter-btn" data-net="AZCLIMATE" style="border-bottom:2px solid #a78bfa;">COOP</button>
-      <button class="filter-btn" data-net="USCRN" style="border-bottom:2px solid #34d399;">USCRN</button>
-      <button class="filter-btn" data-net="RAWS" style="border-bottom:2px solid #fbbf24;">RAWS</button>
-      <button class="filter-btn" data-net="SNOTEL" style="border-bottom:2px solid #60a5fa;">SNOTEL</button>
-      <button class="filter-btn" data-net="RWIS" style="border-bottom:2px solid #f472b6;">RWIS</button>
-      <button class="filter-btn" data-net="ALERT" style="border-bottom:2px solid #fb7185;">ALERT</button>
-      <button class="filter-btn" data-net="CWOP" style="border-bottom:2px solid #94a3b8;">CWOP</button>
-      <select id="stn-select"></select>
-      <div class="meta-badge" id="run-meta">Loading HRRR run...</div>
+    <div>
+      <h1>Northern Arizona HRRRv4 MOS Guidance</h1>
+      <div class="sub">WFO Flagstaff CWA &bull; Diurnal High/Low Statistical Post-Processing &amp; Verification</div>
+    </div>
+    <div class="meta-pills">
+      <div class="pill">HRRR Init: <strong id="metaInit">--</strong></div>
+      <div class="pill">Cycle: <strong id="metaCycle">--</strong></div>
+      <div class="pill">Updated: <strong id="metaUpdated">--</strong></div>
+      <div class="pill">Stations: <strong id="metaCount">--</strong></div>
+      <button class="btn" id="refreshBtn" title="Reload latest JSON data">Refresh</button>
     </div>
   </header>
 
-  <div class="layout">
-    <div id="map"></div>
-    <div class="panel">
-      <div class="stn-header">
-        <h2 id="stn-title">Select a Station</h2>
-        <p id="stn-sub">Zoom in to reveal denser local stations; highest-priority networks display first when zoomed out</p>
+  <div class="container">
+    <div id="statusBanner"></div>
+
+    <div class="toolbar">
+      <div>
+        <label for="stationSelect">Select Station</label>
+        <select id="stationSelect"></select>
+      </div>
+      <div>
+        <label for="stationSearch">Filter Stations</label>
+        <input type="text" id="stationSearch" placeholder="Search ID, town, or network..." />
+      </div>
+      <div class="net-filters" id="netFilters"></div>
+    </div>
+
+    <div class="grid-main">
+      <div class="card">
+        <h2>
+          <span>Station Network Map</span>
+          <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">Click marker to inspect</span>
+        </h2>
+        <div id="map"></div>
       </div>
 
-      <div class="cards" id="period-cards"></div>
-
-      <div class="box">
-        <div class="box-head">
-          <h3>36-Hour Raw HRRR Hourly Trajectory</h3>
-        </div>
-        <canvas id="trajChart" height="108"></canvas>
-      </div>
-
-      <div class="box">
-        <div class="box-head">
-          <h3>Past 7-Day Verification</h3>
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span class="mae-pill" id="verif-mae-badge">7d MAE: --</span>
-            <div class="btn-group">
-              <button class="vcyc-btn" data-vcyc="00Z">00Z</button>
-              <button class="vcyc-btn active" data-vcyc="06Z">06Z</button>
-              <button class="vcyc-btn" data-vcyc="12Z">12Z</button>
-              <button class="vcyc-btn" data-vcyc="18Z">18Z</button>
-            </div>
-            <div class="btn-group">
-              <button class="vtoggle-btn active" data-vkind="min">Min T</button>
-              <button class="vtoggle-btn" data-vkind="max">Max T</button>
-            </div>
+      <div class="card" id="detailCard">
+        <div class="stn-header">
+          <div>
+            <div class="stn-title" id="stnTitle">Loading stations...</div>
+            <div class="stn-sub" id="stnSub">--</div>
           </div>
+          <div class="obs-badge" id="obsBadge">Latest Obs: --</div>
         </div>
-        <canvas id="verifChart" height="122"></canvas>
-      </div>
 
-      <div class="box">
-        <div class="box-head">
-          <h3 id="breakdown-title">MOS Equation Predictor Breakdown</h3>
+        <div class="periods-grid" id="periodsGrid"></div>
+
+        <div class="chart-box">
+          <div class="chart-title">
+            <span>36-Hour Raw HRRR 2m Temperature Trajectory (&deg;F) with MOS Window Guidance</span>
+            <span id="chartLegend" style="color:var(--text);"></span>
+          </div>
+          <div id="hourlyChart"></div>
         </div>
-        <div class="window-sub" id="breakdown-window">Click any ⓘ button below to inspect parameter physics &amp; averaging window</div>
+
+        <div>
+          <div class="verif-header">
+            <strong style="font-size:0.92rem;">Past 7-Day Multi-Cycle Verification</strong>
+            <div class="cycle-tabs" id="cycleTabs"></div>
+          </div>
+          <div class="verif-grid" id="verifGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>
+        <span>All Northern Arizona Stations Overview</span>
+        <span style="font-size:0.78rem;color:var(--muted);font-weight:400;" id="tableCountLbl"></span>
+      </h2>
+      <div class="all-table-wrap">
         <table>
           <thead>
-            <tr><th>Parameter</th><th class="num">Value</th><th class="num">Weight</th><th class="num">Contrib (°F)</th></tr>
+            <tr>
+              <th>ID</th>
+              <th>Station</th>
+              <th>Network</th>
+              <th class="num">Elev (ft)</th>
+              <th class="num" id="thP0">Period 1</th>
+              <th class="num" id="thP1">Period 2</th>
+              <th class="num" id="thP2">Period 3</th>
+              <th class="num">Prev Obs Min/Max</th>
+            </tr>
           </thead>
-          <tbody id="breakdown-body"></tbody>
+          <tbody id="allStationsBody"></tbody>
         </table>
-      </div>
-
-      <div class="attribution-note">
-        Model guidance derived from NOAA HRRRv4 (AWS Open Data). Surface observations &amp; 7-day verification provided via
-        <strong>Synoptic Data</strong> (public mesonet feeds), <strong>Iowa Environmental Mesonet (IEM)</strong>, and <strong>NOAA/NWS</strong>.
       </div>
     </div>
   </div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script>
-    let forecastData = null;
-    let selectedStn = "KFGZ";
-    let selectedPeriodIdx = 0;
-    let activeNetwork = "ALL";
-    let activeVerifKind = "min";
-    let activeVerifCycle = "06Z";
-    let openInfoTerms = new Set();
-    let markersLayer = L.layerGroup();
-    let chartInstance = null;
-    let verifChartInstance = null;
-
-    const NETWORK_PRIORITY = {
-      AZ_ASOS: 1,
-      AZCLIMATE: 2,
-      USCRN: 3,
-      RAWS: 4,
-      SNOTEL: 5,
-      RWIS: 6,
-      ALERT: 7,
-      CWOP: 8
+    const NETWORK_COLORS = {
+      AZ_ASOS:   "#38bdf8",
+      AZCLIMATE: "#34d399",
+      USCRN:     "#a78bfa",
+      RAWS:      "#fb923c",
+      SNOTEL:    "#e879f9",
+      RWIS:      "#facc15",
+      ALERT:     "#f87171",
+      CWOP:      "#94a3b8"
     };
 
-    const NETWORK_LABELS = {
-      AZ_ASOS: "ASOS/AWOS",
-      AZCLIMATE: "NWS COOP",
-      USCRN: "NOAA USCRN",
-      RAWS: "RAWS",
-      SNOTEL: "NRCS SNOTEL",
-      RWIS: "ADOT RWIS",
-      ALERT: "County ALERT",
-      CWOP: "CWOP"
-    };
+    let payload = null;
+    let allStations = [];
+    let filteredStations = [];
+    let selectedId = null;
+    let selectedVerifCycle = null;
+    let activeNetworks = new Set(Object.keys(NETWORK_COLORS));
+    let map = null;
+    let markerLayer = null;
+    let markersById = {};
 
-    const FALLBACK_WINDOWS = {
-      "00Z": { min_1: "f09, f12, f14 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_1: "f20, f21, f23 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_2: "f33, f36 (09Z, 12Z / 2:00 AM–5:00 AM MST)" },
-      "06Z": { min_1: "f03, f06, f08 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_1: "f14, f15, f17 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_2: "f27, f30, f32 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)" },
-      "12Z": { max_1: "f08, f09, f11 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_1: "f21, f24, f26 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_2: "f32, f33, f35 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)" },
-      "18Z": { max_1: "f02, f03, f05 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)", min_1: "f15, f18, f20 (09Z, 12Z, 14Z / 2:00 AM–7:00 AM MST)", max_2: "f26, f27, f29 (20Z, 21Z, 23Z / 1:00 PM–4:00 PM MST)" }
-    };
-
-    function getMapTileLabel(stn) {
-      if (stn.network === "AZ_ASOS") return stn.id;
-      return stn.name
-        .replace(/\s*\([^)]*\)/g, "")
-        .replace(/\s+(?:COOP|USCRN|RAWS|SNOTEL|RWIS|ALERT|CWOP)$/i, "")
-        .replace(/\s+Nat'l Mon(?:ument)?$/i, "")
-        .trim();
+    function showBanner(msg) {
+      const el = document.getElementById("statusBanner");
+      el.textContent = msg;
+      el.style.display = "block";
     }
 
-    function getPinClass(net) {
-      const mapCls = {
-        AZCLIMATE: "pin-label coop",
-        USCRN: "pin-label uscrn",
-        RAWS: "pin-label raws",
-        SNOTEL: "pin-label snotel",
-        RWIS: "pin-label rwis",
-        ALERT: "pin-label alert",
-        CWOP: "pin-label cwop"
-      };
-      return mapCls[net] || "pin-label";
+    function hideBanner() {
+      document.getElementById("statusBanner").style.display = "none";
     }
 
-    function getPredictorInfo(term, period, cycleName) {
-      const winText = period.window_desc || (FALLBACK_WINDOWS[cycleName] && FALLBACK_WINDOWS[cycleName][period.key]) || "target forecast hours";
-      const isMin = period.kind === "min";
-
-      const catalog = {
-        Intercept: { title: "Regression Intercept", unit: "°F", agg: "Constant equation baseline", desc: "Station-specific constant offset (°F) from the multiple linear regression model before adding HRRR physical and seasonal predictors." },
-        hrrr_ext_t: {
-          title: isMin ? "Raw HRRR Window Min 2m Temp" : "Raw HRRR Window Max 2m Temp",
-          unit: "°F",
-          agg: isMin ? "Minimum across window hours" : "Maximum across window hours",
-          desc: isMin
-            ? "Coldest raw 2-meter air temperature (°F) simulated by HRRR across the overnight/morning target window. Serves as the primary baseline predictor."
-            : "Warmest raw 2-meter air temperature (°F) simulated by HRRR across the afternoon heating target window. Serves as the primary baseline predictor."
-        },
-        hrrr_win_temp: { title: "Mean 2m Temperature", unit: "°F", agg: "Mean across window hours", desc: "Average HRRR 2-meter air temperature (°F) across the target forecast window." },
-        hrrr_win_dp2m: { title: "Mean 2m Dewpoint", unit: "°F", agg: "Mean across window hours", desc: "Average HRRR 2-meter dewpoint temperature (°F) across the target window. Higher boundary-layer moisture inhibits nocturnal radiational cooling and moderates daytime highs." },
-        hrrr_win_dpd: { title: "Mean 2m Dewpoint Depression", unit: "°F", agg: "Mean (T − Td) across window hours", desc: "Average spread between 2-meter temperature and dewpoint (T − Td, °F). Larger spreads indicate dry high-desert air with stronger overnight radiational cooling and steeper daytime lapse rates." },
-        hrrr_win_rh: { title: "Mean 2m Relative Humidity", unit: "%", agg: "Mean across window hours", desc: "Average HRRR 2-meter relative humidity (%) across the target forecast window." },
-        hrrr_u10_kt: { title: "Mean 10m U-Wind (West–East)", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 10-meter zonal wind component (knots; positive = westerly wind from the west, negative = easterly). Captures local downslope/upslope terrain flow." },
-        hrrr_v10_kt: { title: "Mean 10m V-Wind (South–North)", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 10-meter meridional wind component (knots; positive = southerly wind from the south, negative = northerly). Captures warm or cold air advection across the Mogollon Rim." },
-        hrrr_wspd10_kt: { title: "Mean 10m Wind Speed", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 10-meter wind speed magnitude (knots). Stronger winds mix the nocturnal boundary layer and prevent cold-air drainage inversions from pooling in valleys." },
-        hrrr_wspd700_kt: { title: "Mean 700 mb Wind Speed", unit: "kt", agg: "Mean across window hours", desc: "Average HRRR 700 mb (~10,000 ft MSL) ridge-level wind speed (knots), reflecting synoptic flow strength and mechanical mixing potential over the Colorado Plateau." },
-        hrrr_lcdc: { title: "Mean Low Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR low-level cloud fraction (%). Low clouds strongly trap outgoing longwave radiation at night (warmer lows) and block daytime solar insolation (cooler highs)." },
-        hrrr_mcdc: { title: "Mean Mid-Level Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR mid-level cloud fraction (%) across the target forecast window." },
-        hrrr_hcdc: { title: "Mean High Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR high-level cirrus cloud fraction (%) across the target forecast window." },
-        hrrr_tcdc: { title: "Mean Total Cloud Cover", unit: "%", agg: "Mean across window hours", desc: "Average HRRR entire-atmosphere total cloud cover (%) across the target window, regulating both daytime solar heating and nighttime radiative heat loss." },
-        hrrr_tmp_500: { title: "Mean 500 mb Temperature", unit: "°C", agg: "Mean across window hours", desc: "Average HRRR 500 mb (~18,000 ft MSL) air temperature (°C), representing deep-layer synoptic airmass warmth aloft." },
-        hrrr_tmp_700: { title: "Mean 700 mb Temperature", unit: "°C", agg: "Mean across window hours", desc: "Average HRRR 700 mb (~10,000 ft MSL) free-atmosphere temperature (°C)—near Flagstaff/Rim elevation, capturing ambient airmass temperature above shallow surface inversions." },
-        hrrr_hgt_500: { title: "Mean 500 mb Geopotential Height", unit: "gpm", agg: "Mean across window hours", desc: "Average HRRR 500 mb geopotential height (meters), distinguishing upper-level troughs from warm subtropical ridges." },
-        hrrr_thick_1000_500: { title: "Mean 1000–500 mb Thickness", unit: "gpm", agg: "Mean (Z500 − Z1000) across window hours", desc: "Average HRRR 1000–500 mb layer thickness (meters), proportional to the column-mean virtual temperature of the lower troposphere." },
-        hrrr_lapse_500_700: { title: "Mean 700–500 mb Temp Difference", unit: "°C", agg: "Mean (T500 − T700) across window hours", desc: "Average HRRR temperature change from 700 mb to 500 mb (T500 − T700, °C). More negative values indicate steeper mid-level lapse rates and deeper afternoon mixing." },
-        hrrr_pwat: { title: "Mean Precipitable Water (PWAT)", unit: "mm", agg: "Mean across window hours", desc: "Average HRRR column-integrated precipitable water (mm). Higher PWAT enhances downward infrared greenhouse warming at night and reduces diurnal temperature range." },
-        hrrr_qpf_in: { title: "Window Accumulated Precipitation (QPF)", unit: "in", agg: "Cumulative QPF from 6h before window to window end", desc: "HRRR accumulated liquid-equivalent precipitation (inches) from 6 hours prior to the window start through the final hour of the window (APCP[end] − APCP[start−6h])." },
-        hrrr_snow_in: { title: "Mean Snow Depth on Ground", unit: "in", agg: "Mean across window hours", desc: "Average HRRR modeled snow depth (inches) across the target window. Snow cover sharply increases surface albedo and promotes intense overnight radiational cooling." },
-        hrrr_dlwrf: { title: "Mean Downward Longwave Radiation", unit: "W/m²", agg: "Mean across window hours", desc: "Average HRRR downward longwave (infrared) radiative flux at the surface (W/m²). Directly measures greenhouse warming emitted back to the surface by clouds and water vapor." },
-        hrrr_dswrf: { title: "Mean Downward Shortwave Radiation", unit: "W/m²", agg: "Mean across window hours", desc: "Average HRRR downward shortwave solar radiation flux at the surface (W/m²), measuring direct daytime solar heating." },
-        norm_t: { title: "Station Climatological Normal", unit: "°F", agg: `Daily harmonic normal for ${period.verify_date}`, desc: "Station's smooth annual harmonic normal Max or Min temperature (°F) on the verification date, fitted from its 2020–2026 daily record." },
-        sin_doy_1: { title: "Annual Seasonal Harmonic (sin)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "First-order annual sine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias." },
-        cos_doy_1: { title: "Annual Seasonal Harmonic (cos)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "First-order annual cosine harmonic of the verification Day-of-Year, correcting seasonal shifts in HRRR's warm/cold bias." },
-        sin_doy_2: { title: "Semi-Annual Seasonal Harmonic (sin)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "Second-order (6-month) sine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon bias patterns." },
-        cos_doy_2: { title: "Semi-Annual Seasonal Harmonic (cos)", unit: "unitless", agg: `Calendar Day-of-Year on ${period.verify_date}`, desc: "Second-order (6-month) cosine harmonic of the verification Day-of-Year, capturing shoulder-season and monsoon bias patterns." }
-      };
-
-      const entry = catalog[term] || { title: term, unit: "", agg: "Window predictor", desc: "HRRR model predictor selected by forward stepwise screening regression." };
-      const isWindowTerm = !["Intercept", "norm_t", "sin_doy_1", "cos_doy_1", "sin_doy_2", "cos_doy_2"].includes(term);
-      const timeDetail = isWindowTerm ? `${entry.agg} — Window: ${winText}` : entry.agg;
-      return { ...entry, timeDetail };
+    function fmtTemp(v) {
+      return (v === null || v === undefined || Number.isNaN(Number(v))) ? "--" : `${Number(v).toFixed(1)}°`;
     }
 
-    const darkOsm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      className: "dark-tiles",
-      attribution: "&copy; OpenStreetMap contributors"
-    });
+    function fmtDelta(d) {
+      if (d === null || d === undefined || Number.isNaN(Number(d))) return "";
+      const val = Number(d);
+      if (val > 0.05) return `<span class="delta-pos">+${val.toFixed(1)}°</span>`;
+      if (val < -0.05) return `<span class="delta-neg">${val.toFixed(1)}°</span>`;
+      return `<span class="delta-zero">0.0°</span>`;
+    }
 
-    const usgsTopo = L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}", {
-      maxZoom: 16,
-      attribution: "Tiles courtesy of the U.S. Geological Survey"
-    });
+    function initMap() {
+      if (typeof L === "undefined" || map !== null) return;
+      map = L.map("map", { zoomControl: true }).setView([35.15, -111.35], 7);
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap &copy; CARTO",
+        maxZoom: 18
+      }).addTo(map);
+      markerLayer = L.layerGroup().addTo(map);
+    }
 
-    const usgsSatellite = L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}", {
-      maxZoom: 16,
-      attribution: "Tiles courtesy of the U.S. Geological Survey"
-    });
+    function renderNetworkChips() {
+      const wrap = document.getElementById("netFilters");
+      const presentNets = Array.from(new Set(allStations.map(s => s.network)));
+      wrap.innerHTML = presentNets.map(net => {
+        const color = NETWORK_COLORS[net] || "#cbd5e1";
+        const isActive = activeNetworks.has(net);
+        return `<span class="net-chip ${isActive ? "active" : ""}" data-net="${net}">
+          <span class="dot" style="background:${color}"></span>${net}
+        </span>`;
+      }).join("");
 
-    const map = L.map("map", {
-      center: [35.25, -110.95],
-      zoom: 7,
-      layers: [darkOsm]
-    });
-
-    L.control.layers({
-      "Dark Map": darkOsm,
-      "USGS Topo (Terrain)": usgsTopo,
-      "USGS Satellite": usgsSatellite
-    }).addTo(map);
-
-    markersLayer.addTo(map);
-
-    function renderMarkers() {
-      if (!forecastData) return;
-      markersLayer.clearLayers();
-
-      const zoom = map.getZoom();
-      // Progressive screen-space collision box: larger when zoomed out so highest-priority
-      // networks (Airports > COOP > USCRN > RAWS > SNOTEL > RWIS > ALERT > CWOP) display first,
-      // shrinking to 0 at zoom >= 11 so every single station renders when zoomed in.
-      let minDx = 0;
-      let minDy = 0;
-      if (activeNetwork === "ALL") {
-        if (zoom <= 7) { minDx = 84; minDy = 26; }
-        else if (zoom === 8) { minDx = 68; minDy = 23; }
-        else if (zoom === 9) { minDx = 52; minDy = 19; }
-        else if (zoom === 10) { minDx = 36; minDy = 15; }
-      }
-
-      const sortedStations = Object.values(forecastData.stations)
-        .filter(stn => activeNetwork === "ALL" || stn.network === activeNetwork)
-        .sort((a, b) => {
-          const pa = NETWORK_PRIORITY[a.network] || 99;
-          const pb = NETWORK_PRIORITY[b.network] || 99;
-          if (pa !== pb) return pa - pb;
-          return a.id.localeCompare(b.id);
+      wrap.querySelectorAll(".net-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          const net = chip.getAttribute("data-net");
+          if (activeNetworks.has(net)) {
+            if (activeNetworks.size > 1) activeNetworks.delete(net);
+          } else {
+            activeNetworks.add(net);
+          }
+          renderNetworkChips();
+          applyFilters();
         });
-
-      const placedPoints = [];
-      sortedStations.forEach(stn => {
-        const pt = map.latLngToContainerPoint([stn.lat, stn.lon]);
-        if (minDx > 0) {
-          const overlaps = placedPoints.some(p => Math.abs(p.x - pt.x) < minDx && Math.abs(p.y - pt.y) < minDy);
-          if (overlaps) return;
-        }
-        placedPoints.push(pt);
-
-        const p0 = stn.periods[0];
-        const tileName = getMapTileLabel(stn);
-        const badge = p0 ? `${tileName}: ${p0.mos_f.toFixed(0)}°` : tileName;
-        const cls = getPinClass(stn.network);
-        const prio = NETWORK_PRIORITY[stn.network] || 99;
-        const icon = L.divIcon({
-          className: "",
-          html: `<div class="${cls}" title="${stn.id} — ${stn.name} (${NETWORK_LABELS[stn.network] || stn.network})">${badge}</div>`,
-          iconSize: null
-        });
-
-        L.marker([stn.lat, stn.lon], { icon, zIndexOffset: (10 - prio) * 100 })
-          .addTo(markersLayer)
-          .on("click", () => {
-            selectedPeriodIdx = 0;
-            document.getElementById("stn-select").value = stn.id;
-            renderStation(stn.id);
-          });
       });
     }
 
-    map.on("zoomend", renderMarkers);
+    function applyFilters() {
+      const q = document.getElementById("stationSearch").value.trim().toLowerCase();
+      filteredStations = allStations.filter(s => {
+        if (!activeNetworks.has(s.network)) return false;
+        if (!q) return true;
+        return (
+          s.id.toLowerCase().includes(q) ||
+          (s.name || "").toLowerCase().includes(q) ||
+          (s.network || "").toLowerCase().includes(q)
+        );
+      });
 
-    function renderVerificationChart(stn) {
-      const verifAll = stn.past_7d_verification;
-      const verif = verifAll ? verifAll[activeVerifCycle] : null;
-      const badgeEl = document.getElementById("verif-mae-badge");
-      if (!verif || !verif[activeVerifKind]) {
-        badgeEl.textContent = `${activeVerifCycle} 7d MAE: Pending`;
+      if (!filteredStations.length) {
+        filteredStations = [...allStations];
+      }
+
+      if (!selectedId || !filteredStations.some(s => s.id === selectedId)) {
+        const defaultStn = filteredStations.find(s => s.id === "KFLG") || filteredStations[0];
+        selectedId = defaultStn ? defaultStn.id : null;
+      }
+
+      renderDropdown();
+      renderMapMarkers();
+      renderOverviewTable();
+      if (selectedId) renderStationDetail(selectedId);
+    }
+
+    function renderDropdown() {
+      const sel = document.getElementById("stationSelect");
+      sel.innerHTML = filteredStations.map(s =>
+        `<option value="${s.id}" ${s.id === selectedId ? "selected" : ""}>${s.id} — ${s.name} (${s.network}, ${s.elev_ft} ft)</option>`
+      ).join("");
+    }
+
+    function renderMapMarkers() {
+      if (!map || !markerLayer) return;
+      markerLayer.clearLayers();
+      markersById = {};
+
+      filteredStations.forEach(s => {
+        const isSel = s.id === selectedId;
+        const color = NETWORK_COLORS[s.network] || "#38bdf8";
+        const marker = L.circleMarker([s.lat, s.lon], {
+          radius: isSel ? 9 : 6,
+          fillColor: color,
+          color: isSel ? "#ffffff" : "#0f172a",
+          weight: isSel ? 2.5 : 1.2,
+          opacity: 1,
+          fillOpacity: isSel ? 1 : 0.85
+        });
+
+        const pSummary = (s.periods || []).map(p => `${p.label.split(" ")[0]}: <b>${fmtTemp(p.mos_f)}</b>`).join(" | ");
+        marker.bindTooltip(`<b>${s.id}</b> — ${s.name}<br/>${s.network} &bull; ${s.elev_ft} ft<br/>${pSummary}`);
+        marker.on("click", () => selectStation(s.id, false));
+        marker.addTo(markerLayer);
+        markersById[s.id] = marker;
+      });
+    }
+
+    function selectStation(stnId, panMap = true) {
+      selectedId = stnId;
+      renderDropdown();
+      renderMapMarkers();
+      renderOverviewTable();
+      renderStationDetail(stnId);
+      if (panMap && map && markersById[stnId]) {
+        const ll = markersById[stnId].getLatLng();
+        map.panTo(ll);
+      }
+    }
+
+    function renderHourlySvg(stn) {
+      const container = document.getElementById("hourlyChart");
+      const legend = document.getElementById("chartLegend");
+      const curve = stn.hourly_curve || [];
+      if (!curve.length) {
+        container.innerHTML = `<div style="color:var(--muted);font-size:0.84rem;padding:12px;">No hourly HRRR trajectory available.</div>`;
+        legend.textContent = "";
         return;
       }
 
-      const rows = verif[activeVerifKind];
-      const mosMae = verif[`${activeVerifKind}_mos_mae`];
-      const rawMae = verif[`${activeVerifKind}_raw_mae`];
-      badgeEl.textContent = mosMae !== null
-        ? `${activeVerifCycle} 7d Guidance MAE: ${mosMae.toFixed(1)}°F (Raw: ${rawMae !== null ? rawMae.toFixed(1) + "°F" : "--"})`
-        : `${activeVerifCycle} 7d MAE: Pending Obs`;
+      const temps = curve.map(d => d.raw_temp_f);
+      const mosVals = (stn.periods || []).map(p => p.mos_f).filter(v => v !== null && v !== undefined);
+      const allVals = temps.concat(mosVals);
+      const minT = Math.floor(Math.min(...allVals) - 3);
+      const maxT = Math.ceil(Math.max(...allVals) + 3);
+      const spanT = Math.max(1, maxT - minT);
 
-      const mosColor = activeVerifKind === "min" ? "#38bdf8" : "#fb923c";
-      const vCtx = document.getElementById("verifChart").getContext("2d");
-      if (verifChartInstance) verifChartInstance.destroy();
+      const W = 760, H = 175, padL = 38, padR = 16, padT = 14, padB = 26;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+      const n = curve.length;
 
-      verifChartInstance = new Chart(vCtx, {
-        data: {
-          labels: rows.map(r => r.label),
-          datasets: [
-            {
-              type: "bar",
-              label: "Observed (°F)",
-              data: rows.map(r => r.obs_f),
-              backgroundColor: "rgba(148, 163, 184, 0.35)",
-              borderColor: "#94a3b8",
-              borderWidth: 1,
-              borderRadius: 4,
-              order: 3
-            },
-            {
-              type: "line",
-              label: `${activeVerifCycle} Active Guidance (°F)`,
-              data: rows.map(r => r.mos_f),
-              borderColor: mosColor,
-              backgroundColor: mosColor,
-              borderWidth: 2.5,
-              pointRadius: 4,
-              tension: 0.2,
-              order: 1
-            },
-            {
-              type: "line",
-              label: `${activeVerifCycle} Raw HRRR (°F)`,
-              data: rows.map(r => r.raw_f),
-              borderColor: "#f43f5e",
-              backgroundColor: "#f43f5e",
-              borderWidth: 2,
-              borderDash: [5, 4],
-              pointRadius: 3.5,
-              tension: 0.2,
-              order: 2
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { labels: { color: "#cbd5e1", boxWidth: 12, font: { size: 11 } } }
-          },
-          scales: {
-            x: { ticks: { color: "#94a3b8" }, grid: { color: "#334155" } },
-            y: { ticks: { color: "#94a3b8" }, grid: { color: "#334155" } }
-          }
+      const xAt = i => padL + (n === 1 ? plotW / 2 : (i / (n - 1)) * plotW);
+      const yAt = t => padT + ((maxT - t) / spanT) * plotH;
+
+      let gridSvg = "";
+      const step = spanT > 35 ? 10 : 5;
+      for (let t = Math.ceil(minT / step) * step; t <= maxT; t += step) {
+        const y = yAt(t);
+        gridSvg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#334155" stroke-dasharray="3,3" stroke-width="1"/>`;
+        gridSvg += `<text x="${padL - 6}" y="${y + 4}" fill="#94a3b8" font-size="10" text-anchor="end">${t}°</text>`;
+      }
+
+      let xLabels = "";
+      curve.forEach((pt, idx) => {
+        if (idx % 6 === 0 || idx === n - 1) {
+          const x = xAt(idx);
+          xLabels += `<text x="${x}" y="${H - 6}" fill="#94a3b8" font-size="10" text-anchor="middle">${pt.time_mst}</text>`;
         }
       });
+
+      const polyPts = curve.map((pt, idx) => `${xAt(idx).toFixed(1)},${yAt(pt.raw_temp_f).toFixed(1)}`).join(" ");
+
+      let mosOverlay = "";
+      const fhrToIdx = {};
+      curve.forEach((pt, idx) => { fhrToIdx[pt.fhr] = idx; });
+
+      (stn.periods || []).forEach(p => {
+        const validIdxs = (p.fhrs || []).map(fh => fhrToIdx[fh]).filter(idx => idx !== undefined);
+        if (!validIdxs.length) return;
+        const x0 = xAt(Math.min(...validIdxs));
+        const x1 = xAt(Math.max(...validIdxs));
+        const y = yAt(p.mos_f);
+        const col = p.kind === "min" ? "#60a5fa" : "#fb923c";
+        mosOverlay += `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${col}" stroke-width="2.5" stroke-dasharray="5,3"/>`;
+        mosOverlay += `<text x="${(x0 + x1) / 2}" y="${p.kind === "min" ? y + 12 : y - 5}" fill="${col}" font-size="10.5" font-weight="700" text-anchor="middle">MOS ${p.mos_f.toFixed(1)}°</text>`;
+      });
+
+      legend.innerHTML = `<span style="color:#cbd5e1;">&mdash; Raw HRRR</span> &nbsp; <span style="color:var(--cool);">&dash; MOS Min</span> &nbsp; <span style="color:var(--warm);">&dash; MOS Max</span>`;
+
+      container.innerHTML = `
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">
+          ${gridSvg}
+          ${xLabels}
+          <polyline fill="none" stroke="#e2e8f0" stroke-width="2" points="${polyPts}" />
+          ${mosOverlay}
+        </svg>
+      `;
     }
 
-    function renderBreakdownTable(activeP) {
-      const cyc = forecastData.synoptic_cycle || "";
-      const winText = activeP.window_desc || (FALLBACK_WINDOWS[cyc] && FALLBACK_WINDOWS[cyc][activeP.key]) || "";
-      document.getElementById("breakdown-title").textContent = `Equation Breakdown — ${activeP.label} (${activeP.verify_date})`;
+    function renderVerification(stn) {
+      const tabsEl = document.getElementById("cycleTabs");
+      const gridEl = document.getElementById("verifGrid");
+      const verif = stn.past_7d_verification || {};
+      const cycles = ["00Z", "06Z", "12Z", "18Z"];
 
-      const fallbackNote = activeP.used_raw_fallback
-        ? `⚠️ Raw HRRR (${activeP.raw_hrrr_f.toFixed(1)}°F) substituted because MOS holdout MAE (${activeP.holdout_mos_mae}°F) > Raw MAE (${activeP.holdout_raw_mae}°F). Underlying equation (${activeP.mos_eq_f.toFixed(1)}°F) shown below:`
-        : (winText ? `Target Window: ${winText} • Click ⓘ on any row for details` : "Click ⓘ on any row for parameter details");
-      document.getElementById("breakdown-window").textContent = fallbackNote;
+      if (!selectedVerifCycle || !cycles.includes(selectedVerifCycle)) {
+        selectedVerifCycle = payload.synoptic_cycle || "12Z";
+      }
 
-      const tbody = document.getElementById("breakdown-body");
-      tbody.innerHTML = "";
+      tabsEl.innerHTML = cycles.map(c =>
+        `<button class="btn btn-secondary ${c === selectedVerifCycle ? "active" : ""}" data-cyc="${c}">${c}</button>`
+      ).join("");
 
-      activeP.breakdown.forEach(row => {
-        const info = getPredictorInfo(row.term, activeP, cyc);
-        const isOpen = openInfoTerms.has(row.term);
-        const valDisplay = (row.term === "Intercept" || !info.unit || info.unit === "unitless")
-          ? `${row.value}`
-          : `${row.value} ${info.unit}`;
+      tabsEl.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedVerifCycle = btn.getAttribute("data-cyc");
+          renderVerification(stn);
+        });
+      });
 
-        const tr = document.createElement("tr");
-        tr.className = "pred-row";
-        tr.innerHTML = `
-          <td>
-            <div class="pred-cell">
-              <span class="pred-title">${info.title}</span>
-              <span class="pred-code">${row.term}</span>
-              <button type="button" class="info-btn ${isOpen ? "open" : ""}" title="Show parameter description &amp; time window">i</button>
+      const cycData = verif[selectedVerifCycle] || { min: [], max: [] };
+
+      function buildTable(title, rows, mosMae, rawMae) {
+        const maeBadge = (mosMae !== null && rawMae !== null)
+          ? `MOS MAE: <b style="color:var(--good)">${mosMae.toFixed(2)}°</b> vs Raw: <b>${rawMae.toFixed(2)}°</b>`
+          : `7-Day MAE: --`;
+
+        const trs = (rows || []).map(r => {
+          const mosErr = (r.obs_f !== null && r.mos_f !== null) ? `${(r.mos_f - r.obs_f >= 0 ? "+" : "")}${(r.mos_f - r.obs_f).toFixed(1)}°` : "--";
+          const rawErr = (r.obs_f !== null && r.raw_f !== null) ? `${(r.raw_f - r.obs_f >= 0 ? "+" : "")}${(r.raw_f - r.obs_f).toFixed(1)}°` : "--";
+          return `<tr>
+            <td>${r.label}</td>
+            <td class="num">${fmtTemp(r.obs_f)}</td>
+            <td class="num"><b>${fmtTemp(r.mos_f)}</b></td>
+            <td class="num">${fmtTemp(r.raw_f)}</td>
+            <td class="num">${mosErr}</td>
+            <td class="num" style="color:var(--muted)">${rawErr}</td>
+          </tr>`;
+        }).join("");
+
+        return `
+          <div style="background:var(--panel-alt);border:1px solid var(--border);border-radius:8px;padding:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.8rem;">
+              <strong>${title}</strong>
+              <span style="color:var(--muted)">${maeBadge}</span>
             </div>
-          </td>
-          <td class="num">${valDisplay}</td>
-          <td class="num">${row.weight}</td>
-          <td class="num">${row.contrib >= 0 ? "+" : ""}${row.contrib.toFixed(2)}°F</td>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th class="num">Obs</th>
+                  <th class="num">MOS</th>
+                  <th class="num">Raw</th>
+                  <th class="num">MOS Err</th>
+                  <th class="num">Raw Err</th>
+                </tr>
+              </thead>
+              <tbody>${trs || `<tr><td colspan="6" style="color:var(--muted)">No verification rows yet.</td></tr>`}</tbody>
+            </table>
+          </div>
         `;
-        tr.onclick = () => {
-          if (openInfoTerms.has(row.term)) openInfoTerms.delete(row.term);
-          else openInfoTerms.add(row.term);
-          renderBreakdownTable(activeP);
-        };
-        tbody.appendChild(tr);
+      }
 
-        if (isOpen) {
-          const detailTr = document.createElement("tr");
-          detailTr.className = "info-drawer";
-          detailTr.innerHTML = `
-            <td colspan="4">
-              <div>${info.desc}</div>
-              <div class="info-meta">Time Frame &amp; Aggregation: ${info.timeDetail}</div>
-            </td>
-          `;
-          tbody.appendChild(detailTr);
-        }
-      });
+      gridEl.innerHTML =
+        buildTable("Morning Min Verification", cycData.min, cycData.min_mos_mae, cycData.min_raw_mae) +
+        buildTable("Afternoon Max Verification", cycData.max, cycData.max_mos_mae, cycData.max_raw_mae);
     }
 
-    function renderStation(stnId) {
-      selectedStn = stnId;
-      const stn = forecastData.stations[stnId];
+    function renderStationDetail(stnId) {
+      const stn = payload.stations[stnId];
       if (!stn) return;
 
-      const netLabel = NETWORK_LABELS[stn.network] || stn.network;
-      const obsStr = (stn.prev_obs_min !== null && stn.prev_obs_max !== null)
-        ? ` | Latest Obs (${stn.obs_date_label}): ${stn.prev_obs_min}°F / ${stn.prev_obs_max}°F`
-        : "";
-      document.getElementById("stn-title").textContent = `${stn.id} — ${stn.name}`;
-      document.getElementById("stn-sub").textContent =
-        `Elevation: ${stn.elev_ft.toLocaleString()} ft | Network: ${netLabel}${obsStr}`;
+      document.getElementById("stnTitle").textContent = `${stn.id} — ${stn.name}`;
+      document.getElementById("stnSub").textContent =
+        `Network: ${stn.network} • Elevation: ${stn.elev_ft} ft • Coordinates: ${stn.lat.toFixed(4)}°N, ${Math.abs(stn.lon).toFixed(4)}°W`;
 
-      const cardsEl = document.getElementById("period-cards");
-      cardsEl.innerHTML = "";
-      stn.periods.forEach((p, idx) => {
-        const sign = p.delta_f >= 0 ? "+" : "";
-        const fbTag = p.used_raw_fallback ? `<span class="fb-pill" title="Holdout MOS MAE > Raw HRRR MAE; using Raw HRRR">RAW HRRR</span>` : "";
-        const card = document.createElement("div");
-        card.className = `card ${p.kind} ${idx === selectedPeriodIdx ? "active" : ""}`;
-        card.innerHTML = `
-          <div class="lbl"><span>${p.label}</span>${fbTag}</div>
-          <div class="dt">${p.verify_date}</div>
-          <div class="temp">${p.mos_f.toFixed(1)}°F</div>
-          <div class="sub">Raw HRRR: ${p.raw_hrrr_f.toFixed(1)}°F (${sign}${p.delta_f.toFixed(1)}°F)</div>
-          <div class="sub">Holdout MAE: ${p.holdout_mos_mae}°F (Raw: ${p.holdout_raw_mae}°F)</div>
+      const obsEl = document.getElementById("obsBadge");
+      if (stn.obs_date_label && (stn.prev_obs_min !== null || stn.prev_obs_max !== null)) {
+        obsEl.innerHTML = `Latest Verified Obs (<strong>${stn.obs_date_label}</strong>)<br/>Low: <strong style="color:var(--cool)">${fmtTemp(stn.prev_obs_min)}</strong> &bull; High: <strong style="color:var(--warm)">${fmtTemp(stn.prev_obs_max)}</strong>`;
+      } else {
+        obsEl.innerHTML = `Latest Verified Obs<br/><span style="color:var(--muted)">Awaiting daily report</span>`;
+      }
+
+      const periodsEl = document.getElementById("periodsGrid");
+      periodsEl.innerHTML = (stn.periods || []).map(p => {
+        const fbHtml = p.used_raw_fallback
+          ? `<div class="fallback-tag" title="Holdout MOS MAE (${p.holdout_mos_mae}°F) > Raw HRRR MAE (${p.holdout_raw_mae}°F); raw HRRR used automatically.">RAW GUARDRAIL ACTIVE (Eq: ${p.mos_eq_f.toFixed(1)}°)</div>`
+          : "";
+        const bdRows = (p.breakdown || []).map(b =>
+          `<tr>
+            <td>${b.term}</td>
+            <td class="num">${Number(b.value).toFixed(2)}</td>
+            <td class="num">${Number(b.weight).toFixed(4)}</td>
+            <td class="num">${Number(b.contrib) >= 0 ? "+" : ""}${Number(b.contrib).toFixed(2)}°</td>
+          </tr>`
+        ).join("");
+
+        return `
+          <div class="period-card ${p.kind}">
+            <div class="period-label">${p.label}</div>
+            <div class="period-date">${p.verify_date}</div>
+            <div class="temp-row">
+              <div class="mos-temp">${fmtTemp(p.mos_f)}</div>
+              <div class="raw-temp">Raw HRRR: <strong>${fmtTemp(p.raw_hrrr_f)}</strong> (${fmtDelta(p.delta_f)})</div>
+            </div>
+            <div style="font-size:0.75rem;color:var(--muted);">${p.window_desc}</div>
+            <div class="mae-line">Holdout MAE: Raw <strong>${p.holdout_raw_mae.toFixed(2)}°</strong> &rarr; MOS <strong style="color:var(--good)">${p.holdout_mos_mae.toFixed(2)}°</strong></div>
+            ${fbHtml}
+            <details class="breakdown">
+              <summary>Equation Predictor Breakdown</summary>
+              <table style="margin-top:6px;">
+                <thead><tr><th>Term</th><th class="num">Val</th><th class="num">Wt</th><th class="num">Contrib</th></tr></thead>
+                <tbody>${bdRows}</tbody>
+              </table>
+            </details>
+          </div>
         `;
-        card.onclick = () => {
-          selectedPeriodIdx = idx;
-          activeVerifKind = p.kind;
-          document.querySelectorAll(".vtoggle-btn").forEach(b => b.classList.toggle("active", b.dataset.vkind === activeVerifKind));
-          renderStation(stnId);
-        };
-        cardsEl.appendChild(card);
-      });
+      }).join("");
 
-      const activeP = stn.periods[selectedPeriodIdx] || stn.periods[0];
-      if (activeP) renderBreakdownTable(activeP);
-
-      const ctx = document.getElementById("trajChart").getContext("2d");
-      if (chartInstance) chartInstance.destroy();
-      chartInstance = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: stn.hourly_curve.map(d => d.time_mst),
-          datasets: [{
-            label: "Raw HRRR 2m Temp (°F)",
-            data: stn.hourly_curve.map(d => d.raw_temp_f),
-            borderColor: "#38bdf8",
-            backgroundColor: "rgba(56, 189, 248, 0.15)",
-            borderWidth: 2,
-            pointRadius: 2,
-            fill: true,
-            tension: 0.25
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: "#94a3b8", maxTicksLimit: 9 }, grid: { color: "#334155" } },
-            y: { ticks: { color: "#94a3b8" }, grid: { color: "#334155" } }
-          }
-        }
-      });
-
-      renderVerificationChart(stn);
+      renderHourlySvg(stn);
+      renderVerification(stn);
     }
 
-    document.querySelectorAll(".filter-btn").forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeNetwork = btn.dataset.net;
-        renderMarkers();
-      };
-    });
+    function renderOverviewTable() {
+      const tbody = document.getElementById("allStationsBody");
+      document.getElementById("tableCountLbl").textContent = `Showing ${filteredStations.length} of ${allStations.length} stations`;
 
-    document.querySelectorAll(".vtoggle-btn").forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll(".vtoggle-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeVerifKind = btn.dataset.vkind;
-        if (forecastData) renderVerificationChart(forecastData.stations[selectedStn]);
-      };
-    });
+      const samplePeriods = (filteredStations[0] && filteredStations[0].periods) || [];
+      if (samplePeriods[0]) document.getElementById("thP0").textContent = `${samplePeriods[0].label} (${samplePeriods[0].verify_date})`;
+      if (samplePeriods[1]) document.getElementById("thP1").textContent = `${samplePeriods[1].label} (${samplePeriods[1].verify_date})`;
+      if (samplePeriods[2]) document.getElementById("thP2").textContent = `${samplePeriods[2].label} (${samplePeriods[2].verify_date})`;
 
-    document.querySelectorAll(".vcyc-btn").forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll(".vcyc-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeVerifCycle = btn.dataset.vcyc;
-        if (forecastData) renderVerificationChart(forecastData.stations[selectedStn]);
-      };
-    });
+      tbody.innerHTML = filteredStations.map(s => {
+        const ps = s.periods || [];
+        const pCells = [0, 1, 2].map(i => {
+          const p = ps[i];
+          if (!p) return `<td class="num">--</td>`;
+          return `<td class="num"><strong>${fmtTemp(p.mos_f)}</strong> <span style="color:var(--muted);font-size:0.75rem;">(${fmtTemp(p.raw_hrrr_f)})</span></td>`;
+        }).join("");
 
-    fetch("./`all_forecasts.json?t=${Date.now()}`")
-      .then(r => r.json())
-      .then(data => {
-        forecastData = data;
-        if (data.synoptic_cycle && ["00Z", "06Z", "12Z", "18Z"].includes(data.synoptic_cycle)) {
-          activeVerifCycle = data.synoptic_cycle;
-          document.querySelectorAll(".vcyc-btn").forEach(b => b.classList.toggle("active", b.dataset.vcyc === activeVerifCycle));
-        }
+        const obsStr = (s.prev_obs_min !== null || s.prev_obs_max !== null)
+          ? `${fmtTemp(s.prev_obs_min)} / ${fmtTemp(s.prev_obs_max)}`
+          : "--";
 
-        const allVals = Object.values(data.stations);
-        document.querySelector('[data-net="ALL"]').textContent = `All (${allVals.length})`;
-        const netNames = {
-          AZ_ASOS: "Airports",
-          AZCLIMATE: "COOP",
-          USCRN: "USCRN",
-          RAWS: "RAWS",
-          SNOTEL: "SNOTEL",
-          RWIS: "RWIS",
-          ALERT: "ALERT",
-          CWOP: "CWOP"
-        };
-        Object.entries(netNames).forEach(([netKey, label]) => {
-          const cnt = allVals.filter(s => s.network === netKey).length;
-          const btn = document.querySelector(`[data-net="${netKey}"]`);
-          if (btn) {
-            btn.textContent = `${label} (${cnt})`;
-            if (cnt === 0) btn.style.display = "none";
-          }
+        return `
+          <tr class="clickable ${s.id === selectedId ? "selected-row" : ""}" data-sid="${s.id}">
+            <td><strong>${s.id}</strong></td>
+            <td>${s.name}</td>
+            <td><span class="dot" style="background:${NETWORK_COLORS[s.network] || "#cbd5e1"};margin-right:5px;"></span>${s.network}</td>
+            <td class="num">${s.elev_ft}</td>
+            ${pCells}
+            <td class="num">${obsStr}</td>
+          </tr>
+        `;
+      }).join("");
+
+      tbody.querySelectorAll("tr.clickable").forEach(tr => {
+        tr.addEventListener("click", () => {
+          selectStation(tr.getAttribute("data-sid"), true);
+          window.scrollTo({ top: 0, behavior: "smooth" });
         });
-
-        document.getElementById("run-meta").textContent =
-          `HRRR: ${data.hrrr_init_utc} (${data.synoptic_cycle}) | Updated: ${data.updated_mst}`;
-
-        const selectEl = document.getElementById("stn-select");
-        allVals
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .forEach(stn => {
-            const opt = document.createElement("option");
-            opt.value = stn.id;
-            opt.textContent = stn.network === "AZ_ASOS"
-              ? `${stn.id} — ${stn.name}`
-              : `${stn.name} [${NETWORK_LABELS[stn.network] || stn.network}]`;
-            selectEl.appendChild(opt);
-          });
-        selectEl.value = selectedStn;
-        selectEl.onchange = () => { selectedPeriodIdx = 0; renderStation(selectEl.value); };
-
-        renderMarkers();
-        renderStation(selectedStn);
-      })
-      .catch(() => {
-        document.getElementById("run-meta").textContent = "Run GitHub Action first to generate `all_forecasts.json?t=${Date.now()}`";
       });
+    }
+
+    async function loadForecastData() {
+      hideBanner();
+      const cacheBust = Date.now();
+      const urls = [
+        `all_forecasts.json?t=${cacheBust}`,
+        `latest_forecasts.json?t=${cacheBust}`
+      ];
+
+      let data = null;
+      let lastErr = null;
+
+      for (const u of urls) {
+        try {
+          const resp = await fetch(u, { cache: "no-store" });
+          if (!resp.ok) throw new Error(`HTTP ${resp.status} loading ${u}`);
+          const parsed = await resp.json();
+          if (parsed && parsed.stations && Object.keys(parsed.stations).length > 0) {
+            data = parsed;
+            break;
+          }
+        } catch (err) {
+          lastErr = err;
+        }
+      }
+
+      if (!data) {
+        showBanner(`Unable to load forecast JSON (${lastErr ? lastErr.message : "empty dataset"}). Ensure update_forecast.py has run and GitHub Pages has finished deploying.`);
+        return;
+      }
+
+      payload = data;
+      allStations = Object.values(payload.stations);
+
+      document.getElementById("metaInit").textContent = payload.hrrr_init_utc || "--";
+      document.getElementById("metaCycle").textContent = payload.synoptic_cycle || "--";
+      document.getElementById("metaUpdated").textContent = payload.updated_mst || payload.updated_utc || "--";
+      document.getElementById("metaCount").textContent = allStations.length;
+
+      initMap();
+      renderNetworkChips();
+      applyFilters();
+    }
+
+    document.getElementById("stationSelect").addEventListener("change", e => selectStation(e.target.value, true));
+    document.getElementById("stationSearch").addEventListener("input", applyFilters);
+    document.getElementById("refreshBtn").addEventListener("click", loadForecastData);
+
+    loadForecastData();
   </script>
 </body>
 </html>
