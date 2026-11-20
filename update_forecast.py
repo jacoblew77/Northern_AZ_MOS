@@ -10,6 +10,11 @@ update_forecast.py — Operational 6-Hourly HRRR MOS Runner (Synoptic Data API +
    * Afternoon Max (Date D): 12:00Z on Date D to 06:00Z on Date D+1 (5:00 AM MST D to 11:00 PM MST D).
    Applies a 5-point centered median spike-rejection filter to CWOP stations before aggregation.
 4. Maintains docs/verification_history.json across all four synoptic cycles (00Z, 06Z, 12Z, 18Z).
+5. Writes:
+   * docs/all_forecasts.json    — Full set of all trained Northern AZ stations (used by docs/index.html).
+   * docs/latest_forecasts.json — Restricted list of trusted, population-representative forecast
+     locations (strictly 1 best in-town observation site per GFE Control Value city; towns with
+     no available observation are skipped).
 """
 import datetime
 import io
@@ -33,6 +38,7 @@ warnings.filterwarnings("ignore")
 logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 
 EQ_FILE = "mos_equations.json"
+ALL_OUT_JSON = "docs/all_forecasts.json"
 OUT_JSON = "docs/latest_forecasts.json"
 HIST_JSON = "docs/verification_history.json"
 ALL_CYCLES = ("00Z", "06Z", "12Z", "18Z")
@@ -61,11 +67,170 @@ HRRR_IDX_PATTERNS = {
     "dswrf":    ":DSWRF:surface:",
 }
 
+# Trust ranking for selecting population-representative observation sites
+TRUSTED_NETWORK_RANK = {
+    "AZCLIMATE": 1,  # NWS COOP (typically located in town centers / park HQs)
+    "AZ_ASOS":   2,  # FAA / NWS ASOS & AWOS
+    "USCRN":     3,  # NOAA Climate Reference Network
+    "RAWS":      4,  # Interagency Remote Automatic Weather Stations
+    "ALERT":     5,  # County Flood Control District gauges
+    "CWOP":      6,  # Citizen Weather Observer Program (despiked)
+    "RWIS":      7,  # ADOT Roadway Weather Information System
+    "SNOTEL":    8,  # High-elevation mountain snowpack sites (lowest priority for towns)
+}
+
+# Ordered list of GFE "Set Control Values" cities/locations
+# Each entry maps a town/control point to its population center, typical elevation (ft),
+# search radius (km), ordered preferred station IDs, and mesa/outlier exclusions.
+GFE_CONTROL_LOCATIONS = [
+    # Column 1
+    {"city": "St George, UT",        "lat": 37.0965, "lon": -113.5684, "elev_ft": 2860, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Fredonia",             "lat": 36.9467, "lon": -112.5262, "elev_ft": 4670, "max_km": 12.0, "preferred": ["AZ3250"], "exclude": []},
+    {"city": "Fraziers Well",        "lat": 35.8050, "lon": -113.0650, "elev_ft": 6750, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Seligman",             "lat": 35.3256, "lon": -112.8774, "elev_ft": 5240, "max_km": 12.0, "preferred": ["AZ7716"], "exclude": []},
+    {"city": "Ash Fork",             "lat": 35.2214, "lon": -112.4872, "elev_ft": 5140, "max_km": 12.0, "preferred": ["AZ0487", "AZ0482"], "exclude": []},
+    {"city": "Chino Valley",         "lat": 34.7575, "lon": -112.4538, "elev_ft": 4700, "max_km": 10.0, "preferred": ["AZ1654"], "exclude": ["KPRC"]},
+    {"city": "PRESCOTT KPRC",        "lat": 34.6545, "lon": -112.4196, "elev_ft": 5045, "max_km": 12.0, "preferred": ["KPRC", "AZ6796"], "exclude": []},
+    {"city": "Crown King",           "lat": 34.2056, "lon": -112.3386, "elev_ft": 5770, "max_km": 10.0, "preferred": ["AZ2329"], "exclude": []},
+    {"city": "Yarnell",              "lat": 34.2217, "lon": -112.7475, "elev_ft": 4780, "max_km": 10.0, "preferred": [], "exclude": []},
+    {"city": "Castle Hot Springs",   "lat": 33.9817, "lon": -112.3614, "elev_ft": 2100, "max_km": 10.0, "preferred": ["AZ1353"], "exclude": []},
+    {"city": "Bagdad",               "lat": 34.5817, "lon": -113.2044, "elev_ft": 3750, "max_km": 12.0, "preferred": ["AZ0586"], "exclude": []},
+    {"city": "Kingman",              "lat": 35.1894, "lon": -114.0530, "elev_ft": 3330, "max_km": 12.0, "preferred": ["KIGM"], "exclude": []},
+    {"city": "Wickenburg",           "lat": 33.9686, "lon": -112.7296, "elev_ft": 2090, "max_km": 12.0, "preferred": ["AZ9287"], "exclude": []},
+
+    # Column 2
+    {"city": "Jacob Lake",           "lat": 36.7133, "lon": -112.2167, "elev_ft": 7920, "max_km": 10.0, "preferred": ["AZ4418"], "exclude": []},
+    {"city": "North Rim",            "lat": 36.2133, "lon": -112.0617, "elev_ft": 8200, "max_km": 10.0, "preferred": ["AZ1001"], "exclude": ["AZ6471"]},
+    {"city": "Phantom Ranch",        "lat": 36.1056, "lon": -112.0950, "elev_ft": 2480, "max_km": 6.0,  "preferred": ["AZ6471"], "exclude": ["AZ1001", "AZ3596", "KGCN"]},
+    {"city": "Grand Canyon KGCN",    "lat": 35.9524, "lon": -112.1470, "elev_ft": 6609, "max_km": 8.0,  "preferred": ["KGCN"], "exclude": ["AZ3596"]},
+    {"city": "Grand Canyon Village", "lat": 36.0544, "lon": -112.1401, "elev_ft": 6860, "max_km": 8.0,  "preferred": ["AZ3596"], "exclude": ["KGCN", "AZ6471"]},
+    {"city": "Valle",                "lat": 35.6536, "lon": -112.1386, "elev_ft": 5990, "max_km": 10.0, "preferred": ["AZ9007"], "exclude": []},
+    {"city": "Williams",             "lat": 35.2494, "lon": -112.1910, "elev_ft": 6760, "max_km": 10.0, "preferred": ["AZ9359"], "exclude": ["KCMR"]},
+    {"city": "Bellemont",            "lat": 35.2300, "lon": -111.8214, "elev_ft": 7150, "max_km": 8.0,  "preferred": ["AZ0678"], "exclude": ["KFLG"]},
+    # Sedona: exclude KSEZ (Airport Mesa, 4830 ft) so in-town valley-floor Sedona COOP/CWOP/ALERT is chosen
+    {"city": "Sedona",               "lat": 34.8697, "lon": -111.7610, "elev_ft": 4350, "max_km": 10.0, "preferred": ["AZ7708", "AZ7710", "AZ6037"], "exclude": ["KSEZ"]},
+    # Cottonwood: Tuzigoot NM COOP (AZ8865) or in-town Cottonwood station on valley floor
+    {"city": "Cottonwood",           "lat": 34.7392, "lon": -112.0099, "elev_ft": 3314, "max_km": 9.0,  "preferred": ["AZ8865"], "exclude": ["KSEZ"]},
+    # Camp Verde: Montezuma Castle NM COOP (AZ5635) or in-town Camp Verde CWOP (C4534)
+    {"city": "Camp Verde",           "lat": 34.5636, "lon": -111.8543, "elev_ft": 3147, "max_km": 10.0, "preferred": ["AZ5635", "C4534"], "exclude": []},
+    {"city": "Cordes Jct",           "lat": 34.3311, "lon": -112.1264, "elev_ft": 3770, "max_km": 10.0, "preferred": ["AZ2109"], "exclude": []},
+    {"city": "Black Cyn City",       "lat": 34.0706, "lon": -112.1425, "elev_ft": 2000, "max_km": 10.0, "preferred": [], "exclude": []},
+
+    # Column 3
+    {"city": "Phoenix, AZ",          "lat": 33.4484, "lon": -112.0740, "elev_ft": 1086, "max_km": 12.0, "preferred": ["KPHX"], "exclude": []},
+    {"city": "Page",                 "lat": 36.9147, "lon": -111.4558, "elev_ft": 4300, "max_km": 10.0, "preferred": ["KPGA", "AZ6180"], "exclude": []},
+    {"city": "Lees Ferry",           "lat": 36.8664, "lon": -111.5878, "elev_ft": 3200, "max_km": 8.0,  "preferred": ["AZ4849"], "exclude": ["KPGA"]},
+    {"city": "Tuba City",            "lat": 36.1350, "lon": -111.2399, "elev_ft": 4960, "max_km": 12.0, "preferred": ["AZ8792"], "exclude": []},
+    {"city": "Cameron",              "lat": 35.8758, "lon": -111.4125, "elev_ft": 4200, "max_km": 10.0, "preferred": [], "exclude": []},
+    {"city": "Wupatki N.M.",         "lat": 35.5186, "lon": -111.3703, "elev_ft": 4900, "max_km": 10.0, "preferred": ["AZ9542"], "exclude": []},
+    {"city": "Doney Park",           "lat": 35.2667, "lon": -111.5000, "elev_ft": 6650, "max_km": 8.0,  "preferred": [], "exclude": ["KFLG", "AZ3009", "AZ3010"]},
+    {"city": "Flagstaff",            "lat": 35.1983, "lon": -111.6513, "elev_ft": 6910, "max_km": 10.0, "preferred": ["AZ3009", "KFLG", "AZ3010"], "exclude": ["AZ0678"]},
+    {"city": "Munds Park",           "lat": 34.9436, "lon": -111.6406, "elev_ft": 6600, "max_km": 8.0,  "preferred": [], "exclude": ["KFLG", "KSEZ"]},
+    {"city": "Happy Jack",           "lat": 34.7453, "lon": -111.4114, "elev_ft": 7500, "max_km": 14.0, "preferred": ["AZ3828", "AZ0871"], "exclude": []},
+    {"city": "Pine",                 "lat": 34.3844, "lon": -111.4551, "elev_ft": 5370, "max_km": 8.0,  "preferred": [], "exclude": ["KPAN", "AZ6323"]},
+    # Payson: in-town COOP AZ6323 (4,920 ft) preferred over KPAN airport north of town (5,157 ft)
+    {"city": "Payson",               "lat": 34.2309, "lon": -111.3251, "elev_ft": 4920, "max_km": 10.0, "preferred": ["AZ6323", "KPAN"], "exclude": []},
+    {"city": "Jakes Corner",         "lat": 34.0117, "lon": -111.3164, "elev_ft": 2820, "max_km": 10.0, "preferred": [], "exclude": []},
+
+    # Column 4
+    {"city": "Young",                "lat": 34.1003, "lon": -110.9636, "elev_ft": 5180, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Blanding, UT",         "lat": 37.6242, "lon": -109.4782, "elev_ft": 6105, "max_km": 12.0, "preferred": ["KBDG"], "exclude": []},
+    {"city": "Navajo N.M.",          "lat": 36.6808, "lon": -110.5389, "elev_ft": 7280, "max_km": 10.0, "preferred": ["AZ0750"], "exclude": []},
+    {"city": "Kayenta",              "lat": 36.7278, "lon": -110.2546, "elev_ft": 5640, "max_km": 12.0, "preferred": ["AZ4579"], "exclude": []},
+    {"city": "Pinon",                "lat": 36.1008, "lon": -110.2206, "elev_ft": 6350, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Kykotsmovi",           "lat": 35.8706, "lon": -110.6186, "elev_ft": 5680, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Keams Canyon",         "lat": 35.8136, "lon": -110.1889, "elev_ft": 6200, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Dilkon",               "lat": 35.3672, "lon": -110.3197, "elev_ft": 5880, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Winslow",              "lat": 35.0242, "lon": -110.6974, "elev_ft": 4850, "max_km": 10.0, "preferred": ["KINW", "AZ9439"], "exclude": []},
+    {"city": "Holbrook",             "lat": 34.9022, "lon": -110.1582, "elev_ft": 5080, "max_km": 10.0, "preferred": ["AZ4089"], "exclude": []},
+    {"city": "Heber",                "lat": 34.4322, "lon": -110.5944, "elev_ft": 6600, "max_km": 10.0, "preferred": ["AZ3961"], "exclude": []},
+    {"city": "Show Low",             "lat": 34.2542, "lon": -110.0298, "elev_ft": 6345, "max_km": 10.0, "preferred": ["KSOW", "AZ7855"], "exclude": []},
+    {"city": "Carrizo",              "lat": 33.9978, "lon": -110.2950, "elev_ft": 5100, "max_km": 10.0, "preferred": [], "exclude": []},
+
+    # Column 5
+    {"city": "WhiteRiver",           "lat": 33.8394, "lon": -109.9639, "elev_ft": 5150, "max_km": 12.0, "preferred": ["AZ9271"], "exclude": []},
+    {"city": "Gallup, NM",           "lat": 35.5281, "lon": -108.7426, "elev_ft": 6468, "max_km": 12.0, "preferred": ["KGUP"], "exclude": []},
+    {"city": "Teec Nos Pos",         "lat": 36.9231, "lon": -109.0886, "elev_ft": 5200, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Many Farms",           "lat": 36.3586, "lon": -109.6194, "elev_ft": 5310, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Canyon de Chelly",     "lat": 36.1536, "lon": -109.5389, "elev_ft": 5610, "max_km": 10.0, "preferred": ["AZ1248"], "exclude": []},
+    {"city": "Window Rock",          "lat": 35.6806, "lon": -109.0536, "elev_ft": 6820, "max_km": 10.0, "preferred": ["KRQE", "AZ9410"], "exclude": []},
+    {"city": "Ganado",               "lat": 35.7114, "lon": -109.5419, "elev_ft": 6380, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Lupton",               "lat": 35.3497, "lon": -109.0511, "elev_ft": 6150, "max_km": 12.0, "preferred": [], "exclude": []},
+    {"city": "Petrified NM",         "lat": 35.0656, "lon": -109.7814, "elev_ft": 5450, "max_km": 12.0, "preferred": ["AZ6468", "AZ6190"], "exclude": []},
+    {"city": "St. Johns",            "lat": 34.5058, "lon": -109.3609, "elev_ft": 5685, "max_km": 10.0, "preferred": ["KSJN"], "exclude": []},
+    # Springerville: in-town COOP AZ8162 (6,970 ft) preferred over exposed west-bench airport KJTC (7,055 ft)
+    {"city": "Springerville",        "lat": 34.1331, "lon": -109.2859, "elev_ft": 6970, "max_km": 10.0, "preferred": ["AZ8162", "KJTC"], "exclude": []},
+    {"city": "Greer",                "lat": 34.0103, "lon": -109.4586, "elev_ft": 8360, "max_km": 8.0,  "preferred": [], "exclude": ["AZ8162", "KJTC"]},
+    {"city": "Alpine",               "lat": 33.8481, "lon": -109.1436, "elev_ft": 8015, "max_km": 10.0, "preferred": ["AZ0159"], "exclude": []},
+]
+
+
+def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    r_km = 6371.0
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp = math.radians(lat2 - lat1)
+    dl = math.radians(lon2 - lon1)
+    a = math.sin(dp / 2.0) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2.0) ** 2
+    return 2.0 * r_km * math.atan2(math.sqrt(a), math.sqrt(1.0 - a))
+
+
+def select_trusted_control_stations(all_stations_out: dict) -> dict:
+    """
+    Selects at most one trusted, population-representative observation station per town
+    from GFE_CONTROL_LOCATIONS. Towns without a qualifying observation site are skipped.
+    """
+    selected_out = {}
+    used_station_ids = set()
+
+    for loc in GFE_CONTROL_LOCATIONS:
+        city_label = loc["city"]
+        c_lat, c_lon = loc["lat"], loc["lon"]
+        c_elev = loc["elev_ft"]
+        max_km = loc["max_km"]
+        excluded = set(loc.get("exclude", []))
+
+        chosen_sid = None
+
+        # 1. Explicit priority list of trusted in-town / representative station IDs
+        for pref_sid in loc.get("preferred", []):
+            if pref_sid in all_stations_out and pref_sid not in used_station_ids and pref_sid not in excluded:
+                chosen_sid = pref_sid
+                break
+
+        # 2. Spatial + network-trust + elevation-similarity search within town radius
+        if chosen_sid is None:
+            scored_candidates = []
+            for sid, stn_obj in all_stations_out.items():
+                if sid in used_station_ids or sid in excluded:
+                    continue
+                dist_km = haversine_km(c_lat, c_lon, stn_obj["lat"], stn_obj["lon"])
+                if dist_km > max_km:
+                    continue
+                elev_diff_ft = abs(int(stn_obj.get("elev_ft", c_elev)) - c_elev)
+                # Reject mountaintop / deep-canyon outliers (> 650 ft off town floor)
+                if elev_diff_ft > 650:
+                    continue
+                net_rank = TRUSTED_NETWORK_RANK.get(stn_obj.get("network", ""), 99)
+                score = (net_rank, round(elev_diff_ft / 150.0, 2), round(dist_km, 2))
+                scored_candidates.append((score, sid))
+
+            if scored_candidates:
+                scored_candidates.sort(key=lambda item: item[0])
+                chosen_sid = scored_candidates[0][1]
+
+        if chosen_sid is not None:
+            used_station_ids.add(chosen_sid)
+            stn_copy = dict(all_stations_out[chosen_sid])
+            stn_copy["control_city"] = city_label
+            selected_out[chosen_sid] = stn_copy
+
+    return selected_out
+
 
 def get_synoptic_token() -> str:
     token = os.environ.get("SYNOPTIC_TOKEN", "").strip()
     if not token:
-        raise RuntimeError("SYNOPTIC_TOKEN environment variable is missing. Set it in GitHub Actions Secrets.")
+        raise RuntimeError("SYNOPTIC_TOKEN environment variable is missing. Add it to GitHub Actions Secrets.")
     return token
 
 
@@ -611,13 +776,14 @@ def main():
 
     backfill_past_7_days(stations, hist_records, today_mst)
 
-    output_payload = {
+    base_meta = {
         "updated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "updated_mst": now_az.strftime("%Y-%m-%d %I:%M %p MST"),
         "hrrr_init_utc": chosen_init.strftime("%Y-%m-%d %H:%MZ"),
         "synoptic_cycle": chosen_cyc,
-        "stations": {},
     }
+
+    all_stations_out = {}
 
     for stn_id, s_info in stations.items():
         meta = s_info["meta"]
@@ -699,7 +865,7 @@ def main():
 
         verif_7d = build_station_7d_verification(stn_id, obs_map, hist_records, today_mst)
 
-        output_payload["stations"][stn_id] = {
+        all_stations_out[stn_id] = {
             "id": stn_id,
             "name": meta["name"],
             "network": meta["network"],
@@ -714,12 +880,22 @@ def main():
             "past_7d_verification": verif_7d,
         }
 
+    trusted_control_out = select_trusted_control_stations(all_stations_out)
+
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
     with open(HIST_JSON, "w") as f:
-        json.dump({"schema_version": 2, "updated_utc": output_payload["updated_utc"], "records": hist_records}, f, indent=2)
+        json.dump({"schema_version": 2, "updated_utc": base_meta["updated_utc"], "records": hist_records}, f, indent=2)
+    with open(ALL_OUT_JSON, "w") as f:
+        json.dump({**base_meta, "stations": all_stations_out}, f, indent=2)
     with open(OUT_JSON, "w") as f:
-        json.dump(output_payload, f, indent=2)
-    print(f"Wrote updated forecasts and multi-cycle 7-day verification for {len(stations)} stations.")
+        json.dump({**base_meta, "stations": trusted_control_out}, f, indent=2)
+
+    print(
+        f"Wrote {len(all_stations_out)} total stations to {ALL_OUT_JSON} and "
+        f"{len(trusted_control_out)} trusted 1-per-city control locations to {OUT_JSON}."
+    )
+    for sid, obj in trusted_control_out.items():
+        print(f"  [Control: {obj['control_city']}] -> {sid} ({obj['name']} | {obj['network']} | {obj['elev_ft']} ft)")
 
 
 if __name__ == "__main__":
