@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  update-forecast:
+  update-forecasts:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,18 +20,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install runtime packages
-        run: pip install -q eccodes eccodeslib "numpy<2" pandas requests
+      - name: Install GRIB & numerical packages
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libeccodes-dev
+          pip install -q eccodes "numpy<2" pandas requests
 
-      - name: Run HRRR MOS live forecast & verification update
+      - name: Run operational MOS forecast & verification update
         env:
           SYNOPTIC_TOKEN: ${{ secrets.SYNOPTIC_TOKEN }}
         run: python -u update_forecast.py
 
-      - name: Commit updated JSON to docs/
+      - name: Commit updated forecasts and verification history
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/latest_forecasts.json docs/verification_history.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update HRRR MOS forecasts & 7-day verification [skip ci]"
+          git add docs/latest_forecasts.json docs/all_forecasts.json docs/verification_history.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update HRRR MOS forecasts and verification"
           git push
