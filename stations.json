@@ -135,23 +135,15 @@
     "lon": -110.115,
     "elev_ft": 5823
   },
-  "AZ0000": {
-    "name": "Arizona Average COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZ0000",
-    "lat": 34.2932,
-    "lon": -111.6646,
-    "elev_ft": 2490,
-    "source": "IEM_COOP"
-  },
   "AZ0159": {
     "name": "Alpine COOP",
     "network": "AZCLIMATE",
     "iem_id": "AZ0159",
     "lat": 33.8492,
     "lon": -109.1436,
-    "elev_ft": 8050,
-    "source": "IEM_COOP"
+    "elev_ft": 7999,
+    "source": "IEM_COOP",
+    "az_coop_id": "ALPA3"
   },
   "AZ0586": {
     "name": "Bagdad COOP",
@@ -159,8 +151,9 @@
     "iem_id": "AZ0586",
     "lat": 34.5972,
     "lon": -113.1739,
-    "elev_ft": 12976,
-    "source": "IEM_COOP"
+    "elev_ft": 3970,
+    "source": "IEM_COOP",
+    "az_coop_id": "BDDA3"
   },
   "AZ0678": {
     "name": "Bellemont WFO",
@@ -169,7 +162,8 @@
     "lat": 35.2302,
     "lon": -111.8221,
     "elev_ft": 7152,
-    "source": "IEM_COOP"
+    "source": "IEM_COOP",
+    "az_coop_id": "FGZ"
   },
   "AZ0750": {
     "name": "Betatakin (Navajo Nat'l Mon)",
@@ -177,8 +171,9 @@
     "iem_id": "AZ0750",
     "lat": 36.6786,
     "lon": -110.5419,
-    "elev_ft": 7286,
-    "source": "IEM_COOP"
+    "elev_ft": 7297,
+    "source": "IEM_COOP",
+    "az_coop_id": "BETA3"
   },
   "AZ0871": {
     "name": "Blue Ridge RS COOP",
@@ -186,8 +181,9 @@
     "iem_id": "AZ0871",
     "lat": 34.6108,
     "lon": -111.1922,
-    "elev_ft": 22572,
-    "source": "IEM_COOP"
+    "elev_ft": 6903,
+    "source": "IEM_COOP",
+    "az_coop_id": "BRGA3"
   },
   "AZ1001": {
     "name": "Bright Angel RS COOP",
@@ -195,8 +191,9 @@
     "iem_id": "AZ1001",
     "lat": 36.2147,
     "lon": -112.0619,
-    "elev_ft": 26247,
-    "source": "IEM_COOP"
+    "elev_ft": 8389,
+    "source": "IEM_COOP",
+    "az_coop_id": "NRMA3"
   },
   "AZ1248": {
     "name": "Canyon de Chelly COOP",
@@ -204,8 +201,9 @@
     "iem_id": "AZ1248",
     "lat": 36.1536,
     "lon": -109.5389,
-    "elev_ft": 5610,
-    "source": "IEM_COOP"
+    "elev_ft": 5545,
+    "source": "IEM_COOP",
+    "az_coop_id": "CHNA3"
   },
   "AZ2109": {
     "name": "Cordes COOP",
@@ -213,8 +211,9 @@
     "iem_id": "AZ2109",
     "lat": 34.305,
     "lon": -112.165,
-    "elev_ft": 12372,
-    "source": "IEM_COOP"
+    "elev_ft": 3782,
+    "source": "IEM_COOP",
+    "az_coop_id": "CORA3"
   },
   "AZ3009": {
     "name": "Flagstaff 4 SW COOP",
@@ -222,17 +221,9 @@
     "iem_id": "AZ3009",
     "lat": 35.1611,
     "lon": -111.7311,
-    "elev_ft": 23376,
-    "source": "IEM_COOP"
-  },
-  "AZ3010": {
-    "name": "Flagstaff AP COOP",
-    "network": "AZCLIMATE",
+    "elev_ft": 7110,
     "source": "IEM_COOP",
-    "iem_id": "AZ3010",
-    "lat": 35.1442,
-    "lon": -111.6664,
-    "elev_ft": 22976
+    "az_coop_id": "FLSA3"
   },
   "AZ3013": {
     "name": "Flagstaff 14N COOP",
@@ -240,26 +231,9 @@
     "iem_id": "AZ3013",
     "lat": 35.3835,
     "lon": -111.7293,
-    "elev_ft": 8140,
-    "source": "IEM_COOP"
-  },
-  "AZ3160": {
-    "name": "Ft Valley COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZ3160",
-    "lat": 35.2681,
-    "lon": -111.7428,
-    "elev_ft": 24104,
-    "source": "IEM_COOP"
-  },
-  "AZ3448": {
-    "name": "Gisela COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZ3448",
-    "lat": 34.1111,
-    "lon": -111.2758,
-    "elev_ft": 2900,
-    "source": "IEM_COOP"
+    "elev_ft": 8151,
+    "source": "IEM_COOP",
+    "az_coop_id": "FGNA3"
   },
   "AZ3582": {
     "name": "Grand Canyon Visitor Center COOP",
@@ -267,8 +241,9 @@
     "iem_id": "AZ3582",
     "lat": 36.0597,
     "lon": -112.1098,
-    "elev_ft": 7083,
-    "source": "IEM_COOP"
+    "elev_ft": 7107,
+    "source": "IEM_COOP",
+    "az_coop_id": "GCVA3"
   },
   "AZ3584": {
     "name": "Grand Canyon East Entrance COOP",
@@ -276,8 +251,9 @@
     "iem_id": "AZ3584",
     "lat": 36.0353,
     "lon": -111.8304,
-    "elev_ft": 7480,
-    "source": "IEM_COOP"
+    "elev_ft": 7439,
+    "source": "IEM_COOP",
+    "az_coop_id": "GCEA3"
   },
   "AZ3828": {
     "name": "Happy Jack RS COOP",
@@ -285,8 +261,9 @@
     "iem_id": "AZ3828",
     "lat": 34.7433,
     "lon": -111.4139,
-    "elev_ft": 24541,
-    "source": "IEM_COOP"
+    "elev_ft": 7585,
+    "source": "IEM_COOP",
+    "az_coop_id": "HPJA3"
   },
   "AZ3961": {
     "name": "Heber Black Mesa RS COOP",
@@ -294,8 +271,9 @@
     "iem_id": "AZ3961",
     "lat": 34.3925,
     "lon": -110.5581,
-    "elev_ft": 21621,
-    "source": "IEM_COOP"
+    "elev_ft": 6631,
+    "source": "IEM_COOP",
+    "az_coop_id": "HBRA3"
   },
   "AZ4453": {
     "name": "Jerome COOP",
@@ -303,8 +281,9 @@
     "iem_id": "AZ4453",
     "lat": 34.7522,
     "lon": -112.1114,
-    "elev_ft": 16240,
-    "source": "IEM_COOP"
+    "elev_ft": 4742,
+    "source": "IEM_COOP",
+    "az_coop_id": "JRMA3"
   },
   "AZ5412": {
     "name": "Mc Nary 2N COOP",
@@ -312,8 +291,9 @@
     "iem_id": "AZ5412",
     "lat": 34.1142,
     "lon": -109.8589,
-    "elev_ft": 24081,
-    "source": "IEM_COOP"
+    "elev_ft": 7398,
+    "source": "IEM_COOP",
+    "az_coop_id": "MNYA3"
   },
   "AZ5494": {
     "name": "Meteor Crater COOP",
@@ -321,8 +301,9 @@
     "iem_id": "AZ5494",
     "lat": 35.0283,
     "lon": -111.0233,
-    "elev_ft": 5535,
-    "source": "IEM_COOP"
+    "elev_ft": 5518,
+    "source": "IEM_COOP",
+    "az_coop_id": "MTRA3"
   },
   "AZ5635": {
     "name": "Montezuma Castle Nat'l Mon",
@@ -330,8 +311,9 @@
     "iem_id": "AZ5635",
     "lat": 34.6114,
     "lon": -111.835,
-    "elev_ft": 3180,
-    "source": "IEM_COOP"
+    "elev_ft": 3212,
+    "source": "IEM_COOP",
+    "az_coop_id": "MTZA3"
   },
   "AZ5825": {
     "name": "Natural Bridge COOP",
@@ -340,7 +322,8 @@
     "lat": 34.3222,
     "lon": -111.4533,
     "elev_ft": 4626,
-    "source": "IEM_COOP"
+    "source": "IEM_COOP",
+    "az_coop_id": "TNBA3"
   },
   "AZ6190": {
     "name": "Painted Desert NP",
@@ -348,8 +331,9 @@
     "iem_id": "AZ6190",
     "lat": 35.068,
     "lon": -109.7688,
-    "elev_ft": 5760,
-    "source": "IEM_COOP"
+    "elev_ft": 5781,
+    "source": "IEM_COOP",
+    "az_coop_id": "PAIA3"
   },
   "AZ6323": {
     "name": "Payson COOP",
@@ -357,8 +341,9 @@
     "iem_id": "AZ6323",
     "lat": 34.2333,
     "lon": -111.3333,
-    "elev_ft": 4915,
-    "source": "IEM_COOP"
+    "elev_ft": 4888,
+    "source": "IEM_COOP",
+    "az_coop_id": "PYSA3"
   },
   "AZ6468": {
     "name": "Petrified Forest NP",
@@ -366,8 +351,9 @@
     "iem_id": "AZ6468",
     "lat": 34.8122,
     "lon": -109.8925,
-    "elev_ft": 5446,
-    "source": "IEM_COOP"
+    "elev_ft": 5407,
+    "source": "IEM_COOP",
+    "az_coop_id": "PTFA3"
   },
   "AZ6471": {
     "name": "Phantom Ranch (Grand Canyon)",
@@ -375,8 +361,9 @@
     "iem_id": "AZ6471",
     "lat": 36.1056,
     "lon": -112.095,
-    "elev_ft": 2530,
-    "source": "IEM_COOP"
+    "elev_ft": 6870,
+    "source": "IEM_COOP",
+    "az_coop_id": "PHRA3"
   },
   "AZ6653": {
     "name": "Pleasant Valley R S COOP",
@@ -384,8 +371,9 @@
     "iem_id": "AZ6653",
     "lat": 34.0989,
     "lon": -110.9442,
-    "elev_ft": 16568,
-    "source": "IEM_COOP"
+    "elev_ft": 5085,
+    "source": "IEM_COOP",
+    "az_coop_id": "YNGA3"
   },
   "AZ6796": {
     "name": "Prescott COOP",
@@ -393,8 +381,9 @@
     "iem_id": "AZ6796",
     "lat": 34.5706,
     "lon": -112.4322,
-    "elev_ft": 17077,
-    "source": "IEM_COOP"
+    "elev_ft": 5522,
+    "source": "IEM_COOP",
+    "az_coop_id": "PSTA3"
   },
   "AZ7435": {
     "name": "Saint Johns COOP",
@@ -402,8 +391,9 @@
     "iem_id": "AZ7435",
     "lat": 34.5172,
     "lon": -109.4028,
-    "elev_ft": 18996,
-    "source": "IEM_COOP"
+    "elev_ft": 5791,
+    "source": "IEM_COOP",
+    "az_coop_id": "STJA3"
   },
   "AZ7488": {
     "name": "Sanders COOP",
@@ -411,8 +401,9 @@
     "iem_id": "AZ7488",
     "lat": 35.2239,
     "lon": -109.3222,
-    "elev_ft": 19203,
-    "source": "IEM_COOP"
+    "elev_ft": 5879,
+    "source": "IEM_COOP",
+    "az_coop_id": "SANA3"
   },
   "AZ7716": {
     "name": "Seligman COOP",
@@ -420,17 +411,9 @@
     "iem_id": "AZ7716",
     "lat": 35.3322,
     "lon": -112.8797,
-    "elev_ft": 17224,
-    "source": "IEM_COOP"
-  },
-  "AZ7855": {
-    "name": "Show Low AP COOP",
-    "network": "AZCLIMATE",
+    "elev_ft": 5246,
     "source": "IEM_COOP",
-    "iem_id": "AZ7855",
-    "lat": 34.2639,
-    "lon": -110.0075,
-    "elev_ft": 21033
+    "az_coop_id": "SELA3"
   },
   "AZ8162": {
     "name": "Springerville COOP",
@@ -438,8 +421,9 @@
     "iem_id": "AZ8162",
     "lat": 34.1361,
     "lon": -109.2864,
-    "elev_ft": 7060,
-    "source": "IEM_COOP"
+    "elev_ft": 6965,
+    "source": "IEM_COOP",
+    "az_coop_id": "SPVA3"
   },
   "AZ8326": {
     "name": "Sunrise Mountain COOP",
@@ -447,8 +431,9 @@
     "iem_id": "AZ8326",
     "lat": 33.9733,
     "lon": -109.563,
-    "elev_ft": 9370,
-    "source": "IEM_COOP"
+    "elev_ft": 9400,
+    "source": "IEM_COOP",
+    "az_coop_id": "SMTA3"
   },
   "AZ8329": {
     "name": "Sunset Crater NM",
@@ -456,8 +441,9 @@
     "iem_id": "AZ8329",
     "lat": 35.3694,
     "lon": -111.5436,
-    "elev_ft": 22900,
-    "source": "IEM_COOP"
+    "elev_ft": 6969,
+    "source": "IEM_COOP",
+    "az_coop_id": "SCIA3"
   },
   "AZ8468": {
     "name": "Teec Nos Pos COOP",
@@ -465,8 +451,9 @@
     "iem_id": "AZ8468",
     "lat": 36.9233,
     "lon": -109.09,
-    "elev_ft": 17356,
-    "source": "IEM_COOP"
+    "elev_ft": 5200,
+    "source": "IEM_COOP",
+    "az_coop_id": "TEEA3"
   },
   "AZ8904": {
     "name": "Tuzigoot Nat'l Monument",
@@ -474,17 +461,9 @@
     "iem_id": "AZ8904",
     "lat": 34.7708,
     "lon": -112.0264,
-    "elev_ft": 3383,
-    "source": "IEM_COOP"
-  },
-  "AZ8910": {
-    "name": "Twin Arrows COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZ8910",
-    "lat": 35.1583,
-    "lon": -111.275,
-    "elev_ft": 5920,
-    "source": "IEM_COOP"
+    "elev_ft": 3396,
+    "source": "IEM_COOP",
+    "az_coop_id": "TNMA3"
   },
   "AZ9156": {
     "name": "Walnut Canyon N.M. COOP",
@@ -493,7 +472,8 @@
     "lat": 35.1706,
     "lon": -111.5067,
     "elev_ft": 6716,
-    "source": "IEM_COOP"
+    "source": "IEM_COOP",
+    "az_coop_id": "WALA3"
   },
   "AZ9158": {
     "name": "Walnut Creek COOP",
@@ -501,8 +481,9 @@
     "iem_id": "AZ9158",
     "lat": 34.9281,
     "lon": -112.8097,
-    "elev_ft": 16699,
-    "source": "IEM_COOP"
+    "elev_ft": 5056,
+    "source": "IEM_COOP",
+    "az_coop_id": "PALA3"
   },
   "AZ9359": {
     "name": "Williams COOP",
@@ -510,8 +491,9 @@
     "iem_id": "AZ9359",
     "lat": 35.2413,
     "lon": -112.1929,
-    "elev_ft": 6909,
-    "source": "IEM_COOP"
+    "elev_ft": 6896,
+    "source": "IEM_COOP",
+    "az_coop_id": "WLLA3"
   },
   "AZ9370": {
     "name": "Williams 35 NNW COOP",
@@ -519,17 +501,9 @@
     "iem_id": "AZ9370",
     "lat": 35.7552,
     "lon": -112.3374,
-    "elev_ft": 5990,
-    "source": "IEM_COOP"
-  },
-  "AZ9439": {
-    "name": "Winslow AP COOP",
-    "network": "AZCLIMATE",
+    "elev_ft": 5984,
     "source": "IEM_COOP",
-    "iem_id": "AZ9439",
-    "lat": 35.0281,
-    "lon": -110.7208,
-    "elev_ft": 16030
+    "az_coop_id": "BBRA3"
   },
   "AZ9542": {
     "name": "Wupatki NM",
@@ -537,17 +511,9 @@
     "iem_id": "AZ9542",
     "lat": 35.5247,
     "lon": -111.3703,
-    "elev_ft": 16102,
-    "source": "IEM_COOP"
-  },
-  "AZC002": {
-    "name": "Arizona - Northeast Climate Division COOP",
-    "network": "AZCLIMATE",
-    "iem_id": "AZC002",
-    "lat": 35.6057,
-    "lon": -110.7682,
-    "elev_ft": 5097,
-    "source": "IEM_COOP"
+    "elev_ft": 4816,
+    "source": "IEM_COOP",
+    "az_coop_id": "WPTA3"
   },
   "AZPA3": {
     "name": "Aztca_Port1 RAWS",
