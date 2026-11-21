@@ -499,18 +499,34 @@ async def fetch_tile_var(session, compressor, url, spec, pixels_in_tile):
 
 
 async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, resolved_specs):
+    """
+    Stores per-station HRRR Zarr series as compact (N_runs, 36) float32 matrices
+    to minimize RAM and cache serialization time across the full daily archive.
+    """
     os.makedirs(CACHE_DIR, exist_ok=True)
+    n_runs = len(unique_runs)
+    var_keys = list(resolved_specs.keys())
     data_store = {}
     uncached_stations = {}
 
     for stn_id, info in station_pixels.items():
-        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_step{SAMPLE_STEP_DAYS}.pkl")
+        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_mat_step{SAMPLE_STEP_DAYS}.pkl")
+        loaded = False
         if os.path.exists(cache_path):
-            with open(cache_path, "rb") as f:
-                data_store[stn_id] = pickle.load(f)
-            print(f"  -> Loaded cached Zarr runs for {stn_id} ({len(data_store[stn_id])} runs).")
-        else:
-            data_store[stn_id] = {}
+            try:
+                with open(cache_path, "rb") as f:
+                    bundle = pickle.load(f)
+                if isinstance(bundle, dict) and bundle.get("run_dts") == unique_runs:
+                    data_store[stn_id] = bundle
+                    loaded = True
+                    print(f"  -> Loaded cached Zarr matrix for {stn_id} ({n_runs} runs).")
+            except Exception:
+                loaded = False
+        if not loaded:
+            data_store[stn_id] = {
+                "run_dts": unique_runs,
+                "vars": {k: np.full((n_runs, 36), np.nan, dtype=np.float32) for k in var_keys},
+            }
             uncached_stations[stn_id] = info
 
     if not uncached_stations:
@@ -522,18 +538,24 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
         tile_to_pixels[info["tile_id"]][stn_id] = (info["ly"], info["lx"])
 
     queue = asyncio.Queue()
-    for r in unique_runs:
-        queue.put_nowait(r)
+    for r_idx, r_dt in enumerate(unique_runs):
+        queue.put_nowait((r_idx, r_dt))
 
     connector = aiohttp.TCPConnector(limit=400, ttl_dns_cache=600)
     timeout = aiohttp.ClientTimeout(total=15, sock_connect=5, sock_read=8)
     compressor = numcodecs.Blosc()
-    pbar = tqdm(total=len(unique_runs), desc="Multi-Station HRRR-Zarr Ingestion", unit="run", smoothing=0.05)
+    pbar = tqdm(total=n_runs, desc="Multi-Station HRRR-Zarr Ingestion", unit="run", smoothing=0.05)
+
+    def store_ts(stn_id: str, vkey: str, r_idx: int, ts: np.ndarray):
+        mat = data_store[stn_id]["vars"][vkey]
+        m_len = min(36, len(ts))
+        if m_len > 0:
+            mat[r_idx, :m_len] = ts[:m_len]
 
     async def worker(session):
         while True:
             try:
-                init_dt = queue.get_nowait()
+                r_idx, init_dt = queue.get_nowait()
             except asyncio.QueueEmpty:
                 break
             try:
@@ -547,9 +569,9 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
                     if tmp_res is None:
                         continue
                     for stn_id, ts in tmp_res.items():
-                        data_store[stn_id].setdefault(init_dt, {})["tmp_2m"] = ts
+                        store_ts(stn_id, "tmp_2m", r_idx, ts)
 
-                    other_keys = [k for k in resolved_specs if k != "tmp_2m"]
+                    other_keys = [k for k in var_keys if k != "tmp_2m"]
                     coros = [
                         fetch_tile_var(session, compressor, f"{base_zarr}/{resolved_specs[k]['path']}/{tile_id}", resolved_specs[k], pix_map)
                         for k in other_keys
@@ -558,7 +580,7 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
                     for k, res in zip(other_keys, res_list):
                         if res is not None:
                             for stn_id, ts in res.items():
-                                data_store[stn_id].setdefault(init_dt, {})[k] = ts
+                                store_ts(stn_id, k, r_idx, ts)
             finally:
                 pbar.update(1)
                 queue.task_done()
@@ -571,9 +593,9 @@ async def download_all_stations_zarr(unique_runs, station_pixels, unique_tiles, 
         pbar.close()
 
     for stn_id in uncached_stations:
-        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_step{SAMPLE_STEP_DAYS}.pkl")
+        cache_path = os.path.join(CACHE_DIR, f"{stn_id}_mat_step{SAMPLE_STEP_DAYS}.pkl")
         with open(cache_path, "wb") as f:
-            pickle.dump(data_store[stn_id], f)
+            pickle.dump(data_store[stn_id], f, protocol=pickle.HIGHEST_PROTOCOL)
 
     return data_store
 
@@ -618,7 +640,9 @@ def main():
             if sid in PINNED_STATIONS:
                 kept_stations[sid] = meta
                 continue
-            obs_df = prefetched_obs.get(sid) or load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+            obs_df = prefetched_obs.get(sid)
+            if obs_df is None:
+                obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
             if obs_df is None:
                 try:
                     if meta.get("source") == "SYNOPTIC":
@@ -672,7 +696,9 @@ def main():
 
     for idx, sid in enumerate(syn_targets, 1):
         meta = target_stations[sid]
-        obs_df = prefetched_obs.get(sid) or load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+        obs_df = prefetched_obs.get(sid)
+        if obs_df is None:
+            obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
         if obs_df is not None:
             cached_hits += 1
         else:
@@ -701,7 +727,9 @@ def main():
 
     for idx, sid in enumerate(coop_targets, 1):
         meta = target_stations[sid]
-        obs_df = prefetched_obs.get(sid) or load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
+        obs_df = prefetched_obs.get(sid)
+        if obs_df is None:
+            obs_df = load_cached_obs(sid, END_DATE, refresh=args.refresh_obs)
         if obs_df is not None:
             cached_hits += 1
         else:
@@ -751,7 +779,9 @@ def main():
 
     for stn_id, meta in valid_targets.items():
         obs_df = obs_by_stn[stn_id]
-        stn_runs = data_store[stn_id]
+        stn_bundle = data_store[stn_id]
+        run_dts = stn_bundle["run_dts"]
+        var_mats = stn_bundle["vars"]
         equations_bundle["stations"][stn_id] = {"meta": meta, "cycles": {}}
 
         for cyc, periods in CYCLE_PERIODS.items():
@@ -761,7 +791,7 @@ def main():
             for period in periods:
                 obs_col = "obs_min" if period["kind"] == "min" else "obs_max"
                 rows = []
-                for init_dt, var_arrays in stn_runs.items():
+                for r_idx, init_dt in enumerate(run_dts):
                     if init_dt.hour != cyc_hr:
                         continue
                     v_date = pd.Timestamp(get_verify_date_mst(init_dt, period["fhrs"]))
@@ -771,6 +801,7 @@ def main():
                     if pd.isna(target_val):
                         continue
 
+                    var_arrays = {vkey: mat[r_idx] for vkey, mat in var_mats.items()}
                     feats = extract_period_features(var_arrays, period, init_dt, meta)
                     if not feats:
                         continue
