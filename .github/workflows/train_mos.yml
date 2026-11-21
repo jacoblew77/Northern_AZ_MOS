@@ -4,34 +4,34 @@ on:
   workflow_dispatch:
     inputs:
       discover_networks:
-        description: 'Auto-discover active public Northern AZ stations (Synoptic + IEM COOP)'
+        description: 'Auto-discover active public Northern AZ stations (Synoptic + Raw AZ_COOP)'
         required: true
         default: false
         type: boolean
       prune_stations:
-        description: 'Remove stations with fewer than min_valid_days from stations.json & mos_equations.json'
+        description: 'Remove stations with fewer than min_valid_days un-estimated days'
         required: true
-        default: false
+        default: true
         type: boolean
       min_por_start:
-        description: 'Earliest record start date cutoff (YYYY-MM-DD; 2021-03-01 = long-record, 2024-06-01 = include newer)'
+        description: 'Earliest record start date cutoff (YYYY-MM-DD)'
         required: true
         default: '2021-03-01'
         type: string
       min_valid_days:
-        description: 'Minimum valid observation days required (1400 = long-record, 500 = include newer)'
+        description: 'Minimum valid un-estimated observation days required'
         required: true
         default: '1400'
         type: string
       retrain_all:
-        description: 'Retrain ALL stations from scratch (uses cached HRRR & obs when available)'
+        description: 'Retrain ALL stations from scratch on daily HRRRv4 archive'
         required: true
-        default: false
+        default: true
         type: boolean
       refresh_obs:
-        description: 'Force fresh Synoptic/IEM observation download (bypass obs_cache)'
+        description: 'Force fresh Synoptic & raw AZ_COOP observation download (bypass obs_cache)'
         required: true
-        default: false
+        default: true
         type: boolean
 
 permissions:
@@ -53,17 +53,17 @@ jobs:
         uses: actions/cache@v4
         with:
           path: zarr_pixel_cache
-          key: hrrr-zarr-cache-${{ hashFiles('stations.json') }}-v2
+          key: hrrr-zarr-daily-cache-${{ hashFiles('stations.json') }}-v3
           restore-keys: |
-            hrrr-zarr-cache-
+            hrrr-zarr-daily-cache-
 
       - name: Cache daily surface observation series
         uses: actions/cache@v4
         with:
           path: obs_cache
-          key: obs-diurnal-cache-${{ hashFiles('stations.json') }}-v1
+          key: obs-raw-diurnal-cache-${{ hashFiles('stations.json') }}-v2
           restore-keys: |
-            obs-diurnal-cache-
+            obs-raw-diurnal-cache-
 
       - name: Install training packages
         run: pip install -q aiohttp fsspec numcodecs "numpy<2" pandas requests tqdm "zarr<3"
@@ -92,5 +92,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stations.json mos_equations.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update Northern AZ MOS stations and equations"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Retrain Northern AZ MOS on daily HRRRv4 & raw AZ_COOP observations"
           git push
